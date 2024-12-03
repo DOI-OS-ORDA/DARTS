@@ -12,12 +12,13 @@ DARTS serves as an interactive platform designed to track cases involving the as
  ## Project
  A team from 18F, in collaboration with our partners at the Office of Restoration and Damage Assessment (ORDA), dedicated twelve weeks to understanding the Damage Assessment and Restoration Tracking System (DARTS) and its users. 
 
- **Phase 1:** The objective was to provide recommendations for enhancing the user experience of case managers and other users involved in the various NRDAR processes within the system, as well as to outline a roadmap for future development. ***Complete***
-
  
  **Problem Statement:** We are building a modern and simplified case information management and tracking system that will alleviate many of the current user challenges with navigating and queries. 
         The new DARTS will reduce manual processes and improve the functionality for users.
  
 **Vision Statement:** ORDA’s Vision is to create an intuitive, user-friendly, streamlined system that DARTS users can trust to deliver accurate NRDAR information,reduce the need for constant maintenance and support,and empower users to work more 
         efficiently.
+
+ **Phase 1:** The objective was to provide recommendations for enhancing the user experience of case managers and other users involved in the various NRDAR processes within the system, as well as to outline a roadmap for future development. ***Completed October 2024***
+ [DARTS Final  Presentation](https://docs.google.com/presentation/d/16QfQCxpfH1_BZDkp-cuHFb0dvJPaU2l29IMI0F_XLPU/edit#slide=id.g30d737a98d2_0_274)
  
