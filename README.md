@@ -22,4 +22,4 @@ DARTS serves as an interactive platform designed to track cases involving the as
  **Phase 1:** The objective was to provide recommendations for enhancing the user experience of case managers and other users involved in the various NRDAR processes within the system, as well as to outline a roadmap for future development. ***Completed October 2024***
  [DARTS Final  Presentation](https://docs.google.com/presentation/d/16QfQCxpfH1_BZDkp-cuHFb0dvJPaU2l29IMI0F_XLPU/edit#slide=id.g30d737a98d2_0_274)
 
- **Phase 2: TBD**
+ **Phase 2: December 2024**
