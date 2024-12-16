@@ -13,29 +13,34 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     depends_on:
-      - postgres
-
-  postgres:
+      - db
     restart: always
+
+  db:
     image: postgres:latest
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
+    expose:
+      - "5432"
     ports:
       - "5432:5432"
     volumes:
       - ./data/db:/var/lib/postgresql/data
+    restart: always
 
-  # pgadmin:
-  #   container_name: pgadmin
-  #   image: dpage/pgadmin4:latest
-  #   environment:
-  #     - PGADMIN_DEFAULT_EMAIL=${PGADMIN_MAIL}
-  #     - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PW}
-  #   ports:
-  #     - "5050:5050"
-  #   restart: always
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=matt.cloyd@gsa.gov
+      - PGADMIN_DEFAULT_PASSWORD=password
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    restart: always
 
   # redis:
   #   restart: always
