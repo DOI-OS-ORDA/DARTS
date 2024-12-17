@@ -9,7 +9,6 @@
 # `DocumentsImport().call()` # imports all documents
 # `DocumentsRepository().all()` # prints all documents
 # `DocumentsRepository().search("bat")` to search for bat, not batteries
-# What is the intended usage after this?
 
 import glob
 import os
