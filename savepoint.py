@@ -1,3 +1,11 @@
+# Usage:
+# Place test .pdf and .docx files into darts/docs
+# `docker-compose run -it web sh`
+# `pip install psycopg[binary]`
+# `python3`
+# `from savepoint import *`
+# What is the intended usage after this?
+
 import glob
 import os
 import psycopg
