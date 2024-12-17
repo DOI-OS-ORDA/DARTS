@@ -1,9 +1,14 @@
 # Usage:
 # Place test .pdf and .docx files into darts/docs
+# `docker compose up --build`
+# Run the query commented at the bottom of this file
 # `docker-compose run -it web sh`
 # `pip install psycopg[binary]`
 # `python3`
 # `from savepoint import *`
+# `DocumentsImport().call()` # imports all documents
+# `DocumentsRepository().all()` # prints all documents
+# `DocumentsRepository().search("bat")` to search for bat, not batteries
 # What is the intended usage after this?
 
 import glob
