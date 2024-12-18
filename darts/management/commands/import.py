@@ -1,0 +1,15 @@
+from django.core.management.base import BaseCommand, CommandError
+from darts.operations import DocumentsImport
+
+
+class Command(BaseCommand):
+    help = "Imports documents into the database, converting PDFs/Word Docs to text"
+
+    def add_arguments(self, parser):
+        parser.add_argument("documents_path", type=str)
+
+    def handle(self, *args, **options):
+        DocumentsImport(options["documents_path"]).call()
+        self.stdout.write(
+            self.style.SUCCESS('Successfully imported documents')
+        )
