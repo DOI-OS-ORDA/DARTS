@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.views.generic import TemplateView, ListView
 
-def search(TemplateView):
-    template_name = 'search.html'
+def search(request):
+    return render(request, "search.html")
