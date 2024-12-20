@@ -3,6 +3,8 @@ from .forms import SearchForm
 from search.models import Document
 from .forms import UploadFileForm
 from django.http import HttpResponseRedirect
+import os
+import subprocess
 
 def search(request):
     if request.method == 'POST':
@@ -19,8 +21,19 @@ def upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
+            
             upload = request.FILES['file']
-            newdoc = Document(file_binary = upload.read() , file_name = upload.name)
+            name = upload.name
+
+            base, ext = os.path.splitext(name)
+            match ext:
+                case ".docx":
+                    command = f'pandoc -f docx -t markdown "test_docs/{name}"'
+                case ".pdf":
+                    command = f'pdftotext "test_docs/{name}" -'
+            body = subprocess.check_output(command, shell=True).decode(encoding='utf-8')
+
+            newdoc = Document(file_binary = upload.read() , file_name = name, file_text = body)
             newdoc.save()
             return HttpResponseRedirect('/upload/')
     else:

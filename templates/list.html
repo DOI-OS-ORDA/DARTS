@@ -8,14 +8,16 @@
     <th>id</th>
     <th>file name</th>
     <th>file binary</th>
+    <th>file text</th>
     <th>search text</th>
   </tr>
   {% for doc in docs %}
     <tr>
       <td>{{ doc.id }}</td>
       <td>{{ doc.file_name }}</td>
-      <td>{{ doc.file_binary }}</td>
-      <td>{{ doc.search_text }}</td>
+      <td>{{ doc.file_binary|truncatechars:20 }}</td>
+      <td>{{ doc.file_text|truncatechars:20 }}</td>
+      <td>{{ doc.search_text|truncatechars:20 }}</td>
     </tr>
   {% endfor %}
 </table>

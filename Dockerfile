@@ -11,6 +11,14 @@ RUN apt-get update && apt-get install -y \
   python-dev-is-python3 \
   xpdf
 WORKDIR /code
+RUN apt-get update && apt-get install -y \
+  build-essential \
+  libpoppler-cpp-dev \
+  pandoc \
+  pkg-config \
+  poppler-utils \
+  python-dev-is-python3 \
+  xpdf
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 COPY . /code/
