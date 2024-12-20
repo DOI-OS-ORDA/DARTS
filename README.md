@@ -10,8 +10,13 @@ To use Docker to start all services, run
 docker compose up
 ```
 
-Then visit localhost:8000 to see the site.
+Then visit <http://localhost:8000> to see the site.
 
+To reach a shell within the Docker container, run
+
+```
+docker compose run -it --remove-orphans web sh
+```
 
 ## OUR ESSENCE
 
