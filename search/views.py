@@ -9,7 +9,7 @@ import subprocess
 def search(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
-        docs = Document.objects.all()
+        docs = Document.objects.all() # TODO: replace with actual search query
         return render(request, 'search.html', {'form': form, 'docs': docs})
     else:
         form = SearchForm()
@@ -25,6 +25,7 @@ def upload(request):
             upload = request.FILES['file']
             name = upload.name
 
+            # TODO: break into fuctions, save search_text
             base, ext = os.path.splitext(name)
             match ext:
                 case ".docx":
