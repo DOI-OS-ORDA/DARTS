@@ -8,9 +8,11 @@ def search(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
         docs = Document.objects.all()
+        return render(request, 'search.html', {'form': form, 'docs': docs})
     else:
         form = SearchForm()
-    return render(request, 'search.html', {'form': form, 'docs': docs})
+        return render(request, 'search.html', {'form': form})
+
 
 def upload(request):
     count = Document.objects.count
@@ -23,3 +25,7 @@ def upload(request):
     else:
         form = UploadFileForm()
     return render(request, 'upload.html', {'form': form, 'count': count})
+
+def list(request):
+    docs = Document.objects.all()
+    return render(request, 'list.html', {'docs': docs})

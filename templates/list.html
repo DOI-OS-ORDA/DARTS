@@ -1,0 +1,23 @@
+<nav>
+  list | <a href="/upload">upload</a> | <a href="/search">search</a>
+</nav>
+<h1>DARTS document list</h1>
+
+<table>
+  <tr>
+    <th>id</th>
+    <th>file name</th>
+    <th>file binary</th>
+    <th>search text</th>
+  </tr>
+  {% for doc in docs %}
+    <tr>
+      <td>{{ doc.id }}</td>
+      <td>{{ doc.file_name }}</td>
+      <td>{{ doc.file_binary }}</td>
+      <td>{{ doc.search_text }}</td>
+    </tr>
+  {% endfor %}
+</table>
+
+
