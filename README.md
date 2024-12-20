@@ -18,6 +18,12 @@ To reach a shell within the Docker container, run
 docker compose run -it --remove-orphans web sh
 ```
 
+From there, to use a Python environment, run
+
+```
+python manage.py shell
+```
+
 ## OUR ESSENCE
 
 The Office of Restoration and Damage Assessment (ORDA) at the Department of Interior (Interior) plays a crucial role within the Interior's Natural Resource Damage Assessment and Restoration (NRDAR) Program. It's responsible for coordinating efforts to assess damage to natural resources and determine the necessary restoration actions following environmental incidents, such as hazardous substance releases. The ORDA works closely with state, tribal, and federal trustee agencies to conduct damage assessments as the initial step toward restoring affected resources.  The ORDA's activities are geared towards ensuring that public natural resources injured or destroyed due to hazardous substance releases are restored, replaced, or that their equivalents are acquired. 
