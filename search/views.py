@@ -19,13 +19,16 @@ def upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            newdoc = Document(file_binary = request.FILES['file'].read())
+            upload = request.FILES['file']
+            newdoc = Document(file_binary = upload.read() , file_name = upload.name)
             newdoc.save()
             return HttpResponseRedirect('/upload/')
     else:
         form = UploadFileForm()
     return render(request, 'upload.html', {'form': form, 'count': count})
 
+
 def list(request):
     docs = Document.objects.all()
     return render(request, 'list.html', {'docs': docs})
+
