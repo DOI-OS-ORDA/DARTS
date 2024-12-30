@@ -1,7 +1,7 @@
 import os
 import psycopg
 
-from .models import Document
+from search.models import Document
 
 class DocumentsRepository:
 
@@ -9,11 +9,14 @@ class DocumentsRepository:
         self.schema = Document
 
     def add(self, filename: str, file, body: str):
-        Document.create(
+        doc = Document(
             filename = file,
             file = file,
             body = body
         )
+        print("---->")
+        print(doc)
+        doc.save()
 
     def search(self, query: str):
         cur = self.conn.cursor()

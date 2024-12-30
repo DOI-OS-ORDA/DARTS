@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+
+    <title>{% block title %}{% endblock %} • DARTS</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/list">list</a>
+      | <a href="/upload">upload</a>
+      | <a href="/search">search</a>
+    </nav>
+    {% block content %}{% endblock content %}
+  </body>
+</html>

@@ -1,25 +1,8 @@
-<nav>
-  list | <a href="/upload">upload</a> | <a href="/search">search</a>
-</nav>
-<h1>DARTS document list</h1>
+{% extends "layout.html" %}
 
-<table>
-  <tr>
-    <th>id</th>
-    <th>file name</th>
-    <th>file binary</th>
-    <th>file text</th>
-    <th>search text</th>
-  </tr>
-  {% for doc in docs %}
-    <tr>
-      <td>{{ doc.id }}</td>
-      <td>{{ doc.file_name }}</td>
-      <td>{{ doc.file_binary|truncatechars:20 }}</td>
-      <td>{{ doc.file_text|truncatechars:20 }}</td>
-      <td>{{ doc.search_text|truncatechars:20 }}</td>
-    </tr>
-  {% endfor %}
-</table>
+{% block title %}List{% endblock %}
 
-
+{% block content %}
+<h1>Document list</h1>
+{% include "partials/document_table.html" with docs=docs %}
+{% endblock content %}

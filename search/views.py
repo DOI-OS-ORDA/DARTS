@@ -10,7 +10,7 @@ def search(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
         docs = Document.objects.all() # TODO: replace with actual search query
-        return render(request, 'search.html', {'form': form, 'docs': docs})
+        return render(request, 'search.html', {'form': form, 'docs': docs, 'searched': True})
     else:
         form = SearchForm()
         return render(request, 'search.html', {'form': form})
@@ -21,7 +21,7 @@ def upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            
+
             upload = request.FILES['file']
             name = upload.name
 

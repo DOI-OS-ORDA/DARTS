@@ -1,9 +1,11 @@
-<nav>
-    <a href="/list">list</a> | upload | <a href="/search">search</a>
-</nav>
-<h1>DARTS upload</h1>
+{% extends "layout.html" %}
+
+{% block title %}Upload{% endblock %}
+
+{% block content %}
+<h1>Upload document</h1>
 <p>
-    {{ count }} documents in database
+  {{ count }} documents in database
 </p>
 
 <form action="/upload/" method="post" enctype="multipart/form-data">
@@ -11,3 +13,4 @@
   {{ form }}
   <input type="submit" value="⬆️ Upload">
 </form>
+{% endblock content %}

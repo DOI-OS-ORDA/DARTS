@@ -1,7 +1,10 @@
-<nav>
-  <a href="/list">list</a> | <a href="/upload">upload</a> | search
-</nav>
-<h1>DARTS search</h1>
+{% extends "layout.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<h1>Search</h1>
+
 {{ fake }}
 <form action="/search/" method="post">
   {% csrf_token %}
@@ -9,11 +12,14 @@
   <input type="submit" value="🔎 Search">
 </form>
 
-{% if request.method == 'POST' %}
-<h2>Results</h2>
-<ol>
-  {% for doc in docs %}
-  <li>{{ doc.file_name }}</li>
-  {% endfor %}
-</ol>
+{% if searched %}
+  <h2>Results</h2>
+
+  {% if docs|length > 0 %}
+    {% include "partials/document_table.html" with docs=docs %}
+  {% else %}
+    <p>No results for this search.</p>
+  {% endif %}
+
 {% endif %}
+{% endblock content %}
