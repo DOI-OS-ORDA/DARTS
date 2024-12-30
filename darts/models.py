@@ -6,3 +6,9 @@ class Document(models.Model):
     file = models.BinaryField()
     body = models.TextField()
     search_text = SearchVectorField()
+
+    @classmethod
+    def create(cls, title):
+        book = cls(title=title)
+        book.save()
+        return book

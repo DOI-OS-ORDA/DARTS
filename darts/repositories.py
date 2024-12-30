@@ -1,28 +1,19 @@
 import os
 import psycopg
 
+from .models import Document
+
 class DocumentsRepository:
 
-    def __init__(self, connection_string: str = f'password={os.environ['POSTGRES_PASSWORD']} user={os.environ['POSTGRES_USER']} host=db'):
-        self.conn = psycopg.connect(connection_string)
-
-    def all(self, limit=100):
-        cur = self.conn.cursor()
-        cur.execute(f"SELECT * FROM documents LIMIT {limit}")
-        self.conn.commit()
-        for record in cur:
-            print(record)
+    def __init__(self, schema = Document):
+        self.schema = Document
 
     def add(self, filename: str, file, body: str):
-        # self.changeset("create", filename = filename, file = file, body = body).commit()
-        cur = self.conn.cursor()
-        cur.execute("""
-            INSERT INTO documents (filename, file, body)
-            VALUES (%s, %s, %s)
-            """,
-            (filename, file, body)
+        Document.create(
+            filename = file,
+            file = file,
+            body = body
         )
-        self.conn.commit()
 
     def search(self, query: str):
         cur = self.conn.cursor()
