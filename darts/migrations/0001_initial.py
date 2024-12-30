@@ -22,4 +22,21 @@ class Migration(migrations.Migration):
                 ('search_text', django.contrib.postgres.search.SearchVectorField()),
             ],
         ),
+
+        # It appears to be impossible to alter an existing column to be generated, so
+        # we drop the column and re-create it here.
+        migrations.RunSQL(
+            sql="""
+                ALTER TABLE darts_document DROP COLUMN search_text;
+
+                ALTER TABLE darts_document
+                ADD COLUMN search_text tsvector
+                GENERATED ALWAYS AS
+                    (to_tsvector('english', coalesce(filename, '') || ' ' || coalesce(body, '')))
+                STORED;
+                """,
+
+            # SQL that does nothing, so that Django knows we can reverse the migration
+            reverse_sql="SELECT 'reversing' as message"
+        ),
     ]
