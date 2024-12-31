@@ -7,8 +7,9 @@ import os
 import subprocess
 from django.http import FileResponse
 import io
+import mimetypes
 
-from darts.operations import DocumentSearch
+from darts.operations import DocumentSearch, TextConversion
 
 def search(request):
     if request.method == 'POST':
@@ -30,15 +31,7 @@ def upload(request):
             upload = request.FILES['file']
             name = upload.name
 
-            # TODO: break into fuctions, save search_text
-            base, ext = os.path.splitext(name)
-            match ext:
-                case ".docx":
-                    command = f'pandoc -f docx -t markdown "test_docs/{name}"'
-                case ".pdf":
-                    command = f'pdftotext "test_docs/{name}" -'
-            body = subprocess.check_output(command, shell=True).decode(encoding='utf-8')
-
+            body = TextConversion.call('test_docs/' + name)
             newdoc = Document(file = upload.read() , filename = name, body = body)
             newdoc.save()
             return HttpResponseRedirect('/upload/')
@@ -57,5 +50,6 @@ def view_doc(request):
 
     buffer = io.BytesIO(document.file)
     buffer.seek(0)
-    return FileResponse(buffer, content_type='application/pdf')
+    mimetype = mimetypes.guess_type(document.filename)[0]
+    return FileResponse(buffer, content_type=mimetype)
 
