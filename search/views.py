@@ -5,6 +5,7 @@ from .forms import UploadFileForm
 from django.http import HttpResponseRedirect
 import os
 import subprocess
+from django.http import FileResponse
 
 from darts.operations import DocumentSearch
 
@@ -48,4 +49,9 @@ def upload(request):
 def list(request):
     docs = Document.objects.all()
     return render(request, 'list.html', {'docs': docs})
+
+def view_doc(request):
+    doc_name = request.GET.get('doc')
+    document = Document.objects.get(filename = doc_name)
+    return FileResponse(document.file, content_type='application/pdf')
 
