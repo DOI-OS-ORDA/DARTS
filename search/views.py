@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 import os
 import subprocess
 from django.http import FileResponse
+import io
 
 from darts.operations import DocumentSearch
 
@@ -53,5 +54,8 @@ def list(request):
 def view_doc(request):
     doc_name = request.GET.get('doc')
     document = Document.objects.get(filename = doc_name)
-    return FileResponse(document.file, content_type='application/pdf')
+
+    buffer = io.BytesIO(document.file)
+    buffer.seek(0)
+    return FileResponse(buffer, content_type='application/pdf')
 
