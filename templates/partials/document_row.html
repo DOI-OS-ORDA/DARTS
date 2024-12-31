@@ -4,5 +4,5 @@
   <td>{{ doc.file|truncatechars:20 }}</td>
   <td>{{ doc.body|truncatechars:20 }}</td>
   <td>{{ doc.search_text|truncatechars:20 }}</td>
-  <td><a href="/view_doc?doc={{ doc.filename }}">view</a></td>
+  <td><a href="/view_doc?doc={{ doc.filename|urlencode }}">view</a></td>
 </tr>
