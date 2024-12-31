@@ -12,13 +12,21 @@
   <input type="submit" value="🔎 Search">
 </form>
 
+<style>
+  span.highlight {
+    background-color: goldenrod;
+  }
+</style>
+
 {% if searched %}
   <h2>Results</h2>
 
-  {% if docs|length > 0 %}
-    {% include "partials/document_table.html" with docs=docs %}
+  {% if results|length > 0 %}
+    {% for result in results %}
+      {% include "partials/search_result.html" with result=result %}
+    {% endfor %}
   {% else %}
-    <p>No results for this search.</p>
+    <p>No results for '{{ query }}'.</p>
   {% endif %}
 
 {% endif %}

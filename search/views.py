@@ -6,11 +6,14 @@ from django.http import HttpResponseRedirect
 import os
 import subprocess
 
+from darts.operations import DocumentSearch
+
 def search(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
-        docs = Document.objects.all() # TODO: replace with actual search query
-        return render(request, 'search.html', {'form': form, 'docs': docs, 'searched': True})
+        query = request.POST.get('query')
+        results = DocumentSearch().call(query)
+        return render(request, 'search.html', {'form': form, 'results': results, 'searched': True, query: query})
     else:
         form = SearchForm()
         return render(request, 'search.html', {'form': form})

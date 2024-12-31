@@ -8,24 +8,25 @@ from .repositories import DocumentsRepository
 
 class DocumentSearch:
 
-    def call(self):
-        with connection.cursor as cursor:
+    def call(self, query):
+        with connection.cursor() as cursor:
             cursor.execute(
                 """
                 SELECT
+                  id,
                   filename,
                   ts_rank_cd(search_text, query) AS rank,
                   ts_headline(body, query, $$MaxFragments=2, MaxWords=20, MinWords=10, StartSel='<span class="highlight">', StopSel='</span>'$$) AS highlight
-                FROM documents, to_tsquery(%s) query
+                FROM search_document, to_tsquery(%s) query
                 WHERE query @@ search_text
-                ORDER BY rank DESC
+                ORDER BY rank DESC, filename ASC
                 LIMIT 100;
                 """,
                 [query]
             )
-            return cursor.fetchall()
+            return self.dictfetchall(cursor)
 
-    def namedtuplefetchall(cursor):
+    def namedtuplefetchall(self, cursor):
         """
         Return all rows from a cursor as a namedtuple.
         Assume the column names are unique.
@@ -34,7 +35,7 @@ class DocumentSearch:
         nt_result = namedtuple("Result", [col[0] for col in desc])
         return [nt_result(*row) for row in cursor.fetchall()]
 
-    def dictfetchall(cursor):
+    def dictfetchall(self, cursor):
         """
         Return all rows from a cursor as a dict.
         Assume the column names are unique.
