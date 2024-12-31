@@ -37,7 +37,7 @@ def upload(request):
                     command = f'pdftotext "test_docs/{name}" -'
             body = subprocess.check_output(command, shell=True).decode(encoding='utf-8')
 
-            newdoc = Document(file_binary = upload.read() , file_name = name, file_text = body)
+            newdoc = Document(file = upload.read() , filename = name, body = body)
             newdoc.save()
             return HttpResponseRedirect('/upload/')
     else:
