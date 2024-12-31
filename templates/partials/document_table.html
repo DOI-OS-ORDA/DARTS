@@ -1,0 +1,9 @@
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Document</th>
+  </tr>
+  {% for doc in docs %}
+    {% include "partials/document_row.html" with doc=doc %}
+  {% endfor %}
+</table>

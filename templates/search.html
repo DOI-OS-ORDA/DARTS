@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<h1>Search</h1>
+
+<form action="/search/" method="post">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="🔎 Search">
+</form>
+
+<style>
+  span.highlight {
+    background-color: goldenrod;
+  }
+</style>
+
+{% if searched %}
+  <h2>Results</h2>
+
+  {% if results|length > 0 %}
+    {% for result in results %}
+      {% include "partials/search_result.html" with result=result %}
+    {% endfor %}
+  {% else %}
+    <p>No results for '{{ query }}'.</p>
+  {% endif %}
+
+{% endif %}
+{% endblock content %}
