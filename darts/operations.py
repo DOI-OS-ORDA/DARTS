@@ -17,7 +17,7 @@ class DocumentSearch:
                   filename,
                   ts_rank_cd(search_text, query) AS rank,
                   ts_headline(body, query, $$MaxFragments=2, MaxWords=20, MinWords=10, StartSel='<span class="highlight">', StopSel='</span>'$$) AS highlight
-                FROM search_document, to_tsquery(%s) query
+                FROM search_document, websearch_to_tsquery(%s) query
                 WHERE query @@ search_text
                 ORDER BY rank DESC, filename ASC
                 LIMIT 100;

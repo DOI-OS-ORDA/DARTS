@@ -51,5 +51,5 @@ def view_doc(request):
     buffer = io.BytesIO(document.file)
     buffer.seek(0)
     mimetype = mimetypes.guess_type(document.filename)[0]
-    return FileResponse(buffer, content_type=mimetype)
+    return FileResponse(buffer, filename=document.filename, content_type=mimetype)
 

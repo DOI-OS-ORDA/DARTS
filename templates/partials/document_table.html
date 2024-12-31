@@ -1,11 +1,7 @@
 <table>
   <tr>
     <th>ID</th>
-    <th>File name</th>
-    <th>Binary data</th>
-    <th>File content</th>
-    <th>Search vector</th>
-    <th>Download</th>
+    <th>Document</th>
   </tr>
   {% for doc in docs %}
     {% include "partials/document_row.html" with doc=doc %}
