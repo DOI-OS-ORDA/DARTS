@@ -10,12 +10,11 @@ class DocumentsRepository:
 
     def add(self, filename: str, file, body: str):
         doc = Document(
-            filename = file,
+            filename = filename,
             file = file,
             body = body
         )
-        print("---->")
-        print(doc)
+        print(f"----> {doc}")
         doc.save()
 
     def search(self, query: str):

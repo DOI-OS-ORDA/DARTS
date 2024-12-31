@@ -9,6 +9,9 @@ class Command(BaseCommand):
         parser.add_argument("documents_path", nargs="?", type=str, default="darts/docs/*")
 
     def handle(self, *args, **options):
+        self.stdout.write(
+            self.style.SUCCESS(f'Loading documents from {options["documents_path"]}')
+        )
         DocumentsImport(options["documents_path"]).call()
         self.stdout.write(
             self.style.SUCCESS('Successfully imported documents')
