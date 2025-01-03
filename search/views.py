@@ -30,7 +30,8 @@ def upload(request):
 
             upload = request.FILES['file']
             name = upload.name
-
+            # TODO: use the document contents uploaded, rather than document from local file system
+            # Per issue: https://github.com/DOI-OS-ORDA/DARTS/issues/25
             body = TextConversion.call('test_docs/' + name)
             newdoc = Document(file = upload.read() , filename = name, body = body)
             newdoc.save()
