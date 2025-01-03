@@ -16,7 +16,7 @@ def search(request):
         form = SearchForm(request.POST)
         query = request.POST.get('query')
         results = DocumentSearch().call(query)
-        return render(request, 'search.html', {'form': form, 'results': results, 'searched': True, query: query})
+        return render(request, 'search.html', {'form': form, 'results': results, 'searched': True, 'query': query})
     else:
         form = SearchForm()
         return render(request, 'search.html', {'form': form})

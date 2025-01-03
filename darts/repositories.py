@@ -14,7 +14,7 @@ class DocumentsRepository:
             file = file,
             body = body
         )
-        print(f"----> {doc}")
+        # print(f"----> {doc}")
         doc.save()
 
     def search(self, query: str):

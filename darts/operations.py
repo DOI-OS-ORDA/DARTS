@@ -8,7 +8,18 @@ from .repositories import DocumentsRepository
 
 class DocumentSearch:
 
-    def call(self, query):
+    def __init__(self, query: str):
+        self.query = query
+        self.result_data = []
+
+    def results(self):
+        if len(self.result_data) > 0:
+            return self.result_data
+        else:
+            self.result_data = self.call()
+            return self.result_data
+
+    def call(self):
         with connection.cursor() as cursor:
             cursor.execute(
                 """
@@ -22,9 +33,10 @@ class DocumentSearch:
                 ORDER BY rank DESC, filename ASC
                 LIMIT 100;
                 """,
-                [query]
+                [self.query]
             )
-            return self.dictfetchall(cursor)
+            self.result_data = self.dictfetchall(cursor)
+            return self
 
     def namedtuplefetchall(self, cursor):
         """
@@ -85,9 +97,12 @@ class DocumentsImport:
         self.repository = repository
 
     def call(self):
+        print(f"----> [START] Starting document import...")
         filepaths = glob.glob(self.folder_path)
         for path in filepaths:
+            print(f"----> Importing {path}...")
             DocumentImport(path, self.repository).call()
+        print(f"----> [END] Document import complete!")
 
 
 class TextConversion:
