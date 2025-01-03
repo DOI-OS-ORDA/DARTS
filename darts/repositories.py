@@ -14,6 +14,10 @@ class DocumentsRepository:
             file = file,
             body = body
         )
+<<<<<<< HEAD
+=======
+        # print(f"----> {doc}")
+>>>>>>> 2faa331 (Unit tests cover much existing functionality)
         doc.save()
 
     def clear(self):
