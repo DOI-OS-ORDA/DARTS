@@ -6,6 +6,10 @@ services:
       - .:/code
     ports:
       - "8000:8000"
+      - "4444:4444"
+    # extra_hosts:
+    #   - "host.docker.internal"
+    #   - "docker.for.mac.localhost"
     environment:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
