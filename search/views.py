@@ -9,7 +9,7 @@ from django.http import FileResponse
 import io
 import mimetypes
 
-from darts.operations import DocumentSearch, TextConversion
+from darts.operations import DocumentSearch
 
 def search(request):
     if request.method == 'POST':
@@ -27,15 +27,15 @@ def upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-
             upload = request.FILES['file']
             name = upload.name
-            # TODO: use the document contents uploaded, rather than document from local file system
-            # Per issue: https://github.com/DOI-OS-ORDA/DARTS/issues/25
-            body = TextConversion.call('test_docs/' + name)
-            newdoc = Document(file = upload.read() , filename = name, body = body)
+            file = upload.read()
+            body = __convert_doc(name, file)
+
+            newdoc = Document(file = file, filename = name, body = body)
             newdoc.save()
             return HttpResponseRedirect('/upload/')
+
     else:
         form = UploadFileForm()
     return render(request, 'upload.html', {'form': form, 'count': count})
@@ -53,4 +53,16 @@ def view_doc(request):
     buffer.seek(0)
     mimetype = mimetypes.guess_type(document.filename)[0]
     return FileResponse(buffer, filename=document.filename, content_type=mimetype)
+
+
+def __convert_doc(name, file):
+    base, ext = os.path.splitext(name)
+    if ext == '.docx':
+        command = f'pandoc -f docx -t markdown'
+    elif ext == '.pdf':
+        command = f'pdftotext - -'
+
+    # pass file contents via stdin, get converted file via stdout
+    return subprocess.check_output(command, input=file, shell=True).decode(encoding='utf-8')
+
 
