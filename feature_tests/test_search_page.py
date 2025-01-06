@@ -2,26 +2,18 @@ import re
 import time
 import unittest
 
-from django.test import LiveServerTestCase
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.firefox.options import Options
 
-class SearchTest(LiveServerTestCase):
+from darts.operations import DocumentsImport
+from .base import FeatureTest
+
+class SearchTest(FeatureTest):
+
     def setUp(self):
-        options = Options()
-        options.binary_location = r'/usr/bin/firefox-esr'
-        options.add_argument("--no-sandbox")
-        options.add_argument("--headless")
-        options.add_argument("--disable-gpu")
-        options.add_argument("--window-size=1920,1080")
-        from selenium.webdriver.firefox.service import Service
-        service = Service('/usr/local/bin/geckodriver')
-        self.browser = webdriver.Firefox(options=options, service=service)
-
-    def tearDown(self):
-        self.browser.quit()
+        super().setUp()
+        documents_folder = "search/tests/fixtures/documents/*"
+        DocumentsImport(documents_folder).call()
 
     def test_can_search(self):
         # A user visits the search page
@@ -47,7 +39,3 @@ class SearchTest(LiveServerTestCase):
         # inputbox.send_keys("bats -Kentucky")
         # TODO click submit
         # self.fail("Finish the test!")
-
-
-if __name__ == "__main__":
-    unittest.main()

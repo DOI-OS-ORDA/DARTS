@@ -1,22 +1,5 @@
 from django.test import TestCase
-from django.http import HttpRequest
-from search.views import search
-
-
-class HomePageTest(TestCase):
-    def test_home_page_returns_correct_html(self):
-        request = HttpRequest()
-        response = search(request)
-        html = response.content.decode("utf8")
-        self.assertIn("<title>Search • DARTS</title>", html)
-        self.assertTrue(html.startswith("<!DOCTYPE html>"))
-        self.assertTrue(html.endswith("</html>\n"))
-
-    def test_home_page_returns_correct_html_2(self):
-        response = self.client.get("/")
-        self.assertContains(response, "<title>Search • DARTS</title>")
-
-
+from unittest.mock import Mock
 from darts.operations import DocumentSearch, DocumentsImport
 
 
@@ -61,12 +44,17 @@ class OperationsDocumentSearchTest(TestCase, CustomAssertions):
             'Preliminary Research Bats and NRDAR.docx'
         )
 
-'''
-  context "with no documents" do
-    before { DocumentsRepository.clear }
-    it "returns no results" do
-      expect(subject.call).to be_empty
-    end
-  end
-end
-'''
+    def test_with_no_documents_returns_no_results(self):
+        self.fail("""
+            This test is showing a design weakness. There's no way to inject
+            the repository for document search because it's hardcoded SQL.
+
+            This should head in the direction of:
+                - Search operation
+                - Repository that has a method for querying search results
+                - Return results wrapped in a SearchResult struct
+        """)
+        empty_repo = Mock()
+        empty_repo.results.return_value = []
+        search = DocumentSearch(self.search_term).call()
+        self.assertEqual(len(search.results()), 0)

@@ -16,7 +16,7 @@ class DocumentSearch:
         if len(self.result_data) > 0:
             return self.result_data
         else:
-            self.result_data = self.call()
+            self.call()
             return self.result_data
 
     def call(self):
