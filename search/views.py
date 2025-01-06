@@ -32,7 +32,7 @@ def upload(request):
             upload = request.FILES['file']
             name = upload.name
 
-            body = TextConversion.call('test_docs/' + name)
+            body = TextConversion.from_filepath('test_docs/' + name)
             newdoc = Document(file = upload.read() , filename = name, body = body)
             newdoc.save()
             return HttpResponseRedirect('/upload/')

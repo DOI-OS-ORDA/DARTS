@@ -14,5 +14,5 @@ class DocumentImport:
         self.repository.add(
             filename = self.file_path,
             file = open(self.file_path, "rb").read(),
-            body = self.text_converter.call(self.file_path)
+            body = self.text_converter.from_filepath(self.file_path)
         )
