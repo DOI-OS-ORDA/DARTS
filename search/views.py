@@ -9,7 +9,8 @@ from django.http import FileResponse
 import io
 import mimetypes
 
-from darts.operations import DocumentSearch, TextConversion
+from search.operations.document_search import DocumentSearch
+from search.operations.text_conversion import TextConversion
 
 def search(request):
     if request.method == 'POST':

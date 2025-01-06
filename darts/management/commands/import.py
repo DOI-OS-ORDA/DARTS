@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from darts.operations import DocumentsImport
+from search.operations.documents_import import DocumentsImport
 
 
 class Command(BaseCommand):

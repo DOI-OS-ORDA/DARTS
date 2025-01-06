@@ -1,6 +1,7 @@
 from django.test import TestCase
 from unittest.mock import Mock
-from darts.operations import DocumentSearch, DocumentsImport
+from search.operations.document_search import DocumentSearch
+from search.operations.documents_import import DocumentsImport
 
 
 class CustomAssertions:

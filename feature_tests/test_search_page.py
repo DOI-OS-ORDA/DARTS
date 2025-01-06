@@ -5,7 +5,7 @@ import unittest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-from darts.operations import DocumentsImport
+from search.operations.documents_import import DocumentsImport
 from .base import FeatureTest
 
 class SearchTest(FeatureTest):
