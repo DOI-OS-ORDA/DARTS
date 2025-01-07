@@ -35,16 +35,16 @@ Run tests with the following commands:
 
 ```sh
 # Run all tests
-docker compose run --it --remove orphans web python3 manage.py test
+docker compose run -it --remove-orphans web python3 manage.py test
 
 # Run only feature tests
-docker compose run --it --remove orphans web python3 manage.py test feature_tests
+docker compose run -it --remove-orphans web python3 manage.py test feature_tests
 
 # Run a single unit test, in this case search/tests/test_operations.py
-docker compose run --it --remove orphans web python3 manage.py test search.tests.test_operations
+docker compose run -it --remove-orphans web python3 manage.py test search.tests.test_operations
 ```
 
-We recommend creating a shell alias that runs `docker compose run --it --remove orphans web python3 manage.py test`. We use `dt` to indicate `"docker...test"`.
+We recommend creating a shell alias that runs `docker compose run -it --remove-orphans web python3 manage.py test`. We use `dt` to indicate `"docker...test"`.
 
 
 ## OUR ESSENCE
