@@ -29,10 +29,11 @@ def upload(request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             upload = request.FILES['file']
-            body = TextConversion.from_file_bytes(name, upload.read())
+            filename = upload.name
+            body = TextConversion.from_file_bytes(filename, upload.read())
             newdoc = Document(
               file = upload.read(),
-              filename = upload.name,
+              filename = filename,
               body = body
             )
             newdoc.save()
