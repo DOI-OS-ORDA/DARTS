@@ -9,14 +9,15 @@ from django.http import FileResponse
 import io
 import mimetypes
 
-from darts.operations import DocumentSearch
+from search.operations.document_search import DocumentSearch
+from search.operations.text_conversion import TextConversion
 
 def search(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
         query = request.POST.get('query')
-        results = DocumentSearch().call(query)
-        return render(request, 'search.html', {'form': form, 'results': results, 'searched': True, query: query})
+        results = DocumentSearch(query).results()
+        return render(request, 'search.html', {'form': form, 'results': results, 'searched': True, 'query': query})
     else:
         form = SearchForm()
         return render(request, 'search.html', {'form': form})
@@ -28,11 +29,13 @@ def upload(request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             upload = request.FILES['file']
-            name = upload.name
-            file = upload.read()
-            body = __convert_doc(name, file)
-
-            newdoc = Document(file = file, filename = name, body = body)
+            filename = upload.name
+            body = TextConversion.from_file_bytes(filename, upload.read())
+            newdoc = Document(
+              file = upload.read(),
+              filename = filename,
+              body = body
+            )
             newdoc.save()
             return HttpResponseRedirect('/upload/')
 
