@@ -1,4 +1,4 @@
-# Architecture Decision Record N: Title
+# Architecture decision record N: Title
 
 Brief description
 
@@ -12,7 +12,7 @@ Backstory, forces at play, where our heads were at when we made the decision
 
 ## Decision
 
-Use sentences starting with "We will..."
+Start with "We will..."
 
 ## Consequences
 
