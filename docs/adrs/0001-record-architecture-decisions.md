@@ -12,11 +12,13 @@ ORDA and 18F are modernizing DARTS. As we started to make technical decisions, w
 
 ## Decision
 
-We will record our tech decisions in Architecture Decision Record (ADRs). We will keep the ADRs in the source control repo of the relevant codebase. When an ADR relates to a GitHub issue ticket, we will tag the issue as ADR-related and we will link to it from the ADR (as above, near the :ticket: symbol).
+We will record our tech decisions in Architecture Decision Record (ADRs). We will keep the ADRs in the source control repo of the relevant codebase. When an ADR relates to a GitHub issue ticket, we will tag the issue as ADR-related (or decision-related) and we will link to it from the ADR (as above, near the :ticket: symbol).
 
 * **Format:** ADRs will be based upon [this template](./xxxx-template.md).
 * **Subject matter:** ADRs are *only* for technical decisions. ADRs are *not* product, design, or business-level decisions. Good subjects for ADRs: the selection of a library, a design pattern, a development practice, or (like the current ADR) a technical documentation practice.
 * **Immutability:** ADRs are loosely immutable. When a decision is superseded, a new ADR should be issued to replace the old. We will add a note to the old ADR's text (and maybe the filename) saying "overwritten" or "superseded."
+
+Our decision was inspired by [the way Login.gov does ADRs](https://github.com/18F/identity-devops) and [this guide to ADRs](https://github.com/joelparkerhenderson/architecture-decision-record).
 
 ## Consequences
 
