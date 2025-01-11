@@ -18,7 +18,7 @@ We will record our tech decisions in Architecture Decision Record (ADRs). We wil
 * **Subject matter:** ADRs are *only* for technical decisions. ADRs are *not* product, design, or business-level decisions. Good subjects for ADRs: the selection of a library, a design pattern, a development practice, or (like the current ADR) a technical documentation practice.
 * **Immutability:** ADRs are loosely immutable. When a decision is superseded, a new ADR should be issued to replace the old. We will add a note to the old ADR's text (and maybe the filename) saying "overwritten" or "superseded."
 
-Our decision was inspired by [the way Login.gov does ADRs](https://github.com/18F/identity-devops) and [this guide to ADRs](https://github.com/joelparkerhenderson/architecture-decision-record).
+Our decision was inspired by [the way Login.gov does ADRs](https://github.com/18F/identity-devops/tree/main/doc/adr) and [Joel Henderson's guide to ADRs](https://github.com/joelparkerhenderson/architecture-decision-record).
 
 ## Consequences
 
