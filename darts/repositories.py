@@ -14,13 +14,6 @@ class DocumentsRepository:
             file = file,
             body = body
         )
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        # print(f"----> {doc}")
->>>>>>> 2faa331 (Unit tests cover much existing functionality)
-=======
->>>>>>> b92aec5 (Split tests into multiple files)
         doc.save()
 
     def clear(self):
