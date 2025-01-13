@@ -2,7 +2,7 @@ class Repository:
     def call(self, *args):
         return list(
             map(
-                lambda result : self.struct(result),
+                lambda record : self.struct(record),
                 self.relation().call(*args)
             )
         )

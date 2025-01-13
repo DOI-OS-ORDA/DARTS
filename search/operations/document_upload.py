@@ -21,6 +21,3 @@ class DocumentUpload:
 
             case False:
                 return form
-
-    def params(self):
-        pass

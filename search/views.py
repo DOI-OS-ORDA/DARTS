@@ -10,15 +10,18 @@ from .repositories.search_results import SearchResultsRepository
 def search(request):
     match request.method:
         case 'POST':
-            form = SearchForm(request.POST)
             query = request.POST.get('query')
-            results = SearchResultsRepository().call(query)
-            params = {'form': form, 'results': results, 'searched': True, 'query': query}
+            params = {
+                'form': SearchForm(request.POST),
+                'query': query,
+                'results': DocumentSearch(query).call(),
+                'searched': True,
+            }
+            return render(request, 'search.html', params)
         case 'GET':
             form = SearchForm()
             params = {'form': form}
-
-    return render(request, 'search.html', params)
+            return render(request, 'search.html', params)
 
 
 def upload(request):

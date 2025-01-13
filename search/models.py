@@ -6,6 +6,7 @@ class Document(models.Model):
     file = models.BinaryField()
     body = models.TextField()
     search_text = SearchVectorField()
+    title = models.CharField(max_length=255)
 
     # Override the method to prevent it from inserting search_text
     def _do_insert(self, manager, using, fields, update_pk, raw):

@@ -29,8 +29,8 @@ class OperationsDocumentSearchTest(TestCase, CustomAssertions):
 
     def setUp(self):
         self.search_term = "bats"
-        self.search = DocumentSearch(self.search_term).call()
-        self.basenames = list(map(lambda entry : entry['filename'].split("/")[-1], self.search.results()))
+        self.results = DocumentSearch(self.search_term).call()
+        self.basenames = list(map(lambda entry : entry.filename.split("/")[-1], self.results))
 
 
     def test_with_matching_documents_returns_matching_results(self):
