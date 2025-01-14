@@ -43,6 +43,6 @@ We have favored technologies that are open-source, widespread, and expected to b
 
 **Ruby (language) and Rails (web application framework):** We considered Ruby on Rails because it is familiar to 18F and suited to the project. However, TWSC does not have as much Ruby experience as experience in Python or .NET.
 
-For a database, considered Microsoft SQL Server because it is the legacy database used by DARTS and because TWSC has expertise in it. For document search, we considered Elasticsearch and Solr. However, we don't have a reason to believe these standalone tools would better meet ORDA's search needs than Postgres fulltext search, and would therefore not be worth the effort to learn, set up, and maintain a separate search tool and database.
+For a database, we considered Microsoft SQL Server because it is the legacy database used by DARTS and because TWSC has expertise in it. For document search, we considered Elasticsearch and Solr. However, we don't have a reason to believe these standalone tools would better meet ORDA's search needs than Postgres fulltext search, and would therefore not be worth the effort to learn, set up, and maintain a separate search tool and database.
 
 
