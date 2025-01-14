@@ -18,9 +18,9 @@ ORDA, 18F, and USGS TWSC together considered the tech stack to use at a series o
 ## Decision
 
 We will replatform DARTS on this tech stack:
-* Python
-* Django
-* PostgreSQL, including [full text search](https://www.postgresql.org/docs/current/textsearch-intro.html)
+* Language: Python
+* Web application framework: Django
+* Primary database: PostgreSQL
 
 ## Consequences
 
