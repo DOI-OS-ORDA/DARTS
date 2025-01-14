@@ -17,7 +17,12 @@ class Migration(migrations.Migration):
             preserve_default=False,
         ),
 
-        # TODO: Add run-sql operation to update titles
+        migrations.AddField(
+            model_name='document',
+            name='filename_normal',
+            field=models.CharField(default='', max_length=255),
+            preserve_default=False,
+        ),
 
         migrations.RunSQL(
             sql="""
@@ -27,7 +32,10 @@ class Migration(migrations.Migration):
                 ADD COLUMN search_text tsvector
                 GENERATED ALWAYS AS
                     (to_tsvector('english',
-                        coalesce(title, '') || ' ' || coalesce(filename, '') || ' ' || coalesce(body, '')
+                        coalesce(title, '') || ' ' ||
+                        coalesce(filename, '') || ' ' ||
+                        coalesce(filename_normal, '') || ' ' ||
+                        coalesce(body, '')
                     ))
                 STORED;
                 """,

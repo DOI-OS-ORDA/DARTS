@@ -13,11 +13,12 @@ class SearchResultsRelation(Relation):
             SELECT
               id,
               filename,
+              title,
               ts_rank_cd(search_text, query) AS rank,
               ts_headline(
                 body,
                 query,
-                $$MaxFragments=2, MaxWords=20, MinWords=10, StartSel='<span class="highlight">', StopSel='</span>'$$
+                $$MaxFragments=1, MaxWords=40, MinWords=30, StartSel='<span class="highlight">', StopSel='</span>'$$
               ) AS highlight
             FROM
                 search_document,

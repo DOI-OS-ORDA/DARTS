@@ -1,4 +1,10 @@
 <tr>
   <td>{{ doc.id }}</td>
-  <td><a href="/view_doc?doc={{ doc.filename|urlencode }}">{{ doc.filename }}</a></td>
+  <td>
+    <a href="/view_doc?doc={{ doc.filename|urlencode }}">
+      {{ doc.title }}
+    </a>
+    <br/>
+    <small>{{ doc.filename }}</small>
+  </td>
 </tr>
