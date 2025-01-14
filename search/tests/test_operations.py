@@ -5,6 +5,7 @@ from unittest.mock import Mock
 from search.operations.document_search import DocumentSearch
 from search.operations.documents_import import DocumentsImport
 from search.operations.text_conversion import TextConversion
+from search.operations.filename_normalizer import FilenameNormalizer
 
 
 class CustomAssertions:
@@ -97,23 +98,33 @@ class OperationsTextConversionTest(TestCase):
 class OperationsFilenameNormalizerTest(TestCase):
 
     def setUp(self):
-        self.subject = FilenameNormalizer
+        self.subject = FilenameNormalizer()
 
 
     def test_replaces_underscores_and_hyphens(self):
         filename = "1132_WA_Lower-Duwamish-River_RP_2013.pdf"
         expected = "1132 WA Lower Duwamish River RP 2013"
-        actual = subject.call(filename)
-        assertEqual(expected, actual)
+        actual = self.subject.call(filename)
+        self.assertEqual(expected, actual)
 
-        # filename = "10454_Army Creek_Draft_RP_Amendment_040423 Trustee final.pdf"
-        # expected = "10454 Army Creek Draft RP Amendment 04 04 23 Trustee final"
-        # actual = subject.call(filename)
 
-        # filename = "Effectsofagasolinesp_20141130 (1).docx"
-        # expected = "Effectsofagasolinesp 2014 11 30"
-        # actual = subject.call(filename)
+    def test_handles_datelike_numbers(self):
+        filename = "Effectsofagasolinesp_20141130 (1).docx"
+        expected = "Effectsofagasolinesp 2014 11 30 (1)"
+        actual = self.subject.call(filename)
+        self.assertEqual(expected, actual)
 
-        # filename = "PhaseIDamageAssessme_20090210"
-        # expected = "Phase I Damage Assessme 2009 02 10"
-        # actual = subject.call(filename)
+
+    def test_handles_camelcase(self):
+        filename = "PhaseIDamageAssessme_20090210"
+        expected = "Phase I Damage Assessme 2009 02 10"
+        actual = self.subject.call(filename)
+        self.assertEqual(expected, actual)
+
+
+    def test_handles_non_datelike_numbers(self):
+        filename = "10454_Army Creek_Draft_RP_Amendment_040423 Trustee final.pdf"
+        expected = "10454 Army Creek Draft RP Amendment 2023 04 04 Trustee final"
+        actual = self.subject.call(filename)
+        self.assertEqual(expected, actual)
+

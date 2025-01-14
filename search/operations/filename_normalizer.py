@@ -1,15 +1,39 @@
+import os
+import re
+
+from dateutil.parser import parse
+from functools import reduce
+
 class FilenameNormalizer:
 
-    @staticmethod
     def call(self, filename):
-        pass
-        # map-reduce calling all the steps on the input?
+        return reduce(
+            lambda text, step : step(text),
+            self.steps(),
+            filename
+        )
+
+
+    def split_date(self, text):
+        date_pattern = "(\\d{6,})"
+        return ''.join(list(map(
+            lambda maybeDate : parse(maybeDate).strftime('%Y %m %d') if re.match(date_pattern, maybeDate) else maybeDate,
+            re.split(date_pattern, text)
+        )))
+
+
+    def camel_case_split(self, identifier):
+        matches = re.finditer('.+?(?:(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|$)', identifier)
+        return [m.group(0) for m in matches]
 
 
     def steps(self):
-        (replace_hyphens)
+        return (
+            lambda x : os.path.splitext(x)[0],             # Get file basename
+            lambda x : re.sub('-', ' ', x),                # Replace dashes
+            lambda x : re.sub('_', ' ', x),                # Replace underscores
+            lambda x : self.split_date(x),                 # Format date
+            lambda x : ' '.join(self.camel_case_split(x)), # Split camel casing
+        )
 
 
-    def replace_hyphens(input):
-        pass
-        # Ruby: input.gsub(/-/, '')
