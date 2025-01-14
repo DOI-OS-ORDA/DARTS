@@ -28,7 +28,7 @@ The choice of a platform outside of .NET and the Microsoft ecosystem may be a ch
 
 ## Alternatives Considered
 
-During the prior phase of the project, we considered building upon the .NET platform used by the DARTS legacy system. This would have the advantage of being familiar to ORDA and TWSC. We rejected this because there is no clear path to upgrade ASP.NET Web Forms beyond the version currently in use.
+**.NET**: During the prior phase of the project, we considered building upon the .NET platform used by the DARTS legacy system. This would have the advantage of being familiar to ORDA and TWSC. We rejected this because there is no clear path to upgrade ASP.NET Web Forms beyond the version currently in use.
 
 We considered Ruby on Rails because it is familiar to 18F and suited to the project. We decided in favor of Python because TWSC has Python expertise and supports existing Python code. We considered Python Flask as a starting point, but we thought we would run into Flask's limits quickly.
 
