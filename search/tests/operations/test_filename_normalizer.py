@@ -1,4 +1,5 @@
 from django.test import TestCase
+from search.operations.filename_normalizer import FilenameNormalizer
 
 class FilenameNormalizerTest(TestCase):
 
