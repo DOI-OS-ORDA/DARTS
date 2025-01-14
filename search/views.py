@@ -29,13 +29,10 @@ def upload(request):
         case 'POST':
             form = UploadFileForm(request.POST, request.FILES)
             DocumentUpload().call(form, request)
+            return render(request, 'upload.html', {'form': form, 'count': Document.objects.count})
         case 'GET':
             form = UploadFileForm()
-
-    return render(request,
-        'upload.html',
-        {'form': form, 'count': Document.objects.count}
-    )
+            return render(request, 'upload.html', {'form': form, 'count': Document.objects.count})
 
 
 def list(request):

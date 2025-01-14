@@ -18,7 +18,7 @@ class SearchResultsRelation(Relation):
               ts_headline(
                 body,
                 query,
-                $$MaxFragments=1, MaxWords=40, MinWords=30, StartSel='<span class="highlight">', StopSel='</span>'$$
+                $$MaxFragments=0, MaxWords=40, MinWords=30, StartSel='<span class="highlight">', StopSel='</span>'$$
               ) AS highlight
             FROM
                 search_document,
