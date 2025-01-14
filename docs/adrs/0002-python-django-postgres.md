@@ -32,4 +32,6 @@ During the prior phase of the project, we considered building upon the .NET plat
 
 We considered Ruby on Rails because it is familiar to 18F and suited to the project. We decided in favor of Python because CERC has Python expertise and supports existing Python code. We considered Python Flask as a starting point, but we thought we would run into Flask's limits quickly.
 
-For a database, we considered Microsoft SQL Server because it is the legacy database used by DARTS and because USGS has expertise in it. For document search, we considered Elasticsearch and Solr. Because PostgreSQL could serve these two purposes &mdash; both a database and, via full text search, a document search engine &mdash; we decided it was the more advantageous tool.
+For a database, we considered Microsoft SQL Server because it is the legacy database used by DARTS and because CERC has expertise in it. For document search, we considered Elasticsearch and Solr. Because PostgreSQL could serve these two purposes &mdash; both a database and, via full text search, a document search engine &mdash; we decided it was the more advantageous tool.
+
+We have favored technologies that are open-source, widespread, and expected to be maintained over those that are closed, proprietary, uncommon, or approaching end-of-life.
