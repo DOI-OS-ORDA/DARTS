@@ -25,11 +25,11 @@ We will replatform DARTS on this tech stack:
 
 ### Rationale
 
-Language: We decided in favor of Python because TWSC has Python expertise and supports existing Python code.
+Language: We decided in favor of Python because TWSC has Python expertise and supports existing Python code. 18F's [guide on languages and runtimes](https://guides.18f.gov/engineering/languages-runtimes/#factors) details other factors that influenced our choice.
 
 Web framework: The most long-lived and popular Python web frameworks are Flask and Django. Flask is marketed as a simpler tool with less "included". We considered Python Flask as a starting point, but we thought we would run into Flask's limits quickly. Django is fully-featured enough that we expect it to serve as a good base throughout the life of the project.
 
-Database: PostgreSQL is a well-maintained, production-tested database that can also includes full-text search engine functionality that would allow us to use it as a document search engine. There is the possibility that we might outgrow it, but we think that starting with Postgres will allow us to deliver working software faster / cheaper / with less effort than also adding a standalone specialized search tool.
+Database: PostgreSQL is a well-maintained, production-tested database that can also includes full-text search engine functionality that would allow us to use it as a document search engine. There is the possibility that we might outgrow it, but we think that starting with Postgres will allow us to deliver working software faster / cheaper / with less effort than also adding a standalone specialized search tool. 18F's [guide to Datastore selection](https://guides.18f.gov/engineering/tools/datastore-selection/) elaborates upon the choice of PostgreSQL and full text search.
 
 ## Consequences
 
