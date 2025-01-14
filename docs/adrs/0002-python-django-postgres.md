@@ -30,7 +30,7 @@ The choice of a platform outside of .NET and the Microsoft ecosystem may be a ch
 
 **.NET**: During the prior phase of the project, we considered building upon the .NET platform used by the DARTS legacy system. This would have the advantage of being familiar to ORDA and TWSC. We rejected this because there is no clear path to upgrade ASP.NET Web Forms beyond the version currently in use.
 
-We considered Ruby on Rails because it is familiar to 18F and suited to the project. We decided in favor of Python because TWSC has Python expertise and supports existing Python code. We considered Python Flask as a starting point, but we thought we would run into Flask's limits quickly.
+**Ruby (language) and Rails (web application framework)**: We considered Ruby on Rails because it is familiar to 18F and suited to the project. However, TWSC does not have as much Ruby experience as experience in Python or .NET.
 
 For a database, we considered Microsoft SQL Server because it is the legacy database used by DARTS and because TWSC has expertise in it. For document search, we considered Elasticsearch and Solr. Because PostgreSQL could serve these two purposes &mdash; both a database and, via full text search, a document search engine &mdash; we decided it was the more advantageous tool.
 
