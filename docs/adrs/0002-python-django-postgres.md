@@ -38,6 +38,6 @@ The choice of a platform outside of .NET and the Microsoft ecosystem may be a ch
 
 **Ruby (language) and Rails (web application framework)**: We considered Ruby on Rails because it is familiar to 18F and suited to the project. However, TWSC does not have as much Ruby experience as experience in Python or .NET.
 
-For a database, we considered Microsoft SQL Server because it is the legacy database used by DARTS and because TWSC has expertise in it. For document search, we considered Elasticsearch and Solr. Because PostgreSQL could serve these two purposes &mdash; both a database and, via full text search, a document search engine &mdash; we decided it was the more advantageous tool.
+For a database, we considered Microsoft SQL Server because it is the legacy database used by DARTS and because TWSC has expertise in it. For document search, we considered Elasticsearch and Solr. However, we don't have a reason to believe these standalone tools would better meet ORDA's search needs than Postgres fulltext search, and would therefore not be worth the effort to learn, set up, and maintain a separate search tool and database.
 
 We have favored technologies that are open-source, widespread, and expected to be maintained over those that are closed, proprietary, uncommon, or approaching end-of-life.
