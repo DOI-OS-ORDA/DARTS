@@ -2,9 +2,10 @@ from django.db import models
 from django.contrib.postgres.search import SearchVectorField
 
 class Document(models.Model):
-    filename = models.CharField(max_length=255)
-    file = models.BinaryField()
     body = models.TextField()
+    file = models.BinaryField()
+    filename = models.CharField(max_length=255)
+    filename_normal = models.CharField(max_length=255)
     search_text = SearchVectorField()
     title = models.CharField(max_length=255)
 

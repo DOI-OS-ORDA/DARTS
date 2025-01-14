@@ -1,8 +1,10 @@
+import re
+
 class FilenameNormalizer:
 
     @staticmethod
-    def call(self, filename):
-        pass
+    def call(filename):
+        return re.sub('-', ' ', filename)
         # map-reduce calling all the steps on the input?
 
 
