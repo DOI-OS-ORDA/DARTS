@@ -39,7 +39,7 @@ The choice of a platform outside of .NET and the Microsoft ecosystem may be a ch
 
 We have favored technologies that are open-source, widespread, and expected to be maintained over those that are closed, proprietary, uncommon, or approaching end-of-life.
 
-**.NET:**: During the prior phase of the project, we considered building upon the .NET platform used by the DARTS legacy system. This would have the advantage of being familiar to ORDA and TWSC. We rejected this because there is no clear path to upgrade ASP.NET Web Forms beyond the version currently in use.
+**.NET:** During the prior phase of the project, we considered building upon the .NET platform used by the DARTS legacy system. This would have the advantage of being familiar to ORDA and TWSC. We rejected this because there is no clear path to upgrade ASP.NET Web Forms beyond the version currently in use.
 
 **Ruby (language) and Rails (web application framework):** We considered Ruby on Rails because it is familiar to 18F and suited to the project. However, TWSC does not have as much Ruby experience as experience in Python or .NET.
 
