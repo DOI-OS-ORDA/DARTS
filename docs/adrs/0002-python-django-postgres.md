@@ -21,7 +21,13 @@ We will replatform DARTS on this tech stack:
 * Language: Python
 * Web application framework: Django
 * Primary database: PostgreSQL
+### Rationale
 
+Language: We decided in favor of Python because TWSC has Python expertise and supports existing Python code.
+
+Web framework: The most long-lived and popular Python web frameworks are Flask and Django. Flask is marketed as a simpler tool with less "included". We considered Python Flask as a starting point, but we thought we would run into Flask's limits quickly. Django is fully-featured enough that we expect it to serve as a good base throughout the life of the project.
+
+Database: PostgreSQL is a well-maintained, production-tested database that can also includes full-text search engine functionality that would allow us to use it as a document search engine. There is the possibility that we might outgrow it, but we think that starting with Postgres will allow us to deliver working software faster / cheaper / with less effort than also adding a standalone specialized search tool.
 ## Consequences
 
 The choice of a platform outside of .NET and the Microsoft ecosystem may be a challenge for ORDA and TWSC because it is less familiar. We hope that, in the long run, this choice will reduce vendor lock-in and promote maintainability of the codebase.
