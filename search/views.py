@@ -1,3 +1,4 @@
+from django.http import FileResponse
 from django.shortcuts import render
 
 from .forms import SearchForm, UploadFileForm
@@ -27,10 +28,13 @@ def search(request):
 def upload(request):
     match request.method:
         case 'POST':
+            form = UploadFileForm(request.POST, request.FILES)
             match form.is_valid():
                 case True:
-                    form = UploadFileForm(request.POST, request.FILES)
-                    DocumentUpload().call(form, request)
+                    DocumentUpload().call(
+                        request.FILES['file'],
+                        request.POST.get('title'),
+                    )
                     # return HttpResponseRedirect('/upload/') # <-- TODO: stray line found during refactoring
                     return render(request, 'upload.html', {'form': form, 'count': Document.objects.count})
                 case False:
