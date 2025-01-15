@@ -27,9 +27,14 @@ def search(request):
 def upload(request):
     match request.method:
         case 'POST':
-            form = UploadFileForm(request.POST, request.FILES)
-            DocumentUpload().call(form, request)
-            return render(request, 'upload.html', {'form': form, 'count': Document.objects.count})
+            match form.is_valid():
+                case True:
+                    form = UploadFileForm(request.POST, request.FILES)
+                    DocumentUpload().call(form, request)
+                    # return HttpResponseRedirect('/upload/') # <-- TODO: stray line found during refactoring
+                    return render(request, 'upload.html', {'form': form, 'count': Document.objects.count})
+                case False:
+                    return form
         case 'GET':
             form = UploadFileForm()
             return render(request, 'upload.html', {'form': form, 'count': Document.objects.count})

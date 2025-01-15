@@ -1,27 +1,18 @@
 from django.http import HttpResponseRedirect
 
-from search.forms import UploadFileForm
 from search.models import Document
 from search.operations.text_conversion import TextConversion
 from search.operations.filename_normalizer import FilenameNormalizer
 
 class DocumentUpload:
-    def call(self, form, request):
-        match form.is_valid():
-            case True:
-                upload = request.FILES['file']
-                filename = upload.name
-                file_bytes = upload.read()
-                body = TextConversion.from_file_bytes(filename, file_bytes)
-                newdoc = Document(
-                  body = body,
-                  file = file_bytes,
-                  filename = filename,
-                  filename_normal = FilenameNormalizer().call(filename),
-                  title = request.POST.get('title'),
-                )
-                newdoc.save()
-                return HttpResponseRedirect('/upload/')
 
-            case False:
-                return form
+    def call(self, file, title, repo=Document):
+        filename = file.name
+        file_bytes = file.read()
+        self.repo(
+          body = TextConversion.from_file_bytes(filename, file_bytes),
+          file = file_bytes,
+          filename = filename,
+          filename_normal = FilenameNormalizer().call(filename),
+          title = title,
+        ).save()
