@@ -6,7 +6,10 @@ class DocumentUploadTest(TestCase):
 
     def setUp(self):
         self.filename = 'search/tests/fixtures/documents/Effects of a gasoline spill on hibernating bats.docx'
-        self.subject = DocumentUpload(self.file, self.title, self.repo)
+        # self.file = None
+        # self.title = None
+        # self.repo = None
+        # self.subject = DocumentUpload().call(self.file, self.title, self.repo)
 
 
     def test_when_valid_document_creates_record(self):
