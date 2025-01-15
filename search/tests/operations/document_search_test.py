@@ -44,7 +44,6 @@ class DocumentSearchTest(TestCase, CustomAssertions):
             'Preliminary Research Bats and NRDAR.docx'
         )
 
-
     # from unittest.mock import Mock
     # def test_with_no_documents_returns_no_results(self):
     #     self.fail("""

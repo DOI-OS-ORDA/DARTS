@@ -41,6 +41,7 @@ def list(request):
 
 
 def view_doc(request):
-    return DocumentView().call(request)
+    buffer, filename, mimetype = DocumentView(request.GET.get('filename')).call()
+    return FileResponse(buffer, filename=filename, content_type=mimetype)
 
 
