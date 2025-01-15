@@ -1,4 +1,3 @@
-from django.http import HttpResponseRedirect
 
 from search.models import Document
 from search.operations.text_conversion import TextConversion
