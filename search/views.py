@@ -1,4 +1,4 @@
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from .forms import SearchForm, UploadFileForm
@@ -35,8 +35,7 @@ def upload(request):
                         request.FILES['file'],
                         request.POST.get('title'),
                     )
-                    # return HttpResponseRedirect('/upload/') # <-- TODO: stray line found during refactoring
-                    return render(request, 'upload.html', {'form': form, 'count': Document.objects.count})
+                    return HttpResponseRedirect('/upload/')
                 case False:
                     return form
         case 'GET':
