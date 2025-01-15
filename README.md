@@ -35,16 +35,19 @@ Run tests with the following commands:
 
 ```sh
 # Run all tests
-docker compose run -it --remove-orphans web python3 manage.py test
+docker compose run -it --remove-orphans web coverage run --source='.' manage.py test --pattern '*_test.py'
 
 # Run only feature tests
-docker compose run -it --remove-orphans web python3 manage.py test feature_tests
+docker compose run -it --remove-orphans web coverage run --source='.' manage.py test --pattern '*_test.py' feature_tests
 
-# Run a single unit test, in this case search/tests/test_operations.py
-docker compose run -it --remove-orphans web python3 manage.py test search.tests.test_operations
+# Run a scoped-down set of unit tests, in this case search/tests/operations/*.py
+docker compose run -it --remove-orphans web coverage run --source='.' manage.py test --pattern '*_test.py' search.tests.operations
+
+# Get a test coverage report
+docker compose run -it --remove-orphans web coverage report
 ```
 
-We recommend creating a shell alias that runs `docker compose run -it --remove-orphans web python3 manage.py test`. We use `dt` to indicate `"docker...test"`.
+We recommend creating a shell alias that runs `docker compose run -it --remove-orphans web coverage run --source='.' manage.py test --pattern '*_test.py'`. We use `dt` to indicate `"docker...test"`. With that, for example, `dt feature_tests` would run the full command to run just feature tests.
 
 
 ## OUR ESSENCE
