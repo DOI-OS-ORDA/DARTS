@@ -11,11 +11,11 @@ class DocumentUpload:
             case True:
                 upload = request.FILES['file']
                 filename = upload.name
-                fileread = upload.read()
-                body = TextConversion.from_file_bytes(filename, fileread)
+                file_bytes = upload.read()
+                body = TextConversion.from_file_bytes(filename, file_bytes)
                 newdoc = Document(
                   body = body,
-                  file = fileread,
+                  file = file_bytes,
                   filename = filename,
                   filename_normal = FilenameNormalizer().call(filename),
                   title = request.POST.get('title'),
