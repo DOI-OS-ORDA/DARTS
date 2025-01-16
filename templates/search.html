@@ -3,13 +3,21 @@
 {% block title %}Search{% endblock %}
 
 {% block content %}
-<h1>Search</h1>
 
-<form action="/search/" method="post">
-  {% csrf_token %}
-  {{ form }}
-  <input type="submit" value="🔎 Search">
-</form>
+<h1>Search ORDA DARTS</h1>
+
+<section id="search" aria-label="Search ORDA DARTS">
+  <form action="/search/" method="post" class="usa-search usa-search--big" role="search">
+    <label class="usa-sr-only" for="search-field-en-big">Search</label>
+    {% csrf_token %}
+    {% for field in form %}
+      {{ field }}
+    {% endfor %}
+    <button class="usa-button" type="submit">
+      <span class="usa-search__submit-text">Search</span>
+    </button>
+  </form>
+</section>
 
 <style>
   span.highlight {
@@ -17,16 +25,27 @@
   }
 </style>
 
-{% if searched %}
-  <h2>Results</h2>
+<section id="search-results" aria-label="Search results">
+  {% if searched %}
+    <h2>Documents containing <q>{{ query }}</q></h2>
 
-  {% if results|length > 0 %}
-    {% for result in results %}
-      {% include "partials/search_result.html" with result=result %}
-    {% endfor %}
-  {% else %}
-    <p>No results for '{{ query }}'.</p>
+    {% if results|length > 0 %}
+      <div class="grid-row grid-gap">
+        <div>
+          <ul class="usa-collection">
+            {% for result in results %}
+              {% include "partials/search_result.html" with result=result %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% else %}
+      <p>No results for '{{ query }}'.</p>
+    {% endif %}
+
+    {% include "partials/pagination.html" %}
+
   {% endif %}
+</section>
 
-{% endif %}
 {% endblock content %}

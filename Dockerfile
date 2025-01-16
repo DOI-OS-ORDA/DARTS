@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y \
   build-essential \
   firefox-esr \
   libpoppler-cpp-dev \
+  nodejs \
+  npm \
   pandoc \
   pkg-config \
   poppler-utils \
