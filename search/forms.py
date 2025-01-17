@@ -25,7 +25,7 @@ class UploadFileForm(forms.Form):
     )
     public = forms.BooleanField(
         required=False,
-        label=False,
+        label='Is this a public document, or an internal document?',
         widget=forms.RadioSelect(
             choices=[
                 (True, 'This is a public document'),
