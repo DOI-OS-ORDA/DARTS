@@ -1,7 +1,7 @@
-<table width="100%">
+<table class="usa-table" width="100%">
   <tr>
-    <th>ID</th>
-    <th>Document</th>
+    <th scope="col">ID</th>
+    <th scope="col">Document</th>
   </tr>
   {% for doc in docs %}
     {% include "partials/document_row.html" with doc=doc %}

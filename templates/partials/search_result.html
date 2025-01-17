@@ -1,10 +1,30 @@
-<div class="search-result">
-  <a href="/view_doc?doc={{ result.filename|urlencode }}">
-    <strong>{{ result.title }}</strong>
-    <br/>
-    <small>{{ result.filename }}</small>
-  </a>
-  <p>
-    <q>{{ result.highlight|safe }}</q>
-  </p>
-</div>
+<li class="usa-collection__item">
+  <div class="usa-collection__body">
+    <h4 class="usa-collection__heading">
+      <a
+        class="usa-link"
+        href="/view_doc?doc={{ result.filename|urlencode }}"
+        >{{ result.title }}
+      </a>
+    </h4>
+    <p class="usa-collection__description">
+      <q>{{ result.highlight|safe }}</q>
+    </p>
+    <ul class="usa-collection__meta" aria-label="More information">
+      <li class="usa-collection__meta-item">
+        <strong>Date finalized:</strong> <time datetime="2020-09-30T12:00:00+01:00">September 30, 2020</time>
+      </li>
+      <li class="usa-collection__meta-item">
+         <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+          <use href="/assets/uswds/img/sprite.svg#file_present"></use>
+        </svg>
+        {{ result.filename }}
+      </li>
+    </ul>
+    <!-- <ul class="usa-collection__meta" aria-label="Topics">
+      <li class="usa-collection__meta-item usa-tag">TAG</li>
+      <li class="usa-collection__meta-item usa-tag">TAG</li>
+      <li class="usa-collection__meta-item usa-tag">TAG</li>
+    </ul> -->
+  </div>
+</li>
