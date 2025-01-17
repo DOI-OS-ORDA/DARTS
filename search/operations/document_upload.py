@@ -5,7 +5,7 @@ from search.operations.filename_normalizer import FilenameNormalizer
 
 class DocumentUpload:
 
-    def call(self, file, title, repo=Document):
+    def call(self, file, title, public, repo=Document):
         filename = file.name
         file_bytes = file.read()
         repo(
@@ -14,4 +14,5 @@ class DocumentUpload:
           filename = filename,
           filename_normal = FilenameNormalizer().call(filename),
           title = title,
+          public = public,
         ).save()

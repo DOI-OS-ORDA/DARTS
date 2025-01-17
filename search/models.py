@@ -8,6 +8,7 @@ class Document(models.Model):
     filename_normal = models.CharField(max_length=255)
     search_text = SearchVectorField()
     title = models.CharField(max_length=255)
+    public = models.BooleanField(default=False)
 
     # Override the method to prevent it from inserting search_text
     def _do_insert(self, manager, using, fields, update_pk, raw):
