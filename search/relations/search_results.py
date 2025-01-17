@@ -14,6 +14,7 @@ class SearchResultsRelation(Relation):
               id,
               filename,
               title,
+              public,
               ts_rank_cd(search_text, query) AS rank,
               ts_headline(
                 body,

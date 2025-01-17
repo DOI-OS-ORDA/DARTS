@@ -1,6 +1,10 @@
 from darts.repositories import DocumentsRepository
 from search.operations.text_conversion import TextConversion
 
+import string
+import random
+import os
+
 class DocumentImport:
 
     # @inject
@@ -10,9 +14,12 @@ class DocumentImport:
         self.repository = repository
         self.text_converter = converter
 
+
     def call(self) -> None:
         self.repository.add(
-            filename = self.file_path,
+            filename = os.path.basename(self.file_path),
             file = open(self.file_path, "rb").read(),
-            body = self.text_converter.from_filepath(self.file_path)
+            body = self.text_converter.from_filepath(self.file_path),
+            title = ''.join(random.choice(string.ascii_uppercase) for _ in range(10)),
+            public = random.choice([True, False])
         )

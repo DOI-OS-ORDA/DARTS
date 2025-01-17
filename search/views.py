@@ -34,6 +34,7 @@ def upload(request):
                     DocumentUpload().call(
                         request.FILES['file'],
                         request.POST.get('title'),
+                        request.POST.get('public'),
                     )
                     return HttpResponseRedirect('/upload/')
                 case False:

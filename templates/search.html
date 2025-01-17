@@ -34,7 +34,11 @@
         <div>
           <ul class="usa-collection">
             {% for result in results %}
-              {% include "partials/search_result.html" with result=result %}
+              {% if result.public %}
+                {% include "partials/search_result.html" with result=result %}
+              {% else %}
+                {% include "partials/internal_result.html" with result=result %}
+              {% endif %}
             {% endfor %}
           </ul>
         </div>

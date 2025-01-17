@@ -3,7 +3,7 @@
     <h4 class="usa-collection__heading">
       <a
         class="usa-link"
-        href="/view_doc?doc={{ result.filename|urlencode }}"
+        href="/view_doc?filename={{ result.filename|urlencode }}"
         >{{ result.title }}
       </a>
     </h4>
@@ -18,7 +18,7 @@
          <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
           <use href="/assets/uswds/img/sprite.svg#file_present"></use>
         </svg>
-        {{ result.filename }}
+        <small><code>{{ result.filename }}</code></small>
       </li>
     </ul>
     <!-- <ul class="usa-collection__meta" aria-label="Topics">

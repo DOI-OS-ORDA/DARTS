@@ -2,6 +2,7 @@
   <tr>
     <th scope="col">ID</th>
     <th scope="col">Document</th>
+    <th scope="col">Public?</th>
   </tr>
   {% for doc in docs %}
     {% include "partials/document_row.html" with doc=doc %}

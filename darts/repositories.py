@@ -8,11 +8,13 @@ class DocumentsRepository:
     def __init__(self, schema = Document):
         self.schema = Document
 
-    def add(self, filename: str, file, body: str):
+    def add(self, filename: str, file, body: str, title: str, public: bool):
         doc = Document(
             filename = filename,
             file = file,
-            body = body
+            body = body,
+            title = title,
+            public = public,
         )
         doc.save()
 
