@@ -14,15 +14,6 @@ class SearchForm(forms.Form):
 
 class UploadFileForm(forms.Form):
     title = forms.CharField(label="Document title", max_length=255)
-    public = forms.BooleanField(
-        required=False,
-        label=False,
-        widget=forms.RadioSelect(
-            choices=[
-                (True, 'This is a public document'),
-                (False, 'This is an internal document')
-            ]
-    ))
     file = forms.FileField(
         label = "Upload a PDF or DOCX",
         widget = forms.TextInput(attrs={
@@ -32,3 +23,12 @@ class UploadFileForm(forms.Form):
             'type': 'file',
         })
     )
+    public = forms.BooleanField(
+        required=False,
+        label=False,
+        widget=forms.RadioSelect(
+            choices=[
+                (True, 'This is a public document'),
+                (False, 'This is an internal document')
+            ]
+    ))
