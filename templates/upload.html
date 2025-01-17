@@ -3,14 +3,17 @@
 {% block title %}Upload{% endblock %}
 
 {% block content %}
+
 <h1>Upload document</h1>
 <p>
   {{ count }} documents in database
 </p>
 
-<form action="/upload/" method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form }}
-  <input type="submit" value="⬆️ Upload">
-</form>
+{% include "partials/form.html" with
+    form=form
+    action="/upload/"
+    class="usa-form"
+    enctype="multipart/form-data"
+    %}
+
 {% endblock content %}
