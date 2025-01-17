@@ -1,10 +1,10 @@
 <div class="search-result">
   <a href="/view_doc?filename={{ result.filename|urlencode }}">
     <strong>{{ result.title }}</strong>
-    <br/>
-    <small>{{ result.filename }}</small>
   </a>
   <p>
     <q>{{ result.highlight|safe }}</q>
+    <br>
+    <small><code>{{ result.filename }}</code></small>
   </p>
 </div>
