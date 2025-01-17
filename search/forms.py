@@ -5,8 +5,10 @@ class SearchForm(forms.Form):
         label = False,
         max_length = 140,
         widget = forms.TextInput(attrs={
-            # TODO Remove me
-            'style': 'width: 350px',
+            'class': 'usa-input',
+            'id': 'search-field-en-big',
+            'type': 'search',
+            'name': 'search',
         })
     )
 
