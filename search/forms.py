@@ -16,7 +16,7 @@ class UploadFileForm(forms.Form):
     title = forms.CharField(label="Document title", max_length=255)
     file = forms.FileField(
         label = "Upload a PDF or DOCX",
-        widget = forms.TextInput(attrs={
+        widget = forms.FileInput(attrs={
             'class': 'usa-file-input',
             'id': 'file-input-single',
             'name': 'file-input-single',
