@@ -6,7 +6,7 @@ from search.operations.document_import import DocumentImport
 # make "repo.documents" a factory
 # def __init__(self, folder_path: str = Provide["config.documents_pattern"], repository = Provide["repo.documents"]):
 class DocumentsImport:
-    def __init__(self, folder_path: str = './darts/docs/*', repository = DocumentsRepository()):
+    def __init__(self, folder_path: str, repository = DocumentsRepository()):
         self.folder_path = folder_path
         self.repository = repository
 

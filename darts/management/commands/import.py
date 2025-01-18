@@ -6,7 +6,7 @@ class Command(BaseCommand):
     help = "Imports documents into the database, converting PDFs/Word Docs to text"
 
     def add_arguments(self, parser):
-        parser.add_argument("documents_path", nargs="?", type=str, default="darts/docs/*")
+        parser.add_argument("documents_path", nargs="?", type=str, default="test_data/docs/*")
 
     def handle(self, *args, **options):
         self.stdout.write(

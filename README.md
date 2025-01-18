@@ -22,7 +22,7 @@ Import documents with this command:
 
 ```sh
 python manage.py import
-python manage.py import "test_docs/*"
+python manage.py import "test_data/docs/*"
 ```
 
 From there, to use a Python environment, run:
