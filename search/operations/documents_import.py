@@ -1,4 +1,4 @@
-import glob, os
+import glob, os, pandas
 from darts.repositories import DocumentsRepository
 from search.operations.document_import import DocumentImport
 
@@ -15,15 +15,16 @@ class DocumentsImport:
     def call(self):
         print(f"----> [START] Starting document import...")
         filepaths = glob.glob(self.documents_dir)
+        metadata = pandas.read_csv(self.metadata_file)
         for path in filepaths:
             print(f"----> Importing {path}...")
-            metadata = self.find_metadata()
-            DocumentImport(path, metadata['title'], metadata['public'], self.repository).call()
+            md = self.find_metadata(metadata, path)
+            DocumentImport(path, md['title'], md['public'], self.repository).call()
         print(f"----> [END] Document import complete!")
 
 
     # Each filename appears to be prepended with a NRDARDocumentID, thus we match files to ids
-    def find_metadata(filepath):
-        #os.path.basename(filepath)
-        return({'title': 'A Fake Title', 'public': True})
-
+    def find_metadata(self, metadata, path):
+        docid = os.path.basename(path).split('_')[0]
+        name = metadata[metadata['NRDARDocumentID']==int(docid)]['Document Name'].iloc[0]
+        return({'title': name, 'public': True})

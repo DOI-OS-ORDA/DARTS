@@ -7,7 +7,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("documents_dir", nargs="?", type=str, default="test_data/docs/*")
-        parser.add_argument("metadata_file", nargs="?", type=str, default="test_data/docs/*")
+        parser.add_argument("metadata_file", nargs="?", type=str, default="test_data/metadata.csv")
 
     def handle(self, *args, **options):
         self.stdout.write(

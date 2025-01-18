@@ -5,3 +5,4 @@ dependency-injector==4.44.0
 selenium
 python-dateutil
 coverage
+pandas
