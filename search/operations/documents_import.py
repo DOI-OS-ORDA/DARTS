@@ -18,13 +18,27 @@ class DocumentsImport:
         metadata = pandas.read_csv(self.metadata_file)
         for path in filepaths:
             print(f"----> Importing {path}...")
-            md = self.find_metadata(metadata, path)
-            DocumentImport(path, md['title'], md['public'], self.repository).call()
+            datarow = self.has_metadata(metadata, path)
+            if datarow is False:
+                print("==== Skipping file without metadata")
+            else:
+                md = self.get_metadata(datarow)
+                DocumentImport(path, md['title'], md['public'], self.repository).call()
         print(f"----> [END] Document import complete!")
 
 
-    # Each filename appears to be prepended with a NRDARDocumentID, thus we match files to ids
-    def find_metadata(self, metadata, path):
-        docid = os.path.basename(path).split('_')[0]
-        name = metadata[metadata['NRDARDocumentID']==int(docid)]['Document Name'].iloc[0]
-        return({'title': name, 'public': True})
+    def has_metadata(self, metadata, path):
+        nrdarid = os.path.basename(path).split('_')[0]
+        if not nrdarid.isdigit(): return(False) # if filename starts with NRDARDocumentID
+        datarow = metadata[metadata['NRDARDocumentID']==int(nrdarid)] # find the metadata
+        return(False if datarow.empty else datarow)
+
+
+    def get_metadata(self, datarow):
+        return({
+            'public': datarow['PubliclyDisplayed'].iloc[0],
+            'title':  datarow['Document Name'].iloc[0],
+            'type':   datarow['Type'].iloc[0],
+            'desc':   datarow['Description'].iloc[0],
+            'date':   datarow['DocumentDt'].iloc[0],
+        })
