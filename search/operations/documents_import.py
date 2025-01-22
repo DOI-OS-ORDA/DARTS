@@ -18,14 +18,18 @@ class DocumentsImport:
         metadata = pandas.read_csv(self.metadata_file)
         for path in filepaths:
             print(f"----> Importing {path}...")
-            datarow = self.has_metadata(metadata, path)
-            if datarow is False:
-                md = self.fake_metadata()
-            else:
-                md = self.get_metadata(datarow)
+            md = self.choose_metadata(metadata, path)
             DocumentImport(path, md['title'], md['public'], self.repository).call()
         print(f"----> [END] Document import complete!")
 
+
+    def choose_metadata(self, metadata, path):
+        datarow = self.has_metadata(metadata, path)
+        if datarow is False: # lacking real metadata, fall back to randomly-generated
+            return(self.fake_metadata())
+        else:
+            return(self.get_metadata(datarow))
+    
 
     def has_metadata(self, metadata, path):
         nrdarid = os.path.basename(path).split('_')[0]
