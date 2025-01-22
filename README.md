@@ -18,16 +18,22 @@ To reach a shell within the Docker container, run
 docker compose run -it --remove-orphans web sh
 ```
 
+Migrate the database for the search app
+
+```sh
+bin/manage migrate search
+```
+
 Import documents with this command:
 
 ```sh
-python manage.py import
+bin/manage import
 ```
 
 To use a Python environment, run:
 
 ```sh
-python manage.py shell
+bin/manage shell
 ```
 
 ## Testing
