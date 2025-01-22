@@ -23,7 +23,7 @@ class SearchTest(FeatureTest):
         self.assertIn("Search", self.browser.title)
 
         # They see a search field
-        inputbox = self.browser.find_element(By.ID, "id_query")
+        inputbox = self.browser.find_element(By.NAME, "query")
         self.assertTrue(inputbox)
 
         # They search for bats
