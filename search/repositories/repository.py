@@ -1,8 +1,8 @@
 class Repository:
-    def call(self, *args):
+    def call(self, **kwargs):
         return list(
             map(
                 lambda record : self.struct(record),
-                self.relation().call(*args)
+                self.relation().call(**kwargs)
             )
         )

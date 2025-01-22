@@ -24,6 +24,6 @@ class DocumentSearch:
             region_ids = self.user.region_ids
         )
         return SearchResultsRepository().call(
-            self.query,
-            # permissions
+            query = self.query,
+            permissions = permissions
         )
