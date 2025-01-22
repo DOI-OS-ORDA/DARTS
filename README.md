@@ -36,16 +36,22 @@ Run tests with the following commands:
 
 ```sh
 # Run all tests
-docker compose run -it --remove-orphans web coverage run --source='.' manage.py test --pattern '*_test.py'
+bin/testall
 
-# Run only feature tests
-docker compose run -it --remove-orphans web coverage run --source='.' manage.py test --pattern '*_test.py' feature_tests
+# Run all Cucumber / behave features
+bin/features
+
+# Run all feature tests (this is different than the last one, believe it or not)
+bin/feature_test
+
+# Run all unit tests (with code coverage analysis)
+bin/test
 
 # Run a scoped-down set of unit tests, in this case search/tests/operations/*.py
-docker compose run -it --remove-orphans web coverage run --source='.' manage.py test --pattern '*_test.py' search.tests.operations
+bin/test search.tests.operations
 
 # Get a test coverage report
-docker compose run -it --remove-orphans web coverage report
+bin/coverage
 ```
 
 We recommend creating a shell alias that runs `docker compose run -it --remove-orphans web coverage run --source='.' manage.py test --pattern '*_test.py'`. We use `dt` to indicate `"docker...test"`. With that, for example, `dt feature_tests` would run the full command to run just feature tests.
