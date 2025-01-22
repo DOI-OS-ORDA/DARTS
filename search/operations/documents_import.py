@@ -1,4 +1,4 @@
-import glob, os, pandas
+import glob, os, pandas, random, string
 from darts.repositories import DocumentsRepository
 from search.operations.document_import import DocumentImport
 
@@ -20,10 +20,10 @@ class DocumentsImport:
             print(f"----> Importing {path}...")
             datarow = self.has_metadata(metadata, path)
             if datarow is False:
-                print("==== Skipping file without metadata")
+                md = self.fake_metadata()
             else:
                 md = self.get_metadata(datarow)
-                DocumentImport(path, md['title'], md['public'], self.repository).call()
+            DocumentImport(path, md['title'], md['public'], self.repository).call()
         print(f"----> [END] Document import complete!")
 
 
@@ -42,3 +42,14 @@ class DocumentsImport:
             'desc':   datarow['Description'].iloc[0],
             'date':   datarow['DocumentDt'].iloc[0],
         })
+
+
+    def fake_metadata(self):
+        return({
+            'public': random.choice([True, False]),
+            'title':  ''.join(random.choice(string.ascii_uppercase) for _ in range(10)),
+            'type':   'Fake',
+            'desc':   'A test file with fake metadata',
+            'date':   '1/1/1970',
+        })
+
