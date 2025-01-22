@@ -7,6 +7,7 @@ from .operations.document_search import DocumentSearch
 from .operations.document_upload import DocumentUpload
 from .operations.document_view import DocumentView
 from .repositories.search_results import SearchResultsRepository
+from .repositories.users import UsersRepository
 
 def search(request):
     match request.method:
@@ -17,13 +18,20 @@ def search(request):
                 'query': query,
                 'results': DocumentSearch(query).call(),
                 'searched': True,
+                'user_type': UsersRepository.get(request.session.get("user.type", "guest")).name
             }
             return render(request, 'search.html', params)
         case 'GET':
             form = SearchForm()
-            params = {'form': form}
+            params = {
+                'form': form,
+                'user_type': UsersRepository.get(request.session.get("user.type", "guest")).name
+            }
             return render(request, 'search.html', params)
 
+def set_user(request, **kwargs):
+    request.session.update({"user.type": kwargs.get('type')})
+    return HttpResponseRedirect('/search')
 
 def upload(request):
     match request.method:

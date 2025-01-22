@@ -7,31 +7,23 @@ from .base import FeatureTest
 class UserTypeSelectorTest(FeatureTest):
 
     def test_can_select(self):
-        pass
         # A user visits the home page
-        # self.browser.get(self.live_server_url)
+        self.browser.get(self.live_server_url)
 
-        # They see Select user type in the browser title
-        # self.assertIn("Search", self.browser.title)
+        # They see "Select user type" in the header
+        user_type_selector = self.browser.find_element(By.ID, "user_type")
+        self.assertTrue(user_type_selector)
 
-        # They see all the user types (no regions yet)
+        # They see all the user types (no cases or regions yet)
+        for usertype in ("Guest", "Staff", "Superuser", "Tech support", "Regional coordinator",):
+            self.assertTrue(self.browser.find_element(By.PARTIAL_LINK_TEXT, usertype))
 
         # They select "guest user"
+        superuser_link = self.browser.find_element(By.PARTIAL_LINK_TEXT, "Superuser")
+        superuser_link.click()
 
         # They visit the search page (redundant but want to test persistence)
+        self.browser.get(self.live_server_url)
         # They see "guest user" in the menu bar
-
-        # They see a search box
-        # inputbox = self.browser.find_element(By.ID, "id_query")
-        # self.assertTrue(inputbox)
-
-        # They search for bats
-        # inputbox.send_keys("bats")
-        # inputbox.send_keys(Keys.ENTER)
-        # time.sleep(1)
-
-        # They only see public results
-
-        # They see highlighted results containing the search term
-        # results = self.browser.find_elements(By.CLASS_NAME, "search-result")
-        # self.assertTrue(any(re.search('bats', result.text, re.I) for result in results))
+        user_type_selector = self.browser.find_element(By.ID, "user_type")
+        self.assertEqual("Superuser", user_type_selector.text)
