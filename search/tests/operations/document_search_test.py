@@ -112,4 +112,3 @@ class DocumentSearchAsSuperuserTest(TestCase):
     def test_superuser_sees_all_results(self):
         self.results = self.subject.call()
         self.assertIn(self.known_private_title, self.titles)
-
