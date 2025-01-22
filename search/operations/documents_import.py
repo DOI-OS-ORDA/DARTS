@@ -34,7 +34,7 @@ class DocumentsImport:
     def has_metadata(self, metadata, path):
         nrdarid = os.path.basename(path).split('_')[0]
         if not nrdarid.isdigit(): return(False) # if filename starts with NRDARDocumentID
-        datarow = metadata[metadata['NRDARDocumentID']==int(nrdarid)] # find the metadata
+        datarow = metadata[metadata['NRDARDocumentID']==int(nrdarid)] # find metadata by id
         return(False if datarow.empty else datarow)
 
 
