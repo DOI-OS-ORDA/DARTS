@@ -60,3 +60,31 @@ class DocumentSearchTest(TestCase, CustomAssertions):
     #     search = DocumentSearch(self.search_term).call()
     #     self.assertEqual(len(search.results()), 0)
 
+class DocumentSearchAsGuestUserTest(DocumentSearchTest):
+    def setUp(self):
+        self.search_term = "bats"
+        self.known_private_title = "private documento"
+        self.subject = DocumentSearch(
+            self.search_term,
+            user_role = "guest",
+        )
+
+    def test_guest_user_sees_only_public_results(self):
+        self.results = self.subject.call()
+        assertFalse(self.results.includes(self.known_private_title))
+
+
+class DocumentSearchAsSuperuserTest(DocumentSearchTest):
+    def setUp(self):
+        self.search_term = "bats"
+        self.known_private_title = "private documento"
+        self.subject = DocumentSearch(
+            self.search_term,
+            user_role = "superuser",
+        )
+
+    def test_superuser_sees_all_results(self):
+        self.results = self.subject.call()
+        assertTrue(self.results.includes(self.known_private_title))
+
+
