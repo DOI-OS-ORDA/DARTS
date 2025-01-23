@@ -7,12 +7,12 @@ class SearchResultsRelation(Relation):
         match perms:
             case 'hide':
                 return ("AND public = 't'", None)
-            case {'case_ids': case_ids}:
-                print(f"----> CASE IDS {case_ids}")
-                return ("AND cases.case_id IN %(ids)s", case_ids)
-            case {'region_ids': region_ids}:
-                print(f"----> REGION IDS {region_ids}")
-                return ("AND cases.region_id IN %(ids)s", region_ids)
+            # case {'case_ids': case_ids}:
+            #     print(f"----> CASE IDS {case_ids}")
+            #     return ("AND cases.case_id IN %(ids)s", case_ids)
+            # case {'region_ids': region_ids}:
+            #     print(f"----> REGION IDS {region_ids}")
+            #     return ("AND cases.region_id IN %(ids)s", region_ids)
             case 'show':
                 return ("AND (public = 'f' OR public = 't')", None)
             case _:
@@ -22,10 +22,10 @@ class SearchResultsRelation(Relation):
         match perms:
             case 'hide':
                 return 'f'
-            case {'case_ids': case_ids}:
-                return 't' # TODO with caveats
-            case {'region_ids': region_ids}:
-                return 't' # TODO with caveats
+            # case {'case_ids': case_ids}:
+            #     return 't'
+            # case {'region_ids': region_ids}:
+            #     return 't'
             case 'show':
                 return 't' # TODO with caveats
             case _:
