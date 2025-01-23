@@ -3,34 +3,8 @@ from django.db import connection
 
 class SearchResultsRelation(Relation):
 
-    def visibility_clause(self, perms):
-        match perms:
-            case 'hide':
-                return ("AND public = 't'", None)
-            # case {'case_ids': case_ids}:
-            #     print(f"----> CASE IDS {case_ids}")
-            #     return ("AND cases.case_id IN %(ids)s", case_ids)
-            # case {'region_ids': region_ids}:
-            #     print(f"----> REGION IDS {region_ids}")
-            #     return ("AND cases.region_id IN %(ids)s", region_ids)
-            case 'show':
-                return ("AND (public = 'f' OR public = 't')", None)
-            case _:
-                return ("AND public = 't'", None)
 
-    def can_see_private(self, perms):
-        match perms:
-            case 'hide':
-                return 'f'
-            # case {'case_ids': case_ids}:
-            #     return 't'
-            # case {'region_ids': region_ids}:
-            #     return 't'
-            case 'show':
-                return 't' # TODO with caveats
-            case _:
-                return 'f'
-
+    # (%s, %s, %s) case_ids.times.map { "%s" }.join(",")
 
     def call(self, **kwargs):
         options = {}
@@ -84,6 +58,18 @@ class SearchResultsRelation(Relation):
             )
         """
 
+    def visibility_clause(self, options):
+        match options['permissions']:
+            case 'hide':
+                return "WHERE public = 't'"
+            case {'case_ids': case_ids}:
+                return "WHERE public = 't' OR (public = 'f' AND case_id IN (3,4,5))"
+            case {'region_ids': region_ids}:
+                return "WHERE public = 't' OR (public = 'f' AND region_id IN (1,2,3))"
+            case 'show':
+                return "WHERE public = 't' OR public = 'f'"
+            case _:
+                return "WHERE public = 't'"
 
     def visible(self, options):
         return """
