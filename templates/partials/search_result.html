@@ -6,7 +6,7 @@
           class="usa-link"
           href="/view_doc?filename={{ result.filename|urlencode }}"
           >
-          {{ result.title }} {% if not result.public %}<mark>🔒 Internal</mark>{% endif %}
+          {{ result.title }}
         </a>
         {% if not result.public %}<mark>🔒 Internal</mark>{% endif %}
       {% else %}
