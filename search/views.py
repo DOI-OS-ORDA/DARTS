@@ -19,6 +19,7 @@ def search(request):
                 'query': query,
                 'results': DocumentSearch(query, searcher = current_user).call(),
                 'searched': True,
+                'user_types': UsersRepository.all(),
                 'user_type': current_user.name,
             }
             return render(request, 'search.html', params)
@@ -26,6 +27,7 @@ def search(request):
             form = SearchForm()
             params = {
                 'form': form,
+                'user_types': UsersRepository.all(),
                 'user_type': UsersRepository.get(request.session.get("user.type", "guest")).name
             }
             return render(request, 'search.html', params)

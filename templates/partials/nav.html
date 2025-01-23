@@ -24,31 +24,13 @@
             <span>{{ user_type }}</span>
           </button>
           <ul id="basic-nav-section-one" class="usa-nav__submenu">
-            <li class="usa-nav__submenu-item">
-              <a href="/current_user/set/guest"
-                ><span>Guest</span></a
-              >
-            </li>
-            <li class="usa-nav__submenu-item">
-              <a href="/current_user/set/staff"
-                ><span>Staff</span></a
-              >
-            </li>
-            <li class="usa-nav__submenu-item">
-              <a href="/current_user/set/superuser"
-                ><span>Superuser</span></a
-              >
-            </li>
-            <li class="usa-nav__submenu-item">
-              <a href="/current_user/set/tech-support"
-                ><span>Tech support</span></a
-              >
-            </li>
-            <li class="usa-nav__submenu-item">
-              <a href="/current_user/set/regional-coordinator"
-                ><span>Regional coordinator</span></a
-              >
-            </li>
+            {% for role in user_types %}
+              <li class="usa-nav__submenu-item">
+                <a href="/current_user/set/{{ role.slug }}"
+                  ><span>{{ role.name }}</span></a
+                >
+              </li>
+            {% endfor %}
           </ul>
         </li>
         <li class="usa-nav__primary-item">
