@@ -59,5 +59,3 @@ bin/test search.tests.operations
 # Get a test coverage report
 bin/coverage
 ```
-
-We recommend creating a shell alias that runs `docker compose run -it --remove-orphans web coverage run --source='.' manage.py test --pattern '*_test.py'`. We use `dt` to indicate `"docker...test"`. With that, for example, `dt feature_tests` would run the full command to run just feature tests.
