@@ -14,9 +14,8 @@ class UsersRepository(Repository):
             UserStruct({ 'name': "Guest user",   'slug': "guest" }),
             UserStruct({ 'name': "Superuser",    'slug': "superuser" }),
             UserStruct({ 'name': "Tech support", 'slug': "tech-support" }),
-            # TODO: Implement these roles next
-            # UserStruct({ 'name': "Staff",               'slug': "staff" }),
-            # UserStruct({ 'name': "Regional coordinator", 'slug': "regional-coordinator" }),
+            UserStruct({ 'name': "Staff",               'slug': "staff" }),
+            UserStruct({ 'name': "Regional coordinator", 'slug': "regional-coordinator" }),
         ]
 
 

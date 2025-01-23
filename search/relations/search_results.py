@@ -3,114 +3,110 @@ from django.db import connection
 
 class SearchResultsRelation(Relation):
 
-    def visibility_clause(self, perms):
-        match perms:
-            case 'hide':
-                return ("AND public = 't'", None)
-            # case {'case_ids': case_ids}:
-            #     print(f"----> CASE IDS {case_ids}")
-            #     return ("AND cases.case_id IN %(ids)s", case_ids)
-            # case {'region_ids': region_ids}:
-            #     print(f"----> REGION IDS {region_ids}")
-            #     return ("AND cases.region_id IN %(ids)s", region_ids)
-            case 'show':
-                return ("AND (public = 'f' OR public = 't')", None)
-            case _:
-                return ("AND public = 't'", None)
 
-    def can_see_private(self, perms):
-        match perms:
-            case 'hide':
-                return 'f'
-            # case {'case_ids': case_ids}:
-            #     return 't'
-            # case {'region_ids': region_ids}:
-            #     return 't'
-            case 'show':
-                return 't' # TODO with caveats
-            case _:
-                return 'f'
-
+    # (%s, %s, %s) case_ids.times.map { "%s" }.join(",")
 
     def call(self, **kwargs):
         options = {}
         allowed_keys = {'query', 'offset', 'limit', 'permissions'}
         options.update((k, v) for k, v in kwargs.items() if k in allowed_keys)
-        clause, ids = self.visibility_clause(options.get('permissions'))
-        can_see_private = self.can_see_private(options.get('permissions'))
-        sql_query = "\n".join([self.header(), clause, self.footer()])
+        sql_query = "\n".join([
+            self.returnable(options),
+            self.visible(options)
+        ])
+        print("---->")
+        print(options)
         print(sql_query)
 
         data = {
             'query': options.get('query'),
             'limit': options.get('limit', 20),
             'offset': options.get('offset', 0),
-            'ids': ids,
-            'can_see_private': can_see_private
+            # 'case_ids': options.get('permissions').get('case_ids', []),
+            # 'region_ids': options.get('permissions').get('region_ids', []),
         }
 
         with connection.cursor() as cursor:
             cursor.execute(sql_query, data)
-            return self.dictfetchall(cursor)
+            results = self.dictfetchall(cursor)
+            print(results)
+            return results
 
 
-    def header(self):
+    def returnable(self, options):
         return """
-        WITH myconstants (can_see_private) as (
-            values (%(can_see_private)s)
-        )
-        SELECT
-        (   CASE public
-            WHEN 't' THEN id
-            WHEN 'f' THEN
-              CASE can_see_private
-              WHEN 't' THEN id
-              WHEN 'f' THEN NULL
-              END
-            END
-        ) as id,
-        (   CASE public
-            WHEN 't' THEN filename
-            WHEN 'f' THEN
-              CASE can_see_private
-              WHEN 't' THEN filename
-              WHEN 'f' THEN NULL
-              END
-            END
-        ) as filename,
-        title,
-        public,
-        ts_rank_cd(search_text, query) AS rank,
-        (   CASE public
-            WHEN 't' THEN preview
-            WHEN 'f' THEN
-              CASE can_see_private
-              WHEN 't' THEN preview
-              WHEN 'f' THEN NULL
-              END
-            END
-        ) as highlight,
-        (   CASE public
-            WHEN 't' THEN 't'
-            WHEN 'f' THEN can_see_private
-            END
-        ) as visible
-        FROM
-            search_document,
-            websearch_to_tsquery(%(query)s) query,
-            ts_headline(
-                body,
-                query,
-                $$MaxFragments=0, MaxWords=40, MinWords=30, StartSel='<span class="highlight">', StopSel='</span>'$$
-            ) preview,
-            myconstants
-        WHERE query @@ search_text
+            WITH base as (
+                SELECT
+                    id,
+                    filename,
+                    title,
+                    public,
+                    ts_rank_cd(search_text, query) AS rank,
+                    preview,
+                    CAST(trunc((id / 3) + 1) AS INTEGER) as case_id,
+                    CAST(trunc((id / 4) + 1) AS INTEGER) as region_id
+                FROM
+                    search_document,
+                    websearch_to_tsquery(%(query)s) query,
+                    ts_headline(
+                      body,
+                      query,
+                      $$MaxFragments=0, MaxWords=40, MinWords=30, StartSel='<span class="highlight">', StopSel='</span>'$$
+                    ) preview
+                WHERE query @@ search_text
+                ORDER BY rank DESC
+                LIMIT %(limit)s
+                OFFSET %(offset)s
+            )
         """
 
+    def visibility_clause(self, options):
+        match options['permissions']:
+            case 'hide':
+                return "WHERE public = 't'"
+            case {'case_ids': case_ids}:
+                return "WHERE public = 't' OR (public = 'f' AND case_id IN (3,4,5))"
+            case {'region_ids': region_ids}:
+                return "WHERE public = 't' OR (public = 'f' AND region_id IN (1,2,3))"
+            case 'show':
+                return "WHERE public = 't' OR public = 'f'"
+            case _:
+                return "WHERE public = 't'"
 
-    def footer(self):
-        return """
-        ORDER BY rank DESC
-        LIMIT %(limit)s
-        OFFSET %(offset)s;
+
+    def visibility_clause_2(self, options):
+        base = """
+            UNION ALL
+            SELECT
+              NULL as id,
+              case_id,
+              region_id,
+              public,
+              FALSE as visible,
+              title,
+              NULL as preview,
+              rank
+            from base
         """
+        match options['permissions']:
+            case {'case_ids': case_ids}:
+                return base + "WHERE (public = 'f' AND case_id NOT IN (3,4,5))"
+            case {'region_ids': region_ids}:
+                return base + "WHERE (public = 'f' AND region_id NOT IN (1,2,3))"
+            case _:
+                return ""
+
+    def visible(self, options):
+        return """
+            (
+                SELECT
+                  id,
+                  case_id,
+                  region_id,
+                  public,
+                  TRUE as visible,
+                  title,
+                  preview,
+                  rank
+                from base
+        """ + self.visibility_clause(options) + self.visibility_clause_2(options) + ") ORDER BY rank DESC"

@@ -16,7 +16,7 @@
     </h4>
     <p class="usa-collection__description">
       {% if result.visible %}
-        <q>{{ result.highlight|safe }}</q>
+        <q>{{ result.preview|safe }}</q>
       {% else %}
         This document contains information that matches your search, but this document is internal to the case team. For viewing permission, <a href="#">please contact the case team</a>.
       {% endif %}
@@ -34,5 +34,10 @@
       </li>
     </ul>
     {% endif %}
+    <ul class="usa-collection__meta" aria-label="Topics">
+      <li class="usa-collection__meta-item usa-tag">DOC {{ result.id }}</li>
+      <li class="usa-collection__meta-item usa-tag {% if user_type == 'Staff' %}{{ 'usa-tag--new' }}{% endif %}">CASE {{ result.case_id }}</li>
+      <li class="usa-collection__meta-item usa-tag {% if user_type == 'Regional coordinator' %}{{ 'usa-tag--new' }}{% endif %}">REGION {{ result.region_id }}</li>
+    </ul>
   </div>
 </li>
