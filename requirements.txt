@@ -7,5 +7,3 @@ python-dateutil
 coverage
 pandas
 behave
-pandas
-behave
