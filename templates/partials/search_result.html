@@ -1,25 +1,24 @@
 <li class="usa-collection__item">
   <div class="usa-collection__body">
     <h4 class="usa-collection__heading">
-      {% if result.public %}
+      {% if result.visible %}
         <a
           class="usa-link"
           href="/view_doc?filename={{ result.filename|urlencode }}"
           >
-          {{ result.title }}
+          {{ result.title }} {% if not result.public %}<mark>🔒 Internal</mark>{% endif %}
         </a>
       {% else %}
-        <mark>🔒 Internal</mark> {{ result.title }}
       {% endif %}
     </h4>
     <p class="usa-collection__description">
-      {% if result.public %}
+      {% if result.visible %}
         <q>{{ result.highlight|safe }}</q>
       {% else %}
-        This document contains information that matches your search, but this document is internal to the case team. For viewing permission, please <a href="#">contact the case team</a>.
+        This document contains information that matches your search, but this document is internal to the case team. For viewing permission, <a href="#">please contact the case team</a>.
       {% endif %}
     </p>
-    {% if result.public %}
+    {% if result.visible %}
     <ul class="usa-collection__meta" aria-label="More information">
       <li class="usa-collection__meta-item">
         <strong>Date finalized:</strong> <time datetime="2020-09-30T12:00:00+01:00">September 30, 2020</time>

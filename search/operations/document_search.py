@@ -19,9 +19,9 @@ class DocumentSearch:
 
     def call(self):
         permissions = self.engine.call(
-            self.user.role,
-            case_ids = self.user.case_ids,
-            region_ids = self.user.region_ids
+            self.user.slug,
+            case_ids = self.user.case_ids(),
+            region_ids = self.user.region_ids()
         )
         return SearchResultsRepository().call(
             query = self.query,

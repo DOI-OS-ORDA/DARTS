@@ -1,5 +1,5 @@
 from search.repositories.repository import Repository
-from search.structs.struct import Struct
+from search.structs.user import UserStruct
 
 class UsersRepository(Repository):
 
@@ -11,12 +11,13 @@ class UsersRepository(Repository):
     @classmethod
     def all(self):
         return [
-            Struct({ 'name': "Guest user",          'slug': "guest" }),
-            Struct({ 'name': "Staff",               'slug': "staff" }),
-            Struct({ 'name': "Superuser",           'slug': "superuser" }),
-            Struct({ 'name': "Tech support",        'slug': "tech-support" }),
-            Struct({ 'name': "Regional coordinator", 'slug': "regional-coordinator" }),
+            UserStruct({ 'name': "Guest user",          'slug': "guest" }),
+            UserStruct({ 'name': "Staff",               'slug': "staff" }),
+            UserStruct({ 'name': "Superuser",           'slug': "superuser" }),
+            UserStruct({ 'name': "Tech support",        'slug': "tech-support" }),
+            UserStruct({ 'name': "Regional coordinator", 'slug': "regional-coordinator" }),
         ]
+
 
     def call(self):
         pass
