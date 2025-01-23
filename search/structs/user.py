@@ -9,5 +9,3 @@ class UserStruct(Struct):
 
     def region_ids(self):
         return [3,4,5]
-
-
