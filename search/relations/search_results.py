@@ -3,9 +3,6 @@ from django.db import connection
 
 class SearchResultsRelation(Relation):
 
-
-    # (%s, %s, %s) case_ids.times.map { "%s" }.join(",")
-
     def call(self, **kwargs):
         options = {}
         allowed_keys = {'query', 'offset', 'limit', 'permissions'}
@@ -21,8 +18,6 @@ class SearchResultsRelation(Relation):
             'query': options.get('query'),
             'limit': options.get('limit', 20),
             'offset': options.get('offset', 0),
-            # 'case_ids': options.get('permissions').get('case_ids', []),
-            # 'region_ids': options.get('permissions').get('region_ids', []),
         }
 
         with connection.cursor() as cursor:
