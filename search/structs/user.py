@@ -5,9 +5,9 @@ class UserStruct(Struct):
         super().__init__(input)
 
     def case_ids(self):
-        return [3, 4, 5]
+        return [1,2,3]
 
     def region_ids(self):
-        return [1, 2, 3]
+        return [3,4,5]
 
 
