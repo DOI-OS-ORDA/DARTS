@@ -17,8 +17,7 @@ In our work replatforming DARTS, we face the question: will we run [our tech sta
 
 We will implement containerization with Docker and Docker Compose. We believe these tools' capability to hide complexity justifies their costs.
 
-* :white_check_mark: We will maintain in our [`Dockerfile`](../../Dockerfile) a current list of dependencies required for the code to run locally, on a developer's laptop, in a Docker container.
-* :white_check_mark: We will maintain in our [`docker-compose.yml`](../../docker-compose.yml) all of the components needed to run the entire application system locally, via `docker compose up`.
+* :white_check_mark: We will maintain in our [`Dockerfile`](../../Dockerfile) and [`docker-compose.yml`](../../docker-compose.yml) current components and dependencies required for the code to run locally, via `docker compose up`.
 * :x: We discourage including in the `Dockerfile` tools that aren't needed for running or testing the application, such as tools only needed for asset compilation.
 
 ## Consequences
