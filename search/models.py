@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.contrib.postgres.search import SearchVectorField
 
 class Region(models.Model):
@@ -53,3 +54,36 @@ class Document(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Person(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    first_name = models.CharField(null=True)
+    last_name = models.CharField(null=True)
+
+    GUEST = "guest"
+    SUPERUSER = "superuser"
+    TECH = "tech"
+    STAFF = "staff"
+    REGIONAL = "regional"
+    ROLES = {
+        GUEST:     "Guest user",
+        SUPERUSER: "Superuser",
+        TECH:      "Tech support",
+        STAFF:     "Staff",
+        REGIONAL:  "Regional coordinator",
+    }
+    role = models.CharField(max_length=9, choices=ROLES)
+
+    # has_and_belongs_to_many :cases
+    cases = models.ManyToManyField(Case, blank=True)
+
+    # belongs_to :region
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
+
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
+    def __str__(self):
+        return self.full_name()
