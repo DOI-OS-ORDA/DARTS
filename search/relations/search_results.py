@@ -116,6 +116,7 @@ class SearchResultsRelation(Relation):
               public,
               FALSE as visible,
               title,
+              NULL as filename,
               NULL as preview,
               rank
             from base
