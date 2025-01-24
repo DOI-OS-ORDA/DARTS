@@ -63,9 +63,13 @@ class SearchResultsRelation(Relation):
             case 'hide':
                 return "WHERE public = 't'"
             case {'case_ids': case_ids}:
-                return "WHERE public = 't' OR (public = 'f' AND case_id IN (3,4,5))"
+                ids = tuple(case_ids)
+                replaceable = ",".join(["%d"] * len(ids))
+                return f"WHERE public = 't' OR (public = 'f' AND case_id IN ({replaceable}))" % ids
             case {'region_ids': region_ids}:
-                return "WHERE public = 't' OR (public = 'f' AND region_id IN (1,2,3))"
+                ids = tuple(region_ids)
+                replaceable = ",".join(["%d"] * len(ids))
+                return f"WHERE public = 't' OR (public = 'f' AND region_id IN ({replaceable}))" % ids
             case 'show':
                 return "WHERE public = 't' OR public = 'f'"
             case _:
