@@ -18,6 +18,7 @@ In our work replatforming DARTS, we face the question: will we run [our tech sta
 We will implement containerization with Docker and Docker Compose. We believe these tools' capability to hide complexity justifies their costs.
 
 * :white_check_mark: We will maintain in our [`Dockerfile`](../../Dockerfile) and [`docker-compose.yml`](../../docker-compose.yml) current components and dependencies required for the code to run locally, via `docker compose up`.
+* :white_check_mark: We will provide scripts in `bin/` that simplify commonly-used long Docker Compose commands.
 * :x: We discourage including in the `Dockerfile` tools that aren't needed for running or testing the application, such as tools only needed for asset compilation.
 
 ## Consequences
@@ -25,7 +26,7 @@ We will implement containerization with Docker and Docker Compose. We believe th
 * Developers can run the DARTS app from a Docker container. This is not required, but provided for consistency and convenience.
 * Containerization will smooth over some complexity of setting up a local development environment.
 * The development process is now dependent (at least loosely) on Docker, Docker Compose, and Docker Desktop, including its license agreement and cost.
-* Running commands within the application (Python REPL, etc.) requires going through Docker, though we have partially mitigated this complexity by providing `bin/` scripts that simplify commonly-used long Docker Compose commands.
+* Running commands within the application (Python REPL, etc.) requires going through Docker. This incurs extra steps at the command line or the maintance of `bin/` scripts to simplify commands.
 
 ## Alternatives Considered
 
