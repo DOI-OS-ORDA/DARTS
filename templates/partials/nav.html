@@ -14,6 +14,26 @@
       </button>
       <ul class="usa-nav__primary usa-accordion">
         <li class="usa-nav__primary-item">
+          <button
+            type="button"
+            class="usa-accordion__button usa-nav__link usa-current"
+            aria-expanded="false"
+            aria-controls="basic-nav-section-one"
+            id="user_type"
+          >
+            <span>{{ user_type }}</span>
+          </button>
+          <ul id="basic-nav-section-one" class="usa-nav__submenu">
+            {% for role in user_types %}
+              <li class="usa-nav__submenu-item">
+                <a href="/current_user/set/{{ role.slug }}"
+                  ><span>{{ role.name }}</span></a
+                >
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+        <li class="usa-nav__primary-item">
           <a href="/search" class="usa-nav-link">
             <span>Search</span>
           </a>

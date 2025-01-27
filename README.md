@@ -18,16 +18,22 @@ To reach a shell within the Docker container, run
 docker compose run -it --remove-orphans web sh
 ```
 
+Migrate the database for the search app
+
+```sh
+bin/manage migrate search
+```
+
 Import documents with this command:
 
 ```sh
-python manage.py import
+bin/manage import
 ```
 
 To use a Python environment, run:
 
 ```sh
-python manage.py shell
+bin/manage shell
 ```
 
 ## Testing
@@ -36,16 +42,20 @@ Run tests with the following commands:
 
 ```sh
 # Run all tests
-docker compose run -it --remove-orphans web coverage run --source='.' manage.py test --pattern '*_test.py'
+bin/testall
 
-# Run only feature tests
-docker compose run -it --remove-orphans web coverage run --source='.' manage.py test --pattern '*_test.py' feature_tests
+# Run all Cucumber / behave features
+bin/features
+
+# Run all feature tests (this is different than the last one, believe it or not)
+bin/feature_test
+
+# Run all unit tests (with code coverage analysis)
+bin/test
 
 # Run a scoped-down set of unit tests, in this case search/tests/operations/*.py
-docker compose run -it --remove-orphans web coverage run --source='.' manage.py test --pattern '*_test.py' search.tests.operations
+bin/test search.tests.operations
 
 # Get a test coverage report
-docker compose run -it --remove-orphans web coverage report
+bin/coverage
 ```
-
-We recommend creating a shell alias that runs `docker compose run -it --remove-orphans web coverage run --source='.' manage.py test --pattern '*_test.py'`. We use `dt` to indicate `"docker...test"`. With that, for example, `dt feature_tests` would run the full command to run just feature tests.
