@@ -3,16 +3,15 @@ from django.db import connection
 
 class SearchResultsRelation(Relation):
 
-
-    # (%s, %s, %s) case_ids.times.map { "%s" }.join(",")
-
     def call(self, **kwargs):
         options = {}
         allowed_keys = {'query', 'offset', 'limit', 'permissions'}
         options.update((k, v) for k, v in kwargs.items() if k in allowed_keys)
         sql_query = "\n".join([
             self.returnable(options),
-            self.visible(options)
+            self.visible(options),
+            self.unpreviewable(options),
+            self.sort(options)
         ])
 
         data = {
@@ -56,6 +55,24 @@ class SearchResultsRelation(Relation):
             )
         """
 
+
+    def visible(self, options):
+        return """
+            (
+                SELECT
+                  id,
+                  filename,
+                  case_id,
+                  region_id,
+                  public,
+                  TRUE as visible,
+                  title,
+                  preview,
+                  rank
+                from base
+        """ + self.visibility_clause(options)
+
+
     def visibility_clause(self, options):
         match options['permissions']:
             case 'hide':
@@ -74,7 +91,7 @@ class SearchResultsRelation(Relation):
                 return "WHERE public"
 
 
-    def visibility_clause_2(self, options):
+    def unpreviewable(self, options):
         base = """
             UNION ALL
             SELECT
@@ -101,18 +118,6 @@ class SearchResultsRelation(Relation):
             case _:
                 return ""
 
-    def visible(self, options):
-        return """
-            (
-                SELECT
-                  id,
-                  filename,
-                  case_id,
-                  region_id,
-                  public,
-                  TRUE as visible,
-                  title,
-                  preview,
-                  rank
-                from base
-        """ + self.visibility_clause(options) + self.visibility_clause_2(options) + ") ORDER BY rank DESC"
+
+    def sort(self, options):
+        return ") ORDER BY rank DESC"
