@@ -1,6 +1,8 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.postgres.search import SearchVectorField
+from django.template.defaultfilters import slugify
 
 class Region(models.Model):
     name = models.TextField()
@@ -29,6 +31,8 @@ class Document(models.Model):
     filename_normal = models.CharField(max_length=255)
     search_text = SearchVectorField()
     title = models.CharField(max_length=255)
+    # slug should be null=False, unique=True, default=slugify(self.title) but can't figure out how to do that.
+    slug = models.SlugField(max_length=255, null=True)
     public = models.BooleanField(default=False)
 
     # belongs_to :case
@@ -38,6 +42,11 @@ class Document(models.Model):
     def region(self):
         if self.case:
             return self.case.region
+
+    def save(self, *args, **kwargs):  # new
+        if self.title:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
 
     # Override insert and update methods to prevent inserting/updating search_text directly
     def _do_insert(self, manager, using, fields, update_pk, raw):
@@ -54,6 +63,9 @@ class Document(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("document", kwargs={ "id": str(self.id), "slug": str(self.slug) })
 
 
 class Person(models.Model):

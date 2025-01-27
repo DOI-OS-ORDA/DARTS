@@ -60,8 +60,8 @@ def list(request):
     return render(request, 'list.html', {'docs': docs})
 
 
-def view_doc(request):
-    buffer, filename, mimetype = DocumentView(request.GET.get('filename')).call()
+def view_doc(request, id, slug=None):
+    buffer, filename, mimetype = DocumentView(id).call()
     return FileResponse(buffer, filename=filename, content_type=mimetype)
 
 
