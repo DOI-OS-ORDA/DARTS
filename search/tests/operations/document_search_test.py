@@ -2,6 +2,7 @@ from django.test import TestCase
 
 from search.operations.document_search import DocumentSearch
 from search.operations.documents_import import DocumentsImport
+from search.repositories.users import UsersRepository
 
 class CustomAssertions:
     def assertInOrder(self, array: list, earlyElement, laterElement):
@@ -66,7 +67,7 @@ class DocumentSearchAsGuestUserTest(TestCase):
         self.known_private_title = "private documento"
         self.subject = DocumentSearch(
             self.search_term,
-            searcher = None, # TODO Fill in
+            searcher = UsersRepository.get("guest")
         )
 
     def test_guest_user_sees_only_public_results(self):
@@ -80,7 +81,7 @@ class DocumentSearchAsSuperuserTest(TestCase):
         self.known_private_title = "private documento"
         self.subject = DocumentSearch(
             self.search_term,
-            searcher = None, # TODO Fill in
+            searcher = UsersRepository.get("superuser"),
         )
 
     def test_superuser_sees_all_results(self):
