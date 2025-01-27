@@ -2,11 +2,11 @@ import re
 import time
 import unittest
 
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 
-class FeatureTest(LiveServerTestCase):
+class FeatureTest(StaticLiveServerTestCase):
 
     def setUp(self):
         options = Options()
