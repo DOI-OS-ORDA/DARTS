@@ -1,10 +1,10 @@
 from search.repositories.search_results import SearchResultsRepository
 from search.operations.document_visibility_engine import DocumentVisibilityEngine
-from search.structs.user import UserStruct
+from search.repositories.users import UsersRepository
 
 class DocumentSearch:
 
-    default_searcher = UserStruct({ 'name': "Guest user", 'slug': "guest" }),
+    default_searcher = UsersRepository.get("guest")
 
     def __init__(
             self,

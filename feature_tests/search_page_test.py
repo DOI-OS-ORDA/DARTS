@@ -13,7 +13,8 @@ class SearchTest(FeatureTest):
     def setUp(self):
         super().setUp()
         documents_folder = "search/tests/fixtures/documents/*"
-        DocumentsImport(documents_folder).call()
+        documents_metadata = "search/tests/fixtures/metadata.csv"
+        DocumentsImport(documents_folder, documents_metadata).call()
 
     def test_can_search(self):
         # A user visits the search page
@@ -32,7 +33,7 @@ class SearchTest(FeatureTest):
         time.sleep(1)
 
         # They see highlighted results containing the search term
-        results = self.browser.find_elements(By.CLASS_NAME, "search-result")
+        results = self.browser.find_elements(By.CLASS_NAME, "usa-collection__description")
         self.assertTrue(any(re.search('bats', result.text, re.I) for result in results))
 
         # They search for outside of Kentucky

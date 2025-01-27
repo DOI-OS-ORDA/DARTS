@@ -29,7 +29,7 @@ class DocumentsImport:
             return(self.fake_metadata())
         else:
             return(self.get_metadata(datarow))
-    
+
 
     def has_metadata(self, metadata, path):
         nrdarid = os.path.basename(path).split('_')[0]
@@ -42,9 +42,6 @@ class DocumentsImport:
         return({
             'public': datarow['PubliclyDisplayed'].iloc[0],
             'title':  datarow['Document Name'].iloc[0],
-            'type':   datarow['Type'].iloc[0],
-            'desc':   datarow['Description'].iloc[0],
-            'date':   datarow['DocumentDt'].iloc[0],
         })
 
 
@@ -52,8 +49,5 @@ class DocumentsImport:
         return({
             'public': random.choice([True, False]),
             'title':  ''.join(random.choice(string.ascii_uppercase) for _ in range(10)),
-            'type':   'Fake',
-            'desc':   'A test file with fake metadata',
-            'date':   '1/1/1970',
         })
 

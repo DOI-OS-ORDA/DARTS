@@ -16,7 +16,8 @@ class DocumentSearchTest(TestCase, CustomAssertions):
 
     def setUpClass():
         documents_folder = "search/tests/fixtures/documents/*"
-        DocumentsImport(documents_folder).call()
+        documents_metadata = "search/tests/fixtures/metadata.csv"
+        DocumentsImport(documents_folder, documents_metadata).call()
 
 
     def tearDownClass():
@@ -31,18 +32,18 @@ class DocumentSearchTest(TestCase, CustomAssertions):
 
 
     def test_with_matching_documents_returns_matching_results(self):
-        self.assertIn('Effects of a gasoline spill on hibernating bats.docx', self.basenames)
+        self.assertIn('3_Effects of a gasoline spill on hibernating bats.docx', self.basenames)
 
 
     def test_with_matching_documents_does_not_return_incorrect_results(self):
-        self.assertNotIn('10163_Final RPEA Burgess 01 20 05.pdf', self.basenames)
+        self.assertNotIn('1_Final RPEA Burgess 01 20 05.pdf', self.basenames)
 
 
     def test_with_matching_documents_ranks_matches_appropriately(self):
         self.assertInOrder(
             self.basenames,
-            'Effects of a gasoline spill on hibernating bats.docx',
-            'Preliminary Research Bats and NRDAR.docx'
+            '3_Effects of a gasoline spill on hibernating bats.docx',
+            '4_Preliminary Research Bats and NRDAR.docx'
         )
 
     # from unittest.mock import Mock
@@ -62,29 +63,53 @@ class DocumentSearchTest(TestCase, CustomAssertions):
     #     self.assertEqual(len(search.results()), 0)
 
 class DocumentSearchAsGuestUserTest(TestCase):
+
+    def setUpClass():
+        documents_folder = "search/tests/fixtures/documents/*"
+        documents_metadata = "search/tests/fixtures/metadata.csv"
+        DocumentsImport(documents_folder, documents_metadata).call()
+
+
+    def tearDownClass():
+        # TODO: remove documents from the test database
+        pass
+
     def setUp(self):
         self.search_term = "bats"
-        self.known_private_title = "private documento"
+        self.known_private_title = "Restoration Plan Burgess Bats"
         self.subject = DocumentSearch(
             self.search_term,
             searcher = UsersRepository.get("guest")
         )
+        self.results = self.subject.call()
+        self.titles = list(map(lambda entry : entry.title, self.results))
 
     def test_guest_user_sees_only_public_results(self):
-        self.results = self.subject.call()
-        self.assertNotIn(self.known_private_title, self.results)
+        self.assertNotIn(self.known_private_title, self.titles)
 
 
 class DocumentSearchAsSuperuserTest(TestCase):
+    def setUpClass():
+        documents_folder = "search/tests/fixtures/documents/*"
+        documents_metadata = "search/tests/fixtures/metadata.csv"
+        DocumentsImport(documents_folder, documents_metadata).call()
+
+
+    def tearDownClass():
+        # TODO: remove documents from the test database
+        pass
+
     def setUp(self):
         self.search_term = "bats"
-        self.known_private_title = "private documento"
+        self.known_private_title = "Restoration Plan Burgess Bats"
         self.subject = DocumentSearch(
             self.search_term,
             searcher = UsersRepository.get("superuser"),
         )
+        self.results = self.subject.call()
+        self.titles = list(map(lambda entry : entry.title, self.results))
 
     def test_superuser_sees_all_results(self):
         self.results = self.subject.call()
-        self.assertIn(self.known_private_title, self.results)
+        self.assertIn(self.known_private_title, self.titles)
 
