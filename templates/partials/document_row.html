@@ -1,7 +1,7 @@
 <tr>
   <td>{{ doc.id }}</td>
   <td>
-    <a href="/view_doc?filename={{ doc.filename|urlencode }}">
+    <a class="usa-link" href="{{ doc.get_absolute_url }}" target="_blank">
       {{ doc.title }}
     </a>
     <br/>

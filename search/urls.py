@@ -6,6 +6,7 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('upload/', views.upload, name='upload'),
     path('list/', views.list, name='list'),
-    path('view_doc/', views.view_doc, name='view_doc'),
+    path('documents/<int:id>/', views.view_doc, name='document'),
+    path('documents/<int:id>/<slug:slug>/', views.view_doc, name='document'),
     path('current_user/set/<slug:type>', views.set_user, name='set_user'),
 ]

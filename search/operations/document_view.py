@@ -5,14 +5,14 @@ from search.models import Document
 
 class DocumentView:
 
-    def __init__(self, filename, repo=Document):
-        self.filename = filename
+    def __init__(self, id, repo=Document):
+        self.id = id
         self.repository = repo
 
 
     def call(self):
-        document = self.repository.objects.get(filename = self.filename)
+        document = self.repository.objects.get(pk = self.id)
         buffer = io.BytesIO(document.file)
         buffer.seek(0)
         mimetype = mimetypes.guess_type(document.filename)[0]
-        return [buffer, self.filename, mimetype]
+        return [buffer, document.filename, mimetype]

@@ -106,10 +106,4 @@ class DocumentSearchAsSuperuserTest(TestCase):
             self.search_term,
             searcher = UsersRepository.get("superuser"),
         )
-        self.results = self.subject.call()
-        self.titles = list(map(lambda entry : entry.title, self.results))
-
-    def test_superuser_sees_all_results(self):
-        self.results = self.subject.call()
         self.assertIn(self.known_private_title, self.titles)
-

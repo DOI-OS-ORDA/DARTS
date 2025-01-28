@@ -4,7 +4,7 @@
       {% if result.visible %}
         <a
           class="usa-link"
-          href="/view_doc?filename={{ result.filename|urlencode }}"
+          href="{{ result.get_absolute_url }}"
           >
           {{ result.title }}
         </a>

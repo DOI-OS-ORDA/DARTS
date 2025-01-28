@@ -18,8 +18,6 @@ class SearchResultsRelation(Relation):
             'query': options.get('query'),
             'limit': options.get('limit', 20),
             'offset': options.get('offset', 0),
-            # 'case_ids': options.get('permissions').get('case_ids', []),
-            # 'region_ids': options.get('permissions').get('region_ids', []),
         }
 
         with connection.cursor() as cursor:
@@ -34,6 +32,7 @@ class SearchResultsRelation(Relation):
                 SELECT
                     id,
                     filename,
+                    slug,
                     title,
                     public,
                     ts_rank_cd(search_text, query) AS rank,
@@ -55,13 +54,13 @@ class SearchResultsRelation(Relation):
             )
         """
 
-
     def visible(self, options):
         return """
             (
                 SELECT
                   id,
                   filename,
+                  slug,
                   case_id,
                   region_id,
                   public,
@@ -96,7 +95,8 @@ class SearchResultsRelation(Relation):
             UNION ALL
             SELECT
               NULL as id,
-              filename,
+              NULL as filename,
+              NULL as slug,
               case_id,
               region_id,
               public,
