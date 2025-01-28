@@ -53,23 +53,6 @@ class SearchResultsRelation(Relation):
             )
         """
 
-    def visibility_clause(self, options):
-        match options['permissions']:
-            case 'hide':
-                return "WHERE public = 't'"
-            case {'case_ids': case_ids}:
-                ids = tuple(case_ids)
-                replaceable = ",".join(["%d"] * len(ids))
-                return f"WHERE public = 't' OR (public = 'f' AND case_id IN ({replaceable}))" % ids
-            case {'region_ids': region_ids}:
-                ids = tuple(region_ids)
-                replaceable = ",".join(["%d"] * len(ids))
-                return f"WHERE public = 't' OR (public = 'f' AND region_id IN ({replaceable}))" % ids
-            case 'show':
-                return "WHERE public = 't' OR public = 'f'"
-            case _:
-                return "WHERE public = 't'"
-
     def visible(self, options):
         return """
             (

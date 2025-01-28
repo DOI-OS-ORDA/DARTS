@@ -105,5 +105,5 @@ class DocumentSearchAsSuperuserTest(TestCase):
         self.subject = DocumentSearch(
             self.search_term,
             searcher = UsersRepository.get("superuser"),
-            searcher = None, # TODO Fill in
+        )
         self.assertIn(self.known_private_title, self.titles)

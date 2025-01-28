@@ -1,5 +1,5 @@
 from django.http import FileResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .forms import SearchForm, UploadFileForm
 from .models import Document
@@ -61,6 +61,10 @@ def list(request):
 
 
 def view_doc(request, id, slug=None):
+    if slug == None:
+        doc = Document.objects.get(pk=id)
+        return redirect('document', id, doc.slug)
+
     buffer, filename, mimetype = DocumentView(id).call()
     return FileResponse(buffer, filename=filename, content_type=mimetype)
 
