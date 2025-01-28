@@ -1,5 +1,6 @@
 from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.views import View
 
 from .forms import SearchForm, UploadFileForm
 from .models import Document
@@ -9,28 +10,27 @@ from .operations.document_view import DocumentView
 from .repositories.search_results import SearchResultsRepository
 from .repositories.users import UsersRepository
 
-def search(request):
-    match request.method:
-        case 'POST':
-            query = request.POST.get('query')
-            current_user = UsersRepository.get(request.session.get("user.type", "guest"))
-            params = {
-                'form': SearchForm(request.POST),
-                'query': query,
-                'results': DocumentSearch(query, searcher = current_user).call(),
-                'searched': True,
-                'user_types': UsersRepository.all(),
-                'user_type': current_user.name,
-            }
-            return render(request, 'search.html', params)
-        case 'GET':
-            form = SearchForm()
-            params = {
-                'form': form,
-                'user_types': UsersRepository.all(),
-                'user_type': UsersRepository.get(request.session.get("user.type", "guest")).name
-            }
-            return render(request, 'search.html', params)
+class Search(View):
+    def post(self, request):
+        query = request.POST.get('query')
+        current_user = UsersRepository.get(request.session.get("user.type", "guest"))
+        context = {
+            'form': SearchForm(request.POST),
+            'query': query,
+            'results': DocumentSearch(query, searcher = current_user).call(),
+            'searched': True,
+            'user_types': UsersRepository.all(),
+            'current_user': current_user,
+        }
+        return render(request, 'search.html', context)
+
+    def get(self, request):
+        context = {
+            'form': SearchForm(),
+            'user_types': UsersRepository.all(),
+            'current_user': UsersRepository.get(request.session.get("user.type", "guest")),
+        }
+        return render(request, 'search.html', context)
 
 def set_user(request, **kwargs):
     request.session.update({"user.type": kwargs.get('type')})

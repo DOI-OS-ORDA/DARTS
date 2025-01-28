@@ -21,7 +21,7 @@
             aria-controls="basic-nav-section-one"
             id="user_type"
           >
-            <span>{{ user_type }}</span>
+            <span>{{ current_user.name }}</span>
           </button>
           <ul id="basic-nav-section-one" class="usa-nav__submenu">
             {% for role in user_types %}
