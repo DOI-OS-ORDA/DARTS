@@ -32,6 +32,7 @@ class SearchResultsRelation(Relation):
                 SELECT
                     id,
                     filename,
+                    slug,
                     title,
                     public,
                     ts_rank_cd(search_text, query) AS rank,
@@ -59,6 +60,7 @@ class SearchResultsRelation(Relation):
                 SELECT
                   id,
                   filename,
+                  slug,
                   case_id,
                   region_id,
                   public,
@@ -93,13 +95,13 @@ class SearchResultsRelation(Relation):
             UNION ALL
             SELECT
               NULL as id,
-              filename,
+              NULL as filename,
+              NULL as slug,
               case_id,
               region_id,
               public,
               FALSE as visible,
               title,
-              NULL as filename,
               NULL as preview,
               rank
             from base
