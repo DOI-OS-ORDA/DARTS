@@ -24,7 +24,10 @@ def search(request):
                 'user_types': UsersRepository.all(),
                 'user_type': current_user.name,
             }
-            return render(request, 'search.html', params)
+            if request.content_type == 'text/csv':
+                return(HttpResponse("CSV,test,data"))
+            else:
+                return render(request, 'search.html', params)
         case 'GET':
             form = SearchForm()
             params = {
