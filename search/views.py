@@ -1,5 +1,7 @@
 from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+import csv
+from django.http import HttpResponse
 
 from .forms import SearchForm, UploadFileForm
 from .models import Document
@@ -69,3 +71,11 @@ def view_doc(request, id, slug=None):
     return FileResponse(buffer, filename=filename, content_type=mimetype)
 
 
+def csv(request):
+    response = HttpResponse(
+        "CSV,test,data",
+        content_type="text/csv",
+        headers={"Content-Disposition": 'attachment; filename="DARTS.csv"'},
+    )
+
+    return response
