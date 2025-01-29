@@ -30,24 +30,27 @@ class SearchResultsRelation(Relation):
         return """
             WITH base as (
                 SELECT
-                    id,
-                    filename,
-                    slug,
-                    title,
-                    public,
+                    search_document.id,
+                    search_document.filename,
+                    search_document.slug,
+                    search_document.title,
+                    search_document.public,
                     ts_rank_cd(search_text, query) AS rank,
                     preview,
-                    CAST(trunc((id / 3) + 1) AS INTEGER) as case_id,
-                    CAST(trunc((id / 4) + 1) AS INTEGER) as region_id
+                    search_document.case_id,
+                    search_region.id as region_id
                 FROM
-                    search_document,
+                    search_document
+                        JOIN search_case ON case_id = search_case.id
+                        JOIN search_region ON search_case.region_id = search_region.id,
                     websearch_to_tsquery(%(query)s) query,
                     ts_headline(
                       body,
                       query,
                       $$MaxFragments=0, MaxWords=40, MinWords=30, StartSel='<span class="highlight">', StopSel='</span>'$$
                     ) preview
-                WHERE query @@ search_text
+                WHERE
+                    query @@ search_text
                 ORDER BY rank DESC
                 LIMIT %(limit)s
                 OFFSET %(offset)s

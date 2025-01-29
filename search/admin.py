@@ -5,11 +5,11 @@ from search.models import Case, Document, Person, Region
 # Register your models here.
 
 class CaseAdmin(admin.ModelAdmin):
-    list_display = ["name", "region__name", "public"]
+    list_display = ["name", "region", "public"]
     ordering = ('pk',)
 
 class DocumentAdmin(admin.ModelAdmin):
-    list_display = ["title", "filename", "case__id", "public", "region",]
+    list_display = ["title", "public", "case", "region", "filename"]
     ordering = ('-pk',)
 
 class PersonAdmin(admin.ModelAdmin):
