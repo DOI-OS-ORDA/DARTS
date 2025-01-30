@@ -5,7 +5,7 @@ from django.contrib.postgres.search import SearchVectorField
 from django.template.defaultfilters import slugify
 
 class Region(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length=255)
     number = models.IntegerField()
     # has_many :cases
 
@@ -14,11 +14,49 @@ class Region(models.Model):
 
 
 class Case(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length=255)
     public = models.BooleanField(default=False)
     # has_many :documents
     # belongs_to :region
     region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
+
+    alias = models.CharField(max_length=255, null=True)
+    state = models.CharField(max_length=255, null=True)
+    location = models.CharField(max_length=255, null=True)
+    contaminants_of_concern = models.CharField(max_length=255, null=True)
+    affected_doi_resources = models.TextField(null=True)
+    incident_type = models.CharField(max_length=255, null=True)
+    status = models.CharField(max_length=255, null=True)
+    authority = models.CharField(max_length=255, null=True)
+    description = models.TextField(null=True)
+    contact = models.CharField(max_length=255, null=True)
+    trustees = models.TextField(null=True)
+    # photos
+    # map point
+
+
+    def contaminants_list(self):
+        return self.contaminants_of_concern.split(", ")
+
+
+    def contact_object(self):
+        name, address, phone, website, *rest = self.contact.split(" | ")
+        return {
+            'name': name,
+            'address': address,
+            'phone': phone,
+            'website': website,
+            'rest': rest
+        }
+
+
+    def resource_list(self):
+        return self.affected_doi_resources.split(", ")
+
+
+    def trustees_list(self):
+        return self.trustees.split(", ")
+
 
     def __str__(self):
         return self.name

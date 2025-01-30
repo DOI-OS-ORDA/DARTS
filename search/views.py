@@ -4,7 +4,7 @@ from django.views import View
 
 from .context_processors import current_user
 from .forms import SearchForm, UploadFileForm
-from .models import Document
+from .models import Document, Case
 from .operations.document_search import DocumentSearch
 from .operations.document_upload import DocumentUpload
 from .operations.document_view import DocumentView
@@ -31,7 +31,14 @@ class Search(View):
 
 def set_user(request, **kwargs):
     request.session.update({"user.id": kwargs.get('id')})
-    return HttpResponseRedirect('/search')
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+class CaseView(View):
+
+    def get(self, request, id):
+        case = Case.objects.get(pk=id)
+        return render(request, 'case.html', { 'case': case })
 
 
 class Upload(View):

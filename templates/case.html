@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ case.name }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ case.name }}</h1>
+<h3>{{ case.location }}, {{ case.state }}</h3>
+
+<section id="details" aria-label="Case details">
+  <table class="usa-table">
+    {% if case.alias %}
+      <tr>
+        <th scope="row">Also known as</th>
+        <td>{{ case.alias }}</td>
+      </tr>
+    {% endif %}
+    <tr>
+      <th scope="row">Contaminants of concern</th>
+      <td>
+        <ul>
+          {% for contaminant in case.contaminants_list %}
+            <li>{{ contaminant }}</li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Affected DOI resources</th>
+      <td>
+        <ul>
+          {% for resource in case.resource_list %}
+            <li>{{ resource }}</li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Incident type</th>
+      <td>{{ case.incident_type }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Status</th>
+      <td>{{ case.status }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Authority</th>
+      <td>{{ case.authority }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Trustees</th>
+      <td>{{ case.trustees }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Contact</th>
+      <td>
+        <strong>{{ case.contact_object.name }}</strong><br/>
+        {{ case.contact_object.address }}<br/>
+        {{ case.contact_object.phone }}<br/>
+        {{ case.contact_object.website }}
+      </td>
+    </tr>
+  </table>
+</section>
+
+<section class="usa-prose" id="description" aria-label="Case description">
+  <h2>Case description</h2>
+  <p>
+    {{ case.description }}
+  </p>
+</section>
+
+<section id="documents" aria-label="Case documents">
+  <h2>Case documents</h2>
+  {% if case.document_set.all|length > 0 %}
+    {% include "partials/document_table.html" with docs=case.document_set.all %}
+  {% else %}
+    There are no public documents to show.
+  {% endif %}
+</section>
+
+
+{% endblock content %}
