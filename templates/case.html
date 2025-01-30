@@ -65,9 +65,7 @@
 
 <section class="usa-prose" id="description" aria-label="Case description">
   <h2>Case description</h2>
-  <p>
-    {{ case.description }}
-  </p>
+  {{ case.description|linebreaks }}
 </section>
 
 <section id="documents" aria-label="Case documents">

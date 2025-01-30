@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'search.context_processors.current_user',
+                'search.context_processors.document_access_mailto',
                 'search.context_processors.user_types',
             ],
         },

@@ -1,3 +1,4 @@
+import os
 from .repositories.users import UsersRepository
 
 
@@ -7,3 +8,7 @@ def current_user(request):
 
 def user_types(request):
     return { 'selectable_users': UsersRepository.all() }
+
+
+def document_access_mailto(request):
+    return { 'document_access_mailto': os.getenv("DOCUMENT_ACCESS_MAILTO_ADDRESS", "sample@sample.gov") }
