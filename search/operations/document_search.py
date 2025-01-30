@@ -4,7 +4,7 @@ from search.repositories.users import UsersRepository
 
 class DocumentSearch:
 
-    default_searcher = UsersRepository.get("guest")
+    default_searcher = UsersRepository.first()
 
     def __init__(
             self,
@@ -19,11 +19,12 @@ class DocumentSearch:
 
     def call(self):
         permissions = self.engine.call(
-            self.user.slug,
-            case_ids = self.user.case_ids(),
-            region_ids = self.user.region_ids()
+            self.user.role,
+            case_ids = list(map(lambda case : case.id, self.user.cases.all())),
+            # WARNING: This will error if the user does not have an assigned region
+            region_ids = [self.user.region.id]
         )
-        return SearchResultsRepository().call(
+        return SearchResultsRepository().all(
             query = self.query,
             permissions = permissions
         )

@@ -88,6 +88,9 @@ class Person(models.Model):
     }
     role = models.CharField(max_length=9, choices=ROLES)
 
+    def role_name(self):
+        return self.ROLES[self.role]
+
     # has_and_belongs_to_many :cases
     cases = models.ManyToManyField(Case, blank=True)
 

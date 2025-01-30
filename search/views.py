@@ -30,7 +30,7 @@ class Search(View):
 
 
 def set_user(request, **kwargs):
-    request.session.update({"user.type": kwargs.get('type')})
+    request.session.update({"user.id": kwargs.get('id')})
     return HttpResponseRedirect('/search')
 
 

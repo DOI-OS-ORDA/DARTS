@@ -21,13 +21,13 @@
             aria-controls="basic-nav-section-one"
             id="user_type"
           >
-            <span>{{ current_user.name }}</span>
+            <span>{{ current_user.full_name }} ({{ current_user.role_name }})</span>
           </button>
           <ul id="basic-nav-section-one" class="usa-nav__submenu">
-            {% for role in user_types %}
+            {% for user in selectable_users %}
               <li class="usa-nav__submenu-item">
-                <a href="/current_user/set/{{ role.slug }}"
-                  ><span>{{ role.name }}</span></a
+                <a href="/current_user/set/{{ user.id }}"
+                  ><span>{{ user.full_name }} ({{ user.role_name }})</span></a
                 >
               </li>
             {% endfor %}

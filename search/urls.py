@@ -9,5 +9,5 @@ urlpatterns = [
     path('list/', views.list, name='list'),
     path('documents/<int:id>/', views.view_doc, name='document'),
     path('documents/<int:id>/<slug:slug>/', views.view_doc, name='document'),
-    path('current_user/set/<slug:type>', views.set_user, name='set_user'),
+    path('current_user/set/<int:id>/', views.set_user, name='set_user'),
 ]
