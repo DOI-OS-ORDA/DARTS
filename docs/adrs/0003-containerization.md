@@ -2,9 +2,8 @@
 
 Brief description
 
-* :eyes: _Status:_ Proposed
-* :ticket: _Issue:_ Link to github issue
-* :busts_in_silhouette: _Meeting:_ Link to meeting notes
+* :white_check_mark: _Status:_ Implemented
+* :busts_in_silhouette: _Meeting:_ [29 January 2025](https://docs.google.com/document/d/1hiQZG-PVklW5Y-Dk03r9kYafTTdw-Ol9wAq7H5Q2ni0/edit?tab=t.0#heading=h.8kq0024yofc5)
 
 ## Context
 
