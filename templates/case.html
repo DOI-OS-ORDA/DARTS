@@ -1,72 +1,49 @@
 {% extends "layout.html" %}
 
-{% block title %}{{ case.name }}{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+  <style>
+    #map {
+      height: 300px;
+      margin: 1.25rem 0;
+      z-index: 1;
+    }
+  </style>
+{% endblock head %}
+
+{% block title %}{{ case.name }}{% endblock title %}
 
 {% block content %}
 
 <h1>{{ case.name }}</h1>
 <h3>{{ case.location }}, {{ case.state }}</h3>
 
-<section id="details" aria-label="Case details">
-  <table class="usa-table">
-    {% if case.alias %}
-      <tr>
-        <th scope="row">Also known as</th>
-        <td>{{ case.alias }}</td>
-      </tr>
-    {% endif %}
-    <tr>
-      <th scope="row">Contaminants of concern</th>
-      <td>
-        <ul>
-          {% for contaminant in case.contaminants_list %}
-            <li>{{ contaminant }}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">Affected DOI resources</th>
-      <td>
-        <ul>
-          {% for resource in case.resource_list %}
-            <li>{{ resource }}</li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">Incident type</th>
-      <td>{{ case.incident_type }}</td>
-    </tr>
-    <tr>
-      <th scope="row">Status</th>
-      <td>{{ case.status }}</td>
-    </tr>
-    <tr>
-      <th scope="row">Authority</th>
-      <td>{{ case.authority }}</td>
-    </tr>
-    <tr>
-      <th scope="row">Trustees</th>
-      <td>{{ case.trustees }}</td>
-    </tr>
-    <tr>
-      <th scope="row">Contact</th>
-      <td>
-        <strong>{{ case.contact_object.name }}</strong><br/>
-        {{ case.contact_object.address }}<br/>
-        {{ case.contact_object.phone }}<br/>
-        {{ case.contact_object.website }}
-      </td>
-    </tr>
-  </table>
-</section>
-
-<section class="usa-prose" id="description" aria-label="Case description">
-  <h2>Case description</h2>
-  {{ case.description|linebreaks }}
-</section>
+<div class="grid-row grid-gap">
+  <div class="grid-col-7">
+    <section class="usa-prose" id="description" aria-label="Case description">
+      <!-- <h2>Case description</h2> -->
+      {{ case.description|linebreaks }}
+    </section>
+    <section id="details" aria-label="Case details">
+    {% include "partials/case/table.html" %}
+    </section>
+  </div>
+  <div class="grid-col-5">
+    <div id="map"></div>
+    <div id="photos">
+      <ul class="usa-card-group">
+        {% for photo in case.photos %}
+          {% include "partials/case/photo.html" %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
 
 <section id="documents" aria-label="Case documents">
   <h2>Case documents</h2>
@@ -76,6 +53,15 @@
     There are no public documents to show.
   {% endif %}
 </section>
+
+<script>
+  var map = L.map('map').setView({{ case.lonlat }}, {{ case.zoom }});
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+  var marker = L.marker({{ case.lonlat }}).addTo(map);
+</script>
 
 
 {% endblock content %}

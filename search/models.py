@@ -31,9 +31,25 @@ class Case(models.Model):
     description = models.TextField(null=True)
     contact = models.CharField(max_length=255, null=True)
     trustees = models.TextField(null=True)
-    # photos
-    # map point
 
+    def photos(self):
+        return [
+            {
+                'src': "https://www.cerc.usgs.gov/orda_docs/PhotoHandler.ashx?ID=149&task=displayAll",
+                'caption': "Credit: Exxon Valdez Trustee Council"
+            },
+            {
+                'src': "https://www.cerc.usgs.gov/orda_docs/PhotoHandler.ashx?ID=152&task=displayAll",
+                'caption': "Barge water tanks, workers hosing beach, Credit: Exxon Valdez Trustee Council"
+            }
+        ]
+
+
+    def lonlat(self):
+        return [60.614279,-147.0847959]
+
+    def zoom(self):
+        return 8
 
     def contaminants_list(self):
         return self.contaminants_of_concern.split(", ")
