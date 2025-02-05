@@ -1,0 +1,92 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$Lm8ainxBtg3ouiFKVXHoM9$t/yp89jNzOc1Sy27mvVwVDOrnFoLT1udbEpUttjS6LU=",
+        "last_login": "2025-01-24T16:36:26.343Z",
+        "is_superuser": true,
+        "username": "root",
+        "first_name": "",
+        "last_name": "",
+        "email": "matt.cloyd@gsa.gov",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-01-24T16:36:20.122Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$PFXbE2zVHzy4rMUvNLYyqa$IyjDiHq/Wv+eQdHIGxXt9phAk9PFkZcZqi4asV/6gVo=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "matt",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-01-24T18:14:33.365Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$2gFP2gYkztWdqXEtDS3gmA$VPyQBfOiOJrM0rlzFE8JHIxHnqaQj6g/qJEkVTGM/SI=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "chelcey",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-01-30T01:31:31.265Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$e76dvzZ8RUQpfPrOJub9lX$t7kxqRakVC7+X0f6xCMR28RB0cfCZGQXDvNzlGSb/wI=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "deb",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-01-30T01:32:04.771Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$b2eKITHbinaE22dJ2yrPRW$hQs+XKhwvj0y9aUa4u7HZlXZXRubo36HdWXR7QUfFaI=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "deanna",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-01-30T01:32:47.650Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]

@@ -18,10 +18,16 @@ To reach a shell within the Docker container, run
 docker compose run -it --remove-orphans web sh
 ```
 
-Migrate the database for the search app
+Migrate the database for the search app:
 
 ```sh
 bin/manage migrate search
+```
+
+Set up fixture data with this command:
+
+```sh
+bin/manage loaddata regions users persons cases
 ```
 
 Import documents with this command:
