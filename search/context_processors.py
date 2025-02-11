@@ -1,17 +1,9 @@
 import os
 from .repositories.users import UsersRepository
-from .structs.struct import Struct
-
-
-def resolve_current_user(request):
-    try:
-        return UsersRepository.get(request.session.get("user.id"))
-    except:
-        return Struct({ 'full_name': "Guest user", 'role_name': "guest" })
 
 
 def current_user(request):
-    return { 'current_user': resolve_current_user(request) }
+    return { 'current_user': UsersRepository.get_or_fallback(request.session.get("user.id")) }
 
 
 def user_types(request):

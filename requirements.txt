@@ -8,3 +8,4 @@ coverage
 pandas
 behave
 pyyaml
+dj-database-url

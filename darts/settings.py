@@ -79,15 +79,18 @@ WSGI_APPLICATION = 'darts.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+import json
 import os
+
+credentials = json.loads(os.environ['VCAP_SERVICES'])['aws-rds'][0]['credentials']
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['POSTGRES_NAME'],
-        'USER': os.environ['POSTGRES_USER'],
-        'PASSWORD': os.environ['POSTGRES_PASSWORD'],
-        'HOST': 'db',
+        'NAME': credentials['name'],
+        'USER': credentials['username'],
+        'PASSWORD': credentials['password'],
+        'HOST': credentials['host'],
     }
 }
 
