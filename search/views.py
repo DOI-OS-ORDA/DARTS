@@ -1,58 +1,67 @@
 from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.views import View
 
+from .context_processors import current_user
 from .forms import SearchForm, UploadFileForm
-from .models import Document
+from .models import Document, Case
 from .operations.document_search import DocumentSearch
 from .operations.document_upload import DocumentUpload
 from .operations.document_view import DocumentView
 from .repositories.search_results import SearchResultsRepository
 from .repositories.users import UsersRepository
 
-def search(request):
-    match request.method:
-        case 'POST':
-            query = request.POST.get('query')
-            current_user = UsersRepository.get(request.session.get("user.type", "guest"))
-            params = {
-                'form': SearchForm(request.POST),
-                'query': query,
-                'results': DocumentSearch(query, searcher = current_user).call(),
-                'searched': True,
-                'user_types': UsersRepository.all(),
-                'user_type': current_user.name,
-            }
-            return render(request, 'search.html', params)
-        case 'GET':
-            form = SearchForm()
-            params = {
-                'form': form,
-                'user_types': UsersRepository.all(),
-                'user_type': UsersRepository.get(request.session.get("user.type", "guest")).name
-            }
-            return render(request, 'search.html', params)
+
+class Search(View):
+
+    def post(self, request):
+        query = request.POST.get('query')
+        context = {
+            'form': SearchForm(request.POST),
+            'query': query,
+            'results': DocumentSearch(query, searcher = current_user(request)['current_user']).call(),
+            'searched': True,
+        }
+        return render(request, 'search.html', context)
+
+    def get(self, request):
+        context = { 'form': SearchForm() }
+        return render(request, 'search.html', context)
+
 
 def set_user(request, **kwargs):
-    request.session.update({"user.type": kwargs.get('type')})
-    return HttpResponseRedirect('/search')
+    request.session.update({"user.id": kwargs.get('id')})
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
-def upload(request):
-    match request.method:
-        case 'POST':
-            form = UploadFileForm(request.POST, request.FILES)
-            match form.is_valid():
-                case True:
-                    DocumentUpload().call(
-                        request.FILES['file'],
-                        request.POST.get('title'),
-                        request.POST.get('public'),
-                    )
-                    return HttpResponseRedirect('/upload/')
-                case False:
-                    return form
-        case 'GET':
-            form = UploadFileForm()
-            return render(request, 'upload.html', {'form': form, 'count': Document.objects.count})
+
+class CaseView(View):
+
+    def get(self, request, id):
+        case = Case.objects.get(pk=id)
+        return render(request, 'case.html', { 'case': case })
+
+
+class Upload(View):
+
+    def post(self, request):
+        form = UploadFileForm(request.POST, request.FILES)
+        match form.is_valid():
+            case True:
+                DocumentUpload().call(
+                    request.FILES['file'],
+                    request.POST.get('title'),
+                    request.POST.get('public'),
+                )
+                return HttpResponseRedirect('/upload/')
+            case False:
+                return form
+
+    def get(self, request):
+        context = {
+          'form': UploadFileForm(),
+          'count': Document.objects.count
+        }
+        return render(request, 'upload.html', context)
 
 
 def list(request):

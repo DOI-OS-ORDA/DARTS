@@ -1,0 +1,9 @@
+---
+applications:
+- name: darts
+  random-route: true
+  buildpacks:
+    - https://github.com/cloudfoundry/apt-buildpack.git
+    - python_buildpack
+  memory: 1024M
+  stack: cflinuxfs4

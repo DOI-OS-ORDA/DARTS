@@ -3,8 +3,9 @@
   <head>
     <link rel="stylesheet" href="/assets/css/styles.css">
     <script src="/assets/uswds/js/uswds.min.js" async="true"></script>
+    {% block head %}{% endblock head %}
 
-    <title>{% block title %}{% endblock %} • DARTS</title>
+    <title>{% block title %}{% endblock title %} • DARTS</title>
   </head>
   <body>
     <main>
@@ -20,6 +21,8 @@
           </div>
         </div>
       </div>
+      {% block gridless %}{% endblock gridless %}
+      {% include "partials/footer.html" %}
     </main>
   </body>
 </html>

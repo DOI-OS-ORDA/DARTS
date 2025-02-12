@@ -18,7 +18,7 @@
       {% if result.visible %}
         <q>{{ result.preview|safe }}</q>
       {% else %}
-        This document contains information that matches your search, but this document is internal to the case team. For viewing permission, <a href="#">please contact the case team</a>.
+        This document contains information that matches your search, but this document is internal to the case team. For viewing permission, <a href="mailto:{{ document_access_mailto }}?subject=Requesting access to {{ result.title|urlencode }}">please contact the case team</a>.
       {% endif %}
     </p>
     {% if result.visible %}

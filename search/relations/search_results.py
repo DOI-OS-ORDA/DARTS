@@ -3,7 +3,7 @@ from django.db import connection
 
 class SearchResultsRelation(Relation):
 
-    def call(self, **kwargs):
+    def all(self, **kwargs):
         options = {}
         allowed_keys = {'query', 'offset', 'limit', 'permissions'}
         options.update((k, v) for k, v in kwargs.items() if k in allowed_keys)
@@ -13,6 +13,9 @@ class SearchResultsRelation(Relation):
             self.unpreviewable(options),
             self.sort(options)
         ])
+        print("---->")
+        print(options['permissions'])
+        print(sql_query)
 
         data = {
             'query': options.get('query'),
@@ -22,32 +25,34 @@ class SearchResultsRelation(Relation):
 
         with connection.cursor() as cursor:
             cursor.execute(sql_query, data)
-            results = self.dictfetchall(cursor)
-            return results
+            return self.dictfetchall(cursor)
 
 
     def returnable(self, options):
         return """
             WITH base as (
                 SELECT
-                    id,
-                    filename,
-                    slug,
-                    title,
-                    public,
+                    search_document.id,
+                    search_document.filename,
+                    search_document.slug,
+                    search_document.title,
+                    search_document.public,
                     ts_rank_cd(search_text, query) AS rank,
                     preview,
-                    CAST(trunc((id / 3) + 1) AS INTEGER) as case_id,
-                    CAST(trunc((id / 4) + 1) AS INTEGER) as region_id
+                    search_document.case_id,
+                    search_region.id as region_id
                 FROM
-                    search_document,
-                    websearch_to_tsquery(%(query)s) query,
+                    search_document
+                        JOIN search_case ON case_id = search_case.id
+                        JOIN search_region ON search_case.region_id = search_region.id,
+                    websearch_to_tsquery('english', %(query)s) query,
                     ts_headline(
                       body,
                       query,
                       $$MaxFragments=0, MaxWords=40, MinWords=30, StartSel='<span class="highlight">', StopSel='</span>'$$
                     ) preview
-                WHERE query @@ search_text
+                WHERE
+                    query @@ search_text
                 ORDER BY rank DESC
                 LIMIT %(limit)s
                 OFFSET %(offset)s
@@ -72,18 +77,34 @@ class SearchResultsRelation(Relation):
         """ + self.visibility_clause(options)
 
 
+    def query_value(self, input_ids):
+        return tuple(input_ids) or 'NULL'
+
+
+    def query_placeholder(self, value):
+        match value:
+            case 'NULL':
+                return '%s'
+            case (xs):
+                return ",".join(["%d"] * len(xs))
+
+
+    def query_components(self, input_ids):
+        value = self.query_value(input_ids)
+        placeholder = self.query_placeholder(value)
+        return placeholder, value
+
+
     def visibility_clause(self, options):
         match options['permissions']:
             case 'hide':
                 return "WHERE public"
             case {'case_ids': case_ids}:
-                ids = tuple(case_ids)
-                replaceable = ",".join(["%d"] * len(ids))
-                return f"WHERE public OR (NOT public AND case_id IN ({replaceable}))" % ids
+                placeholder, value = self.query_components(case_ids)
+                return f"WHERE public OR (NOT public AND case_id IN ({placeholder}))" % value
             case {'region_ids': region_ids}:
-                ids = tuple(region_ids)
-                replaceable = ",".join(["%d"] * len(ids))
-                return f"WHERE public OR (NOT public AND region_id IN ({replaceable}))" % ids
+                placeholder, value = self.query_components(region_ids)
+                return f"WHERE public OR (NOT public AND region_id IN ({placeholder}))" % value
             case 'show':
                 return "WHERE public OR NOT public"
             case _:
@@ -108,13 +129,15 @@ class SearchResultsRelation(Relation):
         """
         match options['permissions']:
             case {'case_ids': case_ids}:
-                ids = tuple(case_ids)
-                replaceable = ",".join(["%d"] * len(ids))
-                return base + f"WHERE (NOT public AND case_id NOT IN ({replaceable}))" % ids
+                placeholder, value = self.query_components(case_ids)
+                return base + f"WHERE (NOT public AND case_id NOT IN ({placeholder}))" % value
+                #                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                #                                 Remove this if there are no cases assigned
             case {'region_ids': region_ids}:
-                ids = tuple(region_ids)
-                replaceable = ",".join(["%d"] * len(ids))
-                return base + f"WHERE (NOT public AND region_id NOT IN ({replaceable}))" % ids
+                placeholder, value = self.query_components(region_ids)
+                return base + f"WHERE (NOT public AND region_id NOT IN ({placeholder}))" % value
+                #                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                #                                 Remove this if there are no regions assigned
             case _:
                 return ""
 

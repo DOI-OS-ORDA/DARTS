@@ -9,6 +9,11 @@ def add_slugs(apps, schema_editor):
         document.slug = slugify(document.title)
         document.save(update_fields=["slug"])
 
+
+def reverse(apps, schema_editor):
+    return None
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -21,5 +26,5 @@ class Migration(migrations.Migration):
             name='slug',
             field=models.SlugField(max_length=255, null=True),
         ),
-        migrations.RunPython(add_slugs, None),
+        migrations.RunPython(add_slugs, reverse),
     ]

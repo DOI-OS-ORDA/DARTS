@@ -25,8 +25,8 @@ SECRET_KEY = 'django-insecure-ecz^!v!igd((v_4^%u5@=2e@!3)atd=$xtl7eup*6$&(de(@2x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'web']
-
+ALLOWED_HOSTS = ['localhost', 'web', 'darts-turbulent-parrot-rx.app.cloud.gov']
+CSRF_TRUSTED_ORIGINS = ['https://darts-turbulent-parrot-rx.app.cloud.gov']
 
 # Application definition
 
@@ -65,6 +65,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'search.context_processors.current_user',
+                'search.context_processors.document_access_mailto',
+                'search.context_processors.user_types',
             ],
         },
     },
@@ -76,17 +79,31 @@ WSGI_APPLICATION = 'darts.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+import json
 import os
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['POSTGRES_NAME'],
-        'USER': os.environ['POSTGRES_USER'],
-        'PASSWORD': os.environ['POSTGRES_PASSWORD'],
-        'HOST': 'db',
+if os.environ['DJANGO_ENV'] == 'development':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['POSTGRES_DB'],
+            'USER': os.environ['POSTGRES_USER'],
+            'PASSWORD': os.environ['POSTGRES_PASSWORD'],
+            'HOST': os.environ['POSTGRES_HOST'],
+        }
     }
-}
+
+else:
+    credentials = json.loads(os.environ['VCAP_SERVICES'])['aws-rds'][0]['credentials']
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': credentials['name'],
+            'USER': credentials['username'],
+            'PASSWORD': credentials['password'],
+            'HOST': credentials['host'],
+        }
+    }
 
 
 # Password validation
@@ -123,10 +140,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, "assets")
-STATIC_URL = 'assets/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+STATIC_URL = '/assets/'
 STATICFILES_DIRS = [
-    BASE_DIR / "assets/uswds/",
+    BASE_DIR / "assets",
+    BASE_DIR / "assets/uswds",
 ]
 
 # Default primary key field type

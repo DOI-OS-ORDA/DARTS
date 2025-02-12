@@ -1,23 +1,39 @@
+from search.models import Person
 from search.repositories.repository import Repository
-from search.structs.user import UserStruct
+from search.structs.struct import Struct
 
 class UsersRepository(Repository):
 
     @classmethod
-    def get(self, slug):
-        return next(user for user in self.all() if user.slug == slug)
+    def get(self, id):
+        return Person.objects.get(pk=id)
+
+
+    @classmethod
+    def first(self):
+        return Person.objects.first()
 
 
     @classmethod
     def all(self):
-        return [
-            UserStruct({ 'name': "Guest user",   'slug': "guest" }),
-            UserStruct({ 'name': "Superuser",    'slug': "superuser" }),
-            UserStruct({ 'name': "Tech support", 'slug': "tech-support" }),
-            UserStruct({ 'name': "Staff",               'slug': "staff" }),
-            UserStruct({ 'name': "Regional coordinator", 'slug': "regional-coordinator" }),
-        ]
+        return Person.objects.all()
 
 
-    def call(self):
-        pass
+    @classmethod
+    def get_or_fallback(self, id):
+        try:
+            return self.get(id)
+        except Person.DoesNotExist:
+            return self.fallback()
+
+
+    @classmethod
+    def fallback(self):
+        return Struct({
+            'full_name': "Guest user",
+            'role':      "guest",
+            'role_name': "guest",
+            'cases': Struct({ 'all': (lambda: []) }),
+            'region': Struct({ 'id': None }),
+            'region_id': None,
+        })

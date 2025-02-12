@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
   python-dev-is-python3 \
   xpdf
 
-COPY ./binaries/geckodriver-v0.35.0-linux64.tar.gz geckodriver.tar.gz
+COPY ./support/geckodriver-v0.35.0-linux64.tar.gz geckodriver.tar.gz
 RUN tar -zxf geckodriver.tar.gz -C /usr/local/bin && chmod +x /usr/local/bin/geckodriver
 
 WORKDIR /code
@@ -21,3 +21,6 @@ WORKDIR /code
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 COPY . /code/
+
+EXPOSE 8000
+CMD python manage.py runserver 0.0.0.0:8000
