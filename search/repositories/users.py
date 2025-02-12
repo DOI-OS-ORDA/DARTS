@@ -35,4 +35,5 @@ class UsersRepository(Repository):
             'role_name': "guest",
             'cases': Struct({ 'all': (lambda: []) }),
             'region': Struct({ 'id': None }),
+            'region_id': None,
         })

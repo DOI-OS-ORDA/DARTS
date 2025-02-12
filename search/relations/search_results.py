@@ -45,7 +45,7 @@ class SearchResultsRelation(Relation):
                     search_document
                         JOIN search_case ON case_id = search_case.id
                         JOIN search_region ON search_case.region_id = search_region.id,
-                    websearch_to_tsquery(%(query)s) query,
+                    websearch_to_tsquery('english', %(query)s) query,
                     ts_headline(
                       body,
                       query,

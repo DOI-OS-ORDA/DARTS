@@ -4,7 +4,7 @@ from search.repositories.users import UsersRepository
 
 class DocumentSearch:
 
-    default_searcher = UsersRepository.first()
+    default_searcher = lambda : UsersRepository.fallback()
 
     def __init__(
             self,
@@ -13,7 +13,7 @@ class DocumentSearch:
             engine = DocumentVisibilityEngine()
         ):
         self.query = query
-        self.person = searcher or self.default_searcher
+        self.person = searcher or self.default_searcher()
         self.engine = engine
 
 

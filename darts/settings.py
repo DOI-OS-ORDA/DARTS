@@ -25,8 +25,8 @@ SECRET_KEY = 'django-insecure-ecz^!v!igd((v_4^%u5@=2e@!3)atd=$xtl7eup*6$&(de(@2x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'web']
-
+ALLOWED_HOSTS = ['localhost', 'web', 'darts-turbulent-parrot-rx.app.cloud.gov']
+CSRF_TRUSTED_ORIGINS = ['https://darts-turbulent-parrot-rx.app.cloud.gov']
 
 # Application definition
 
@@ -82,17 +82,28 @@ WSGI_APPLICATION = 'darts.wsgi.application'
 import json
 import os
 
-credentials = json.loads(os.environ['VCAP_SERVICES'])['aws-rds'][0]['credentials']
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': credentials['name'],
-        'USER': credentials['username'],
-        'PASSWORD': credentials['password'],
-        'HOST': credentials['host'],
+if os.environ['DJANGO_ENV'] == 'development':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ['POSTGRES_DB'],
+            'USER': os.environ['POSTGRES_USER'],
+            'PASSWORD': os.environ['POSTGRES_PASSWORD'],
+            'HOST': os.environ['POSTGRES_HOST'],
+        }
     }
-}
+
+else:
+    credentials = json.loads(os.environ['VCAP_SERVICES'])['aws-rds'][0]['credentials']
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': credentials['name'],
+            'USER': credentials['username'],
+            'PASSWORD': credentials['password'],
+            'HOST': credentials['host'],
+        }
+    }
 
 
 # Password validation
