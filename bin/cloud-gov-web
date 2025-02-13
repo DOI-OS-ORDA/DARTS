@@ -1,13 +1,13 @@
 #!/bin/sh
 
 # Make sure pandoc has what it needs to run
-mkdir -p $HOME/.pandoc/data/
-cat support/abbreviations > $HOME/.pandoc/data/abbreviations
-echo "data-dir: ${HOME}/.pandoc/data/" > pandoc.yml
-pandoc -d pandoc.yml -f markdown -t markdown support/abbreviations
+bin/run-web mkdir -p $HOME/.pandoc/data/
+bin/run-web cat support/abbreviations > $HOME/.pandoc/data/abbreviations
+bin/run-web echo "data-dir: ${HOME}/.pandoc/data/" > pandoc.yml
+bin/run-web pandoc -d pandoc.yml -f markdown -t markdown support/abbreviations
 
 # Run migrations
-python manage.py migrate
+bin/run-web python manage.py migrate
 
 # Run the dev web server
-python manage.py runserver 0.0.0.0:8080
+bin/run-web python manage.py runserver 0.0.0.0:8080
