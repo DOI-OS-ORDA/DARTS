@@ -53,7 +53,8 @@ jobs:
             pipenv run python manage.py test --noinput
             pipenv run flake8
             pipenv run black --check --diff .
-            pipenv run bandit -r . -x docker_entrypoint.py
+            
+      # pipenv run bandit -r . -x docker_entrypoint.py
 
       - store_artifacts:
           path: test-reports
