@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
 django-csp = "*"
 django-debug-toolbar = "*"
 cfenv = "*"
@@ -12,6 +11,15 @@ gunicorn = {version = "*", extras = ["gevent"]}
 dj-database-url = "*"
 psycopg2-binary = "*"
 whitenoise = "*"
+django = "==5.1"
+psycopg = "==3.2.3"
+pdftotext = "==3.0.0"
+selenium = "*"
+python-dateutil = "*"
+coverage = "*"
+pandas = "*"
+behave = "*"
+pyyaml = "*"
 
 [dev-packages]
 wait4it = "*"

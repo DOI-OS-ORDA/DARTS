@@ -3,9 +3,9 @@ services:
   app:
     build: .
     volumes:
-      - ./darts:/darts
-    working_dir: /darts
-    entrypoint: python /darts/docker_entrypoint.py
+      - .:/app
+    working_dir: /app/darts
+    entrypoint: python /app/darts/docker_entrypoint.py
     depends_on:
       - db
     deploy:

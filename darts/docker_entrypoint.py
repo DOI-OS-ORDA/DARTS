@@ -17,7 +17,7 @@ from wait4it import wait_for
 
 from darts.settings.env import env
 
-HOST_UID = os.stat("/darts").st_uid
+HOST_UID = os.stat("/app").st_uid
 HOST_USER = env.get_credential("HOST_USER", "darts_user")
 
 

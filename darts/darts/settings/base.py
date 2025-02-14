@@ -55,7 +55,7 @@ ROOT_URLCONF = 'darts.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['darts/templates'],
+        'DIRS': ['darts/templates', 'search/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
