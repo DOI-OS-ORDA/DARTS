@@ -1,48 +1,46 @@
+version: "3.0"
 services:
-  web:
+  app:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    environment:
-      - DJANGO_ENV=development
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
-      - POSTGRES_HOST=db
     volumes:
-      - .:/code
+      - ./dartstoo:/dartstoo
+    working_dir: /dartstoo
+    entrypoint: python /dartstoo/docker_entrypoint.py
+    depends_on:
+      - db
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+    environment:
+      - PYTHONUNBUFFERED=yup
+      - DATABASE_URL=postgres://dartstoo_user:dartstoo_password@db/dartstoo
+      - RUNNING_IN_DOCKER=yup
+      - DJANGO_SETTINGS_MODULE=dartstoo.settings.dev
+      - ALLOWED_HOSTS=localhost,app,0.0.0.0
+    stdin_open: true
+    tty: true
     ports:
       - "8000:8000"
-    depends_on:
-      - db
-    restart: always
+    command: >
+      bash -c "python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000"
 
   db:
-    image: postgres:latest
+    image: postgres:12.8
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
-    expose:
-      - "5432"
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./data/db:/var/lib/postgresql/data
-    restart: always
+      - POSTGRES_DB=dartstoo
+      - POSTGRES_USER=dartstoo_user
+      - POSTGRES_PASSWORD=dartstoo_password
 
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4:latest
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=matt.cloyd@gsa.gov
-      - PGADMIN_DEFAULT_PASSWORD=password
-    ports:
-      - "5050:80"
+  owasp:
+    image: owasp/zap2docker-weekly
+    command: zap-baseline.py -t http://app:8000 -c zap.conf -I -r zap_report.html
     depends_on:
-      - db
-    restart: always
+      - app
+    volumes:
+      - .:/zap/wrk/
+    profiles: ["owasp-scan"]
 
-volumes:
-  web-django:
-  web-static:
-  pgdata:
+
+  # gulp image goes here

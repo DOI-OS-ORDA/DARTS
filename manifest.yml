@@ -1,9 +1,11 @@
 ---
 applications:
-- name: darts
-  random-route: true
-  buildpacks:
-    - https://github.com/cloudfoundry/apt-buildpack.git
-    - python_buildpack
-  memory: 1024M
-  stack: cflinuxfs4
+- name: dartstoo-((env))
+  buildpack: python_buildpack
+  instances: ((web_instances))
+  memory: ((web_memory))
+  env:
+    ALLOWED_HOSTS: .app.cloud.gov
+    DJANGO_SETTINGS_MODULE: dartstoo.settings.prod
+  services:
+  - dartstoo-rds-((env))
