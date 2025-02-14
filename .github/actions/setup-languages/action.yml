@@ -13,7 +13,7 @@ runs:
       run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
     - name: Install libpoppler-cpp-dev
       shell: bash
-      run: apt-get install libpoppler-cpp-dev
+      run: sudo apt-get install libpoppler-cpp-dev
     - name: Install dependencies
       run: pipenv install --system --dev
       shell: bash
