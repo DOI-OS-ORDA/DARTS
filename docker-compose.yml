@@ -27,11 +27,13 @@ services:
       python manage.py runserver 0.0.0.0:8000"
 
   db:
-    image: postgres:12.8
+    image: postgres:15.7
     environment:
       - POSTGRES_DB=dartstoo
       - POSTGRES_USER=dartstoo_user
       - POSTGRES_PASSWORD=dartstoo_password
+    volumes:
+      - ./data/db15:/var/lib/postgresql/data
 
   owasp:
     image: owasp/zap2docker-weekly
