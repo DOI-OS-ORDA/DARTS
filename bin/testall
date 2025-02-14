@@ -1,0 +1,3 @@
+#!/bin/sh
+
+bin/test && bin/feature_test

@@ -1,0 +1,60 @@
+[
+{
+    "model": "search.person",
+    "pk": 2,
+    "fields": {
+        "user": 2,
+        "first_name": "Matt",
+        "last_name": "Cloyd",
+        "role": "regional",
+        "region": 1,
+        "cases": [
+            1
+        ]
+    }
+},
+{
+    "model": "search.person",
+    "pk": 3,
+    "fields": {
+        "user": 3,
+        "first_name": "Chelcey",
+        "last_name": "Chavez-Detka",
+        "role": "superuser",
+        "region": 1,
+        "cases": [
+            2,
+            4
+        ]
+    }
+},
+{
+    "model": "search.person",
+    "pk": 4,
+    "fields": {
+        "user": 4,
+        "first_name": "Deb",
+        "last_name": "Hopkins",
+        "role": "tech",
+        "region": 2,
+        "cases": [
+            2,
+            4
+        ]
+    }
+},
+{
+    "model": "search.person",
+    "pk": 5,
+    "fields": {
+        "user": 5,
+        "first_name": "Deanna",
+        "last_name": "Terry",
+        "role": "staff",
+        "region": 5,
+        "cases": [
+            3
+        ]
+    }
+}
+]
