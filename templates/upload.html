@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}Upload{% endblock %}
+
+{% block content %}
+
+<h1>Upload document</h1>
+<p>
+  {{ count }} documents in database
+</p>
+
+{% include "partials/form.html" with
+    form=form
+    action="/upload/"
+    class="usa-form"
+    enctype="multipart/form-data"
+    %}
+
+{% endblock content %}
