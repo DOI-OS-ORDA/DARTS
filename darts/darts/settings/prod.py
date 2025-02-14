@@ -17,8 +17,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 USE_X_FORWARDED_HOST = True
 
-STATIC_ROOT = "/app/dartstoo/dartstoo/static/"
-STATIC_URL = "/dartstoo/static/"
+STATIC_ROOT = "/app/darts/darts/static/"
+STATIC_URL = "/darts/static/"
 
 DATABASES["default"] = dj_database_url.config()
 
@@ -36,7 +36,7 @@ MIDDLEWARE.append("csp.middleware.CSPMiddleware")
 allowed_sources = (
     "'self'",
     # CHANGEME: put the real hostname of the application here
-    "dartstoo.agency.gov/",
+    "darts.agency.gov/",
 )
 CSP_DEFAULT_SRC = allowed_sources
 CSP_SCRIPT_SRC = allowed_sources
@@ -90,7 +90,7 @@ LOGGING = {
             "propagate": True,
             "level": "INFO",
         },
-        "dartstoo": {
+        "darts": {
             "handlers": ["console", "file"],
             "propagate": True,
             "level": "INFO",

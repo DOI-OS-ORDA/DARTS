@@ -12,7 +12,7 @@ module "database" {
   cf_password      = var.cf_password
   cf_org_name      = local.cf_org_name
   cf_space_name    = local.cf_space_name
-  app_name         = "dartstoo"
+  app_name         = "darts"
   env              = local.env
   recursive_delete = local.recursive_delete
   rds_plan_name    = "micro-psql"

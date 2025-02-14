@@ -1,4 +1,4 @@
-# Dartstoo
+# darts
 ========================
 
 <<TKTK: quick summary of project>>
@@ -44,7 +44,7 @@ more information on setting these up successfully.
 
 ### Running tests
 
-* Tests: `pipenv run dartstoo/manage.py test`
+* Tests: `pipenv run darts/manage.py test`
 * Python linter: `pipenv run black`
 * Dynamic security scan: `docker compose run owasp`
 * Static security scan: `pipenv run bandit -r .`

@@ -15,10 +15,10 @@ import subprocess  # nosec
 
 from wait4it import wait_for
 
-from dartstoo.settings.env import env
+from darts.settings.env import env
 
-HOST_UID = os.stat("/dartstoo").st_uid
-HOST_USER = env.get_credential("HOST_USER", "dartstoo_user")
+HOST_UID = os.stat("/darts").st_uid
+HOST_USER = env.get_credential("HOST_USER", "darts_user")
 
 
 def does_username_exist(username):

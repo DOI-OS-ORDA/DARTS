@@ -2,9 +2,9 @@ name: "Run Django server"
 description: "Run django server in the background for scans to access"
 inputs:
   django_settings_module:
-    description: DJANGO_SETTINGS_MODULE to use. Defaults to dartstoo.settings.prod
+    description: DJANGO_SETTINGS_MODULE to use. Defaults to darts.settings.prod
     required: false
-    default: dartstoo.settings.prod
+    default: darts.settings.prod
   database_url:
     description: DATABASE_URL to set
     required: true
@@ -18,7 +18,7 @@ runs:
         DATABASE_URL: ${{ inputs.database_url }}
         SECRET_KEY: not-actually-secret
       run: pipenv run python manage.py runserver 0.0.0.0:8000 &
-      working-directory: dartstoo
+      working-directory: darts
 
     - name: "Wait for startup"
       shell: bash

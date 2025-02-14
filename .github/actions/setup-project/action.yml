@@ -2,13 +2,13 @@ name: Set up project with database
 description: Setup Python, Javascript, and load the database schema into a running postgres db
 inputs:
   django_settings_module:
-    description: DJANGO_SETTINGS_MODULE to set. Defaults to dartstoo.settings.prod
+    description: DJANGO_SETTINGS_MODULE to set. Defaults to darts.settings.prod
     required: false
-    default: dartstoo.settings.prod
+    default: darts.settings.prod
   database_url:
     description: DATABASE_URL to set
     required: false
-    default: postgres://cidbuser:postgres@localhost:5432/dartstoo_test
+    default: postgres://cidbuser:postgres@localhost:5432/darts_test
 outputs:
   database_url:
     value: ${{ inputs.database_url }}
@@ -24,4 +24,4 @@ runs:
         DATABASE_URL: ${{ inputs.database_url }}
       shell: bash
       run: pipenv run python manage.py migrate
-      working-directory: dartstoo
+      working-directory: darts

@@ -10,17 +10,17 @@ jobs:
       - image: cimg/python:3.10-browsers
         environment:
           - PIPENV_VENV_IN_PROJECT=true
-          - DJANGO_SETTINGS_MODULE=dartstoo.settings.prod
-          - DATABASE_URL=postgres://dartstoo_user:dartstoo_password@localhost/dartstoo
+          - DJANGO_SETTINGS_MODULE=darts.settings.prod
+          - DATABASE_URL=postgres://darts_user:darts_password@localhost/darts
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: cimg/postgres:14.2
         environment:
-          - POSTGRES_DB=dartstoo
-          - POSTGRES_USER=dartstoo_user
-          - POSTGRES_PASSWORD=dartstoo_password
+          - POSTGRES_DB=darts
+          - POSTGRES_USER=darts_user
+          - POSTGRES_PASSWORD=darts_password
 
     steps:
       - checkout
@@ -49,7 +49,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            cd dartstoo
+            cd darts
             pipenv run python manage.py test --noinput
             pipenv run flake8
             pipenv run black --check --diff .

@@ -1,11 +1,11 @@
 ---
 applications:
-- name: dartstoo-((env))
+- name: darts-((env))
   buildpack: python_buildpack
   instances: ((web_instances))
   memory: ((web_memory))
   env:
     ALLOWED_HOSTS: .app.cloud.gov
-    DJANGO_SETTINGS_MODULE: dartstoo.settings.prod
+    DJANGO_SETTINGS_MODULE: darts.settings.prod
   services:
-  - dartstoo-rds-((env))
+  - darts-rds-((env))

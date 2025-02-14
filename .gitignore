@@ -175,4 +175,5 @@ cython_debug/
 
 node_modules
 
-dartstoo/dartstoo/static
+darts/darts/static
+data/

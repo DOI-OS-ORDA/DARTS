@@ -5,12 +5,12 @@
 set -o errexit
 set -o pipefail
 
-cd dartstoo
+cd darts
 
 # Only run migrations on the zeroth index when in a cloud.gov environment
 if [[ -v CF_INSTANCE_INDEX && $CF_INSTANCE_INDEX == 0 ]]
 then
-  python manage.py migrate --settings=dartstoo.settings.prod --noinput
+  python manage.py migrate --settings=darts.settings.prod --noinput
 else
   echo "Migrations did not run."
   if [[ -v CF_INSTANCE_INDEX ]]
@@ -31,5 +31,5 @@ DEPLOYMENT_DESCRIPTION="Recording deployment of ${VERSION}."
 
 echo "${DEPLOYMENT_DESCRIPTION}"
 
-python manage.py collectstatic --settings=dartstoo.settings.prod --noinput
-gunicorn -t 120 -k gevent -w 2 dartstoo.wsgi:application
+python manage.py collectstatic --settings=darts.settings.prod --noinput
+gunicorn -t 120 -k gevent -w 2 darts.wsgi:application

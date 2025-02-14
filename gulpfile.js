@@ -12,11 +12,11 @@ uswds.settings.version = 3;
  * Set as many as you need
  */
 
-uswds.paths.dist.css = './dartstoo/dartstoo/static/css';
-uswds.paths.dist.img = './dartstoo/dartstoo/static/img';
-uswds.paths.dist.fonts = './dartstoo/dartstoo/static/fonts';
-uswds.paths.dist.js = './dartstoo/dartstoo/static/js';
-uswds.paths.dist.sass = './dartstoo/dartstoo/static/sass';
+uswds.paths.dist.css = './darts/darts/static/css';
+uswds.paths.dist.img = './darts/darts/static/img';
+uswds.paths.dist.fonts = './darts/darts/static/fonts';
+uswds.paths.dist.js = './darts/darts/static/js';
+uswds.paths.dist.sass = './darts/darts/static/sass';
 
 /**
  * Exports

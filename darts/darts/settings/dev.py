@@ -26,7 +26,7 @@ INTERNAL_IPS = [
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
 
 DATABASES["default"] = dj_database_url.config(
-    default="postgres://dartstoo:dartstoo@localhost/dartstoo"
+    default="postgres://darts:darts@localhost/darts"
 )
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
@@ -64,7 +64,7 @@ def show_django_debug_toolbar(request):
 
 
 DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": "dartstoo.settings.dev.show_django_debug_toolbar",
+    "SHOW_TOOLBAR_CALLBACK": "darts.settings.dev.show_django_debug_toolbar",
 }
 
 USE_X_FORWARDED_HOST = True

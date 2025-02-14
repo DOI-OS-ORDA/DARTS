@@ -1,6 +1,6 @@
 locals {
   cf_api_url      = "https://api.fr.cloud.gov"
-  s3_service_name = "dartstoo-terraform-state"
+  s3_service_name = "darts-terraform-state"
 }
 
 module "s3" {
@@ -13,7 +13,7 @@ module "s3" {
   cf_space_name   = "prod"
   s3_service_name = local.s3_service_name
 
-  
+
 }
 
 resource "cloudfoundry_service_key" "bucket_creds" {

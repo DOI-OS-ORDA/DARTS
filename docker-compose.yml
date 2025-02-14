@@ -3,9 +3,9 @@ services:
   app:
     build: .
     volumes:
-      - ./dartstoo:/dartstoo
-    working_dir: /dartstoo
-    entrypoint: python /dartstoo/docker_entrypoint.py
+      - ./darts:/darts
+    working_dir: /darts
+    entrypoint: python /darts/docker_entrypoint.py
     depends_on:
       - db
     deploy:
@@ -14,9 +14,9 @@ services:
         max_attempts: 5
     environment:
       - PYTHONUNBUFFERED=yup
-      - DATABASE_URL=postgres://dartstoo_user:dartstoo_password@db/dartstoo
+      - DATABASE_URL=postgres://darts_user:darts_password@db/darts
       - RUNNING_IN_DOCKER=yup
-      - DJANGO_SETTINGS_MODULE=dartstoo.settings.dev
+      - DJANGO_SETTINGS_MODULE=darts.settings.dev
       - ALLOWED_HOSTS=localhost,app,0.0.0.0
     stdin_open: true
     tty: true
@@ -29,9 +29,9 @@ services:
   db:
     image: postgres:15.7
     environment:
-      - POSTGRES_DB=dartstoo
-      - POSTGRES_USER=dartstoo_user
-      - POSTGRES_PASSWORD=dartstoo_password
+      - POSTGRES_DB=darts
+      - POSTGRES_USER=darts_user
+      - POSTGRES_PASSWORD=darts_password
     volumes:
       - ./data/db15:/var/lib/postgresql/data
 

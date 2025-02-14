@@ -49,7 +49,7 @@ The bootstrap module is used to create an s3 bucket for later terraform runs to 
 
 1. Add the following to `~/.aws/credentials`
     ```
-    [dartstoo-terraform-backend]
+    [darts-terraform-backend]
     aws_access_key_id = <access_key_id from bucket_credentials>
     aws_secret_access_key = <secret_access_key from bucket_credentials>
     ```
