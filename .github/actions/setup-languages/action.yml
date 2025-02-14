@@ -12,7 +12,7 @@ runs:
       shell: bash
       run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
     - name: Install dependencies
-      run: pipenv install --dev
+      run: pipenv install --system --dev
       shell: bash
 
     
