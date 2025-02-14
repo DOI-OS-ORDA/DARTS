@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/uswds-init.min.js' %}" defer></script>
+    {% block head %}{% endblock head %}
+
+    <title>{% block title %}{% endblock title %} • DARTS</title>
+  </head>
+  <body>
+    <main>
+      <div class="grid-container">
+        <div class="grid-row">
+          <div class="grid-col">
+            {% include "partials/nav.html" %}
+          </div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-col">
+            {% block content %}{% endblock content %}
+          </div>
+        </div>
+      </div>
+      {% block gridless %}{% endblock gridless %}
+      {% include "partials/footer.html" %}
+    </main>
+  </body>
+</html>

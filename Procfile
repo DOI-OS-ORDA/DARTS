@@ -1,1 +1,1 @@
-web: bin/cloud-gov-web
+web: bin/web.sh
