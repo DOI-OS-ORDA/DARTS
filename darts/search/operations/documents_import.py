@@ -1,5 +1,5 @@
 import glob, os, pandas, random, string
-from darts.repositories import DocumentsRepository
+from search.models import Document
 from search.operations.document_import import DocumentImport
 
 
@@ -7,9 +7,7 @@ from search.operations.document_import import DocumentImport
 # make "repo.documents" a factory
 # def __init__(self, folder_path: str = Provide["config.documents_pattern"], repository = Provide["repo.documents"]):
 class DocumentsImport:
-    def __init__(
-        self, documents_dir: str, metadata_file: str, repository=DocumentsRepository()
-    ):
+    def __init__(self, documents_dir: str, metadata_file: str, repository=Document):
         self.documents_dir = documents_dir
         self.metadata_file = metadata_file
         self.repository = repository

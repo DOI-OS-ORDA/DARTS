@@ -1,4 +1,4 @@
-from darts.repositories import DocumentsRepository
+from search.models import Document
 from search.operations.text_conversion import TextConversion
 import os
 
@@ -12,7 +12,7 @@ class DocumentImport:
         file_path: str,
         title: str,
         public: bool,
-        repository=DocumentsRepository(),
+        repository=Document(),
         converter=TextConversion,
     ):
         self.file_path = file_path
