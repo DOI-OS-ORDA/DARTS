@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('search', '0010_alter_case_name'),
+        ("search", "0010_alter_case_name"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='case',
-            name='contact',
+            model_name="case",
+            name="contact",
             field=models.CharField(max_length=255, null=True),
         ),
         migrations.AddField(
-            model_name='case',
-            name='trustees',
+            model_name="case",
+            name="trustees",
             field=models.TextField(null=True),
         ),
     ]

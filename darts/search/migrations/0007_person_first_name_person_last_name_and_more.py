@@ -6,23 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('search', '0006_person'),
+        ("search", "0006_person"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='person',
-            name='first_name',
+            model_name="person",
+            name="first_name",
             field=models.CharField(null=True),
         ),
         migrations.AddField(
-            model_name='person',
-            name='last_name',
+            model_name="person",
+            name="last_name",
             field=models.CharField(null=True),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='cases',
-            field=models.ManyToManyField(blank=True, to='search.case'),
+            model_name="person",
+            name="cases",
+            field=models.ManyToManyField(blank=True, to="search.case"),
         ),
     ]

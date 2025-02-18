@@ -4,6 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from search.operations.documents_import import DocumentsImport
 from .base import FeatureTest
 
+
 class UserTypeSelectorTest(FeatureTest):
 
     def test_can_select(self):
@@ -15,7 +16,13 @@ class UserTypeSelectorTest(FeatureTest):
         self.assertTrue(user_type_selector)
 
         # They see all the user types (no cases or regions yet)
-        for usertype in ("Guest user", "Staff", "Superuser", "Tech support", "Regional coordinator",):
+        for usertype in (
+            "Guest user",
+            "Staff",
+            "Superuser",
+            "Tech support",
+            "Regional coordinator",
+        ):
             self.assertTrue(self.browser.find_element(By.PARTIAL_LINK_TEXT, usertype))
 
         # They select "guest user"

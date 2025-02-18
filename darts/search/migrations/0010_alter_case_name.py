@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('search', '0009_case_affected_doi_resources_case_alias_and_more'),
+        ("search", "0009_case_affected_doi_resources_case_alias_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='case',
-            name='name',
+            model_name="case",
+            name="name",
             field=models.CharField(max_length=255),
         ),
     ]

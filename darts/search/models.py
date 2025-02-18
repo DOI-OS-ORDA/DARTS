@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.search import SearchVectorField
 from django.template.defaultfilters import slugify
 
+
 class Region(models.Model):
     name = models.CharField(max_length=255)
     number = models.IntegerField()
@@ -35,18 +36,17 @@ class Case(models.Model):
     def photos(self):
         return [
             {
-                'src': "https://www.cerc.usgs.gov/orda_docs/PhotoHandler.ashx?ID=149&task=displayAll",
-                'caption': "Credit: Exxon Valdez Trustee Council"
+                "src": "https://www.cerc.usgs.gov/orda_docs/PhotoHandler.ashx?ID=149&task=displayAll",
+                "caption": "Credit: Exxon Valdez Trustee Council",
             },
             {
-                'src': "https://www.cerc.usgs.gov/orda_docs/PhotoHandler.ashx?ID=152&task=displayAll",
-                'caption': "Barge water tanks, workers hosing beach, Credit: Exxon Valdez Trustee Council"
-            }
+                "src": "https://www.cerc.usgs.gov/orda_docs/PhotoHandler.ashx?ID=152&task=displayAll",
+                "caption": "Barge water tanks, workers hosing beach, Credit: Exxon Valdez Trustee Council",
+            },
         ]
 
-
     def lonlat(self):
-        return [60.614279,-147.0847959]
+        return [60.614279, -147.0847959]
 
     def zoom(self):
         return 8
@@ -54,25 +54,21 @@ class Case(models.Model):
     def contaminants_list(self):
         return self.contaminants_of_concern.split(", ")
 
-
     def contact_object(self):
         name, address, phone, website, *rest = self.contact.split(" | ")
         return {
-            'name': name,
-            'address': address,
-            'phone': phone,
-            'website': website,
-            'rest': rest
+            "name": name,
+            "address": address,
+            "phone": phone,
+            "website": website,
+            "rest": rest,
         }
-
 
     def resource_list(self):
         return self.affected_doi_resources.split(", ")
 
-
     def trustees_list(self):
         return self.trustees.split(", ")
-
 
     def __str__(self):
         return self.name
@@ -105,21 +101,28 @@ class Document(models.Model):
     # Override insert and update methods to prevent inserting/updating search_text directly
     def _do_insert(self, manager, using, fields, update_pk, raw):
         return super(Document, self)._do_insert(
-            manager, using,
-            [f for f in fields if f.attname not in ['search_text']],
-            update_pk, raw)
+            manager,
+            using,
+            [f for f in fields if f.attname not in ["search_text"]],
+            update_pk,
+            raw,
+        )
 
     def _do_update(self, base_qs, using, pk_val, values, update_fields, forced_update):
         return super(Document, self)._do_update(
-            base_qs, using, pk_val,
-            [f for f in values if f[0].attname not in ['search_text']],
-            update_fields, forced_update)
+            base_qs,
+            using,
+            pk_val,
+            [f for f in values if f[0].attname not in ["search_text"]],
+            update_fields,
+            forced_update,
+        )
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("document", kwargs={ "id": str(self.id), "slug": str(self.slug) })
+        return reverse("document", kwargs={"id": str(self.id), "slug": str(self.slug)})
 
 
 class Person(models.Model):
@@ -134,11 +137,11 @@ class Person(models.Model):
     STAFF = "staff"
     REGIONAL = "regional"
     ROLES = {
-        GUEST:     "Guest user",
+        GUEST: "Guest user",
         SUPERUSER: "Superuser",
-        TECH:      "Tech support",
-        STAFF:     "Staff",
-        REGIONAL:  "Regional coordinator",
+        TECH: "Tech support",
+        STAFF: "Staff",
+        REGIONAL: "Regional coordinator",
     }
     role = models.CharField(max_length=9, choices=ROLES)
 

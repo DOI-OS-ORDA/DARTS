@@ -3,6 +3,7 @@
 from django.db import migrations, models
 from django.template.defaultfilters import slugify
 
+
 def add_slugs(apps, schema_editor):
     Document = apps.get_model("search", "Document")
     for document in Document.objects.all():
@@ -17,13 +18,13 @@ def reverse(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('search', '0007_person_first_name_person_last_name_and_more'),
+        ("search", "0007_person_first_name_person_last_name_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='document',
-            name='slug',
+            model_name="document",
+            name="slug",
             field=models.SlugField(max_length=255, null=True),
         ),
         migrations.RunPython(add_slugs, reverse),

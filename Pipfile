@@ -20,6 +20,7 @@ coverage = "*"
 pandas = "*"
 behave = "*"
 pyyaml = "*"
+black = "*"
 
 [dev-packages]
 wait4it = "*"

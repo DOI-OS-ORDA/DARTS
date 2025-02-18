@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('search', '0002_document_title'),
+        ("search", "0002_document_title"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='document',
-            name='public',
+            model_name="document",
+            name="public",
             field=models.BooleanField(default=False),
         ),
     ]

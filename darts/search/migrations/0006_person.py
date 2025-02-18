@@ -8,19 +8,52 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('search', '0005_case_region_document_case'),
+        ("search", "0005_case_region_document_case"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Person',
+            name="Person",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('role', models.CharField(choices=[('guest', 'Guest user'), ('superuser', 'Superuser'), ('tech', 'Tech support'), ('staff', 'Staff'), ('regional', 'Regional coordinator')], max_length=9)),
-                ('cases', models.ManyToManyField(to='search.case')),
-                ('region', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='search.region')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "role",
+                    models.CharField(
+                        choices=[
+                            ("guest", "Guest user"),
+                            ("superuser", "Superuser"),
+                            ("tech", "Tech support"),
+                            ("staff", "Staff"),
+                            ("regional", "Regional coordinator"),
+                        ],
+                        max_length=9,
+                    ),
+                ),
+                ("cases", models.ManyToManyField(to="search.case")),
+                (
+                    "region",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="search.region",
+                    ),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

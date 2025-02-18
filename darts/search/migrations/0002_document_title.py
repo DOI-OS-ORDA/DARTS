@@ -6,24 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('search', '0001_initial'),
+        ("search", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='document',
-            name='title',
-            field=models.CharField(default='', max_length=255),
+            model_name="document",
+            name="title",
+            field=models.CharField(default="", max_length=255),
             preserve_default=False,
         ),
-
         migrations.AddField(
-            model_name='document',
-            name='filename_normal',
-            field=models.CharField(default='', max_length=255),
+            model_name="document",
+            name="filename_normal",
+            field=models.CharField(default="", max_length=255),
             preserve_default=False,
         ),
-
         migrations.RunSQL(
             sql="""
                 ALTER TABLE search_document DROP COLUMN search_text;
@@ -39,8 +37,7 @@ class Migration(migrations.Migration):
                     ))
                 STORED;
                 """,
-
             # SQL that does nothing, so that Django knows we can reverse the migration
-            reverse_sql="SELECT 'reversing' as message"
+            reverse_sql="SELECT 'reversing' as message",
         ),
     ]

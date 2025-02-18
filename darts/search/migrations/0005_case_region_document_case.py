@@ -7,18 +7,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('search', '0004_case_region'),
+        ("search", "0004_case_region"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='case',
-            name='region',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='search.region'),
+            model_name="case",
+            name="region",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="search.region",
+            ),
         ),
         migrations.AddField(
-            model_name='document',
-            name='case',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='search.case'),
+            model_name="document",
+            name="case",
+            field=models.ForeignKey(
+                null=True, on_delete=django.db.models.deletion.CASCADE, to="search.case"
+            ),
         ),
     ]
