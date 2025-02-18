@@ -1,7 +1,9 @@
-# syntax=docker/dockerfile:1
-FROM python:3.13
+FROM python:3.10
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+
+COPY ./.docker/zscaler_cert.pem /tmp/zscaler.crt
+RUN cp /tmp/zscaler.crt /usr/local/share/ca-certificates/zscaler.crt ; update-ca-certificates
 
 RUN apt-get update && apt-get install -y \
   build-essential \
@@ -16,11 +18,8 @@ RUN apt-get update && apt-get install -y \
 COPY ./support/geckodriver-v0.35.0-linux64.tar.gz geckodriver.tar.gz
 RUN tar -zxf geckodriver.tar.gz -C /usr/local/bin && chmod +x /usr/local/bin/geckodriver
 
-WORKDIR /code
+COPY Pipfile Pipfile
+COPY Pipfile.lock Pipfile.lock
 
-COPY requirements.txt /code/
-RUN pip install -r requirements.txt
-COPY . /code/
-
-EXPOSE 8000
-CMD python manage.py runserver 0.0.0.0:8000
+RUN pip install pipenv
+RUN pipenv install --system --dev

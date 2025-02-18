@@ -1,1 +1,1 @@
-docker compose run -it --remove-orphans web coverage run --source='.' manage.py test --pattern '*_test.py' feature_tests
+docker compose run -it --remove-orphans app coverage run --source='.' manage.py test --pattern '*_test.py' feature_tests

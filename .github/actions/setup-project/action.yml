@@ -1,0 +1,27 @@
+name: Set up project with database
+description: Setup Python, Javascript, and load the database schema into a running postgres db
+inputs:
+  django_settings_module:
+    description: DJANGO_SETTINGS_MODULE to set. Defaults to darts.settings.prod
+    required: false
+    default: darts.settings.prod
+  database_url:
+    description: DATABASE_URL to set
+    required: false
+    default: postgres://cidbuser:postgres@localhost:5432/darts_test
+outputs:
+  database_url:
+    value: ${{ inputs.database_url }}
+runs:
+  using: composite
+  steps:
+    - name: Set up Python& Javascript
+      uses: ./.github/actions/setup-languages
+
+    - name: Set up database
+      env:
+        DJANGO_SETTINGS_MODULE: ${{ inputs.django_settings_module }}
+        DATABASE_URL: ${{ inputs.database_url }}
+      shell: bash
+      run: pipenv run python manage.py migrate
+      working-directory: darts
