@@ -177,3 +177,6 @@ node_modules
 
 darts/darts/static
 data/
+
+# MacOS
+.DS_Store
