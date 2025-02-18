@@ -1,33 +1,70 @@
-# darts
-========================
+# ORDA DARTS
 
-<<TKTK: quick summary of project>>
+## Installation
 
-## Development
+Clone this repository and navigate into it.
 
-If you're new to Django, see [Getting Started with
-Django](https://www.djangoproject.com/start/) for an introduction to the
-framework.
+To use Docker to start all services, run
 
-### Local Setup
+```sh
+docker compose up
+```
 
-* Install Docker <https://docs.docker.com/get-docker/>
-* Initialize the application:
+Then visit <http://localhost:8000> to see the site.
 
-  ```shell
-  docker compose build
-  docker compose run app python manage.py migrate
-  ```
-* Run the server: `docker compose up`
-* Visit the site: http://localhost:8000
+To reach a shell within the Docker container, run
 
-### Local Configuration
+```sh
+bin/run app sh
+```
 
-## Security
+Migrate the database for the search app:
 
-### Authentication
+```sh
+bin/manage migrate search
+```
 
-TBD
+Set up fixture data with this command:
+
+```sh
+bin/manage loaddata regions users persons cases
+```
+
+Import documents with this command:
+
+```sh
+bin/manage import
+```
+
+To use a Python environment shell, run:
+
+```sh
+bin/manage shell
+```
+
+## Testing
+
+Run tests with the following commands:
+
+```sh
+# Run all tests
+bin/testall
+
+# Run all Cucumber / behave features
+bin/features
+
+# Run all feature tests (this is different than the last one, believe it or not)
+bin/feature_test
+
+# Run all unit tests (with code coverage analysis)
+bin/test
+
+# Run a scoped-down set of unit tests, in this case search/tests/operations/*.py
+bin/test search.tests.operations
+
+# Get a test coverage report
+bin/coverage
+```
 
 ### Inline `<script>` and `<style>` security
 
@@ -38,18 +75,13 @@ nonce: true %>` for inline javascript.
 See the [CSP compliant script tag helpers](./doc/adr/0004-rails-csp-compliant-script-tag-helpers.md) ADR for
 more information on setting these up successfully.
 
-## Internationalization
-
-## Testing
-
 ### Running tests
 
-* Tests: `pipenv run darts/manage.py test`
-* Python linter: `pipenv run black`
-* Dynamic security scan: `docker compose run owasp`
-* Static security scan: `pipenv run bandit -r .`
-* Python dependency checks: `pipenv check`
-
+* Tests: `bin/pipenv run darts/manage.py test`
+* Python linter: `bin/pipenv run black`
+* Dynamic security scan: `bin/run owasp`
+* Static security scan: `bin/pipenv run bandit -r .`
+* Python dependency checks: `bin/pipenv check`
 
 ### Automatic linting
 
@@ -63,10 +95,9 @@ at the top of `.githooks/pre-commit`
 Each environment has dependencies on a PostgreSQL RDS instance managed by cloud.gov.
 See [cloud.gov docs](https://cloud.gov/docs/services/relational-database/) for information on RDS.
 
-#### Staging
+#### Deploying to development
 
-
-#### Production
+TBD
 
 
 ### Configuring ENV variables in cloud.gov
