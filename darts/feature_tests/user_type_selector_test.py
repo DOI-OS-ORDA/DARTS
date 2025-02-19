@@ -1,4 +1,4 @@
-from search.operations.documents_import import DocumentsImport
+from selenium.webdriver.common.by import By
 from .base import FeatureTest
 
 
