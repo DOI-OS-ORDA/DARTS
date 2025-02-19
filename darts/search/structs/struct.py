@@ -5,7 +5,7 @@ class DictObj(object):
 
 class Struct:
     def __init__(self, input: dict):
-        assert isinstance(input, dict)
+        # assert isinstance(input, dict)
         for key, val in input.items():
             if isinstance(val, (list, tuple)):
                 setattr(

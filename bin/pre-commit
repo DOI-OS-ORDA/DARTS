@@ -13,7 +13,7 @@
 echo "Running linter..."
 docker compose run -T --remove-orphans app pipenv run flake8 \
     && docker compose run -T --remove-orphans app pipenv run black --check --diff . \
-    && docker compose run -T --remove-orphans app pipenv run bandit -r .
+    && docker compose run -T --remove-orphans app pipenv run bandit -c ../pyproject.toml -r .
 linter_status=$?
 
 if [ $linter_status -ne 0 ]; then

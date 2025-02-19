@@ -50,6 +50,10 @@ class DocumentsImport:
 
     def fake_metadata(self):
         return {
-            "public": random.choice([True, False]),
-            "title": "".join(random.choice(string.ascii_uppercase) for _ in range(10)),
+            # The use of random is just for creating sample metadata,
+            # and has no cryptographic purpose.
+            "public": random.choice([True, False]),  # nosec
+            "title": "".join(
+                random.choice(string.ascii_uppercase) for _ in range(10)  # nosec
+            ),
         }
