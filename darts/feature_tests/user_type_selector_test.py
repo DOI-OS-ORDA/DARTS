@@ -1,6 +1,3 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-
 from search.operations.documents_import import DocumentsImport
 from .base import FeatureTest
 
