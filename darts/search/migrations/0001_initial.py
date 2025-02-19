@@ -38,7 +38,11 @@ class Migration(migrations.Migration):
                 ALTER TABLE search_document
                 ADD COLUMN search_text tsvector
                 GENERATED ALWAYS AS
-                    (to_tsvector('english', coalesce(filename, '') || ' ' || coalesce(body, '')))
+                    (to_tsvector('english',
+                        coalesce(filename, '') ||
+                        ' ' ||
+                        coalesce(body, '')
+                    ))
                 STORED;
                 """,
             # SQL that does nothing, so that Django knows we can reverse the migration

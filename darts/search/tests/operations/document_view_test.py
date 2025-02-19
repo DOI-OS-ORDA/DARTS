@@ -8,7 +8,7 @@ from search.models import Document
 class DocumentViewDocxTest(TestCase):
 
     def setUp(self):
-        self.filename = "search/tests/fixtures/documents/Effects of a gasoline spill on hibernating bats.docx"
+        self.filename = "search/tests/fixtures/documents/Effects of a gasoline spill on hibernating bats.docx"  # noqa: E501
 
         document = Document(
             body="I assure you, we have data.",

@@ -1,3 +1,5 @@
+# flake8: noqa
+
 from behave import given, when, then
 
 

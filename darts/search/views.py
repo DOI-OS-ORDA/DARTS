@@ -8,8 +8,6 @@ from .models import Document, Case
 from .operations.document_search import DocumentSearch
 from .operations.document_upload import DocumentUpload
 from .operations.document_view import DocumentView
-from .repositories.search_results import SearchResultsRepository
-from .repositories.users import UsersRepository
 
 
 class Search(View):
@@ -69,7 +67,7 @@ def list(request):
 
 
 def view_doc(request, id, slug=None):
-    if slug == None:
+    if slug is None:
         doc = Document.objects.get(pk=id)
         return redirect("document", id, doc.slug)
 

@@ -5,8 +5,6 @@ from search.repositories.users import UsersRepository
 
 class DocumentSearch:
 
-    default_searcher = lambda: UsersRepository.fallback()
-
     def __init__(self, query: str, searcher=None, engine=DocumentVisibilityEngine()):
         self.query = query
         self.person = searcher or self.default_searcher()
@@ -19,3 +17,6 @@ class DocumentSearch:
             region_ids=[self.person.region_id],
         )
         return SearchResultsRepository().all(query=self.query, permissions=permissions)
+
+    def default_searcher(self):
+        return UsersRepository.fallback()

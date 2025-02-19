@@ -11,7 +11,11 @@ class CustomAssertions:
         laterIndex = array.index(laterElement)
         if not earlyIndex < laterIndex:
             raise AssertionError(
-                f"Expected {earlyElement} to appear before {laterElement}, but {earlyElement} was at index {earlyIndex} and {laterElement} was at index {laterIndex}"
+                f"""
+                Expected {earlyElement} to appear before {laterElement},
+                but {earlyElement} was at index {earlyIndex}
+                and {laterElement} was at index {laterIndex}
+                """
             )
 
 

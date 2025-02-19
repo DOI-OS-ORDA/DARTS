@@ -5,8 +5,6 @@ import os
 
 class DocumentImport:
 
-    # @inject
-    # def __init__(self, file_path: str, repository = Provide["repo.documents"], converter = ["ops.text"]):
     def __init__(
         self,
         file_path: str,

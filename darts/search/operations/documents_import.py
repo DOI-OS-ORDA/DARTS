@@ -1,11 +1,15 @@
-import glob, os, pandas, random, string
+import glob
+import os
+import pandas
+import random
+import string
+
 from search.models import Document
 from search.operations.document_import import DocumentImport
 
 
 # To do: DI the repository and config file path
 # make "repo.documents" a factory
-# def __init__(self, folder_path: str = Provide["config.documents_pattern"], repository = Provide["repo.documents"]):
 class DocumentsImport:
     def __init__(self, documents_dir: str, metadata_file: str, repository=Document):
         self.documents_dir = documents_dir
@@ -13,14 +17,14 @@ class DocumentsImport:
         self.repository = repository
 
     def call(self):
-        print(f"----> [START] Starting document import...")
+        print("----> [START] Starting document import...")
         filepaths = glob.glob(self.documents_dir)
         metadata = pandas.read_csv(self.metadata_file)
         for path in filepaths:
             print(f"----> Importing {path}...")
             md = self.choose_metadata(metadata, path)
             DocumentImport(path, md["title"], md["public"], self.repository).call()
-        print(f"----> [END] Document import complete!")
+        print("----> [END] Document import complete!")
 
     def choose_metadata(self, metadata, path):
         datarow = self.has_metadata(metadata, path)

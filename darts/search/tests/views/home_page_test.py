@@ -1,6 +1,4 @@
 from django.test import TestCase
-from django.http import HttpRequest
-from search.views import search
 
 
 class HomePageTest(TestCase):

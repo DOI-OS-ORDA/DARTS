@@ -36,12 +36,12 @@ class Case(models.Model):
     def photos(self):
         return [
             {
-                "src": "https://www.cerc.usgs.gov/orda_docs/PhotoHandler.ashx?ID=149&task=displayAll",
+                "src": "https://www.cerc.usgs.gov/orda_docs/PhotoHandler.ashx?ID=149&task=displayAll",  # noqa: E501
                 "caption": "Credit: Exxon Valdez Trustee Council",
             },
             {
-                "src": "https://www.cerc.usgs.gov/orda_docs/PhotoHandler.ashx?ID=152&task=displayAll",
-                "caption": "Barge water tanks, workers hosing beach, Credit: Exxon Valdez Trustee Council",
+                "src": "https://www.cerc.usgs.gov/orda_docs/PhotoHandler.ashx?ID=152&task=displayAll",  # noqa: E501
+                "caption": "Barge water tanks, workers hosing beach, Credit: Exxon Valdez Trustee Council",  # noqa: E501
             },
         ]
 
@@ -81,7 +81,8 @@ class Document(models.Model):
     filename_normal = models.CharField(max_length=255)
     search_text = SearchVectorField()
     title = models.CharField(max_length=255)
-    # slug should be null=False, unique=True, default=slugify(self.title) but can't figure out how to do that.
+    # slug should be null=False, unique=True, default=slugify(self.title)
+    # but can't figure out how to do that.
     slug = models.SlugField(max_length=255, null=True)
     public = models.BooleanField(default=False)
 

@@ -8,7 +8,7 @@ from search.operations.text_conversion import TextConversion
 class TextConversionDocxTest(TestCase):
 
     def setUp(self):
-        self.file_path = "search/tests/fixtures/documents/3_Effects of a gasoline spill on hibernating bats.docx"
+        self.file_path = "search/tests/fixtures/documents/3_Effects of a gasoline spill on hibernating bats.docx"  # noqa: E501
         self.filename = "3_Effects of a gasoline spill on hibernating bats.docx"
         self.expected_start_text = "![Description: USGS](media/image1.png)"
         self.subject = TextConversion
@@ -61,4 +61,4 @@ class TextConversionPdfTest(TestCase):
             )
 
 
-# TODO: 10164_Final RPEA Burgess ... is all empty, and that should throw an error of some sort
+# TODO: 10164_Final RPEA Burgess... is all empty, should throw an error of some sort

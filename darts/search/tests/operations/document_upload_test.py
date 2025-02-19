@@ -1,12 +1,12 @@
 from django.test import TestCase
 
-from search.operations.document_upload import DocumentUpload
+# from search.operations.document_upload import DocumentUpload
 
 
 class DocumentUploadTest(TestCase):
 
     def setUp(self):
-        self.filename = "search/tests/fixtures/documents/Effects of a gasoline spill on hibernating bats.docx"
+        self.filename = "search/tests/fixtures/documents/Effects of a gasoline spill on hibernating bats.docx"  # noqa: E501
         # self.file = None
         # self.title = None
         # self.repo = None

@@ -51,7 +51,11 @@ class SearchResultsRelation(Relation):
                     ts_headline(
                       body,
                       query,
-                      $$MaxFragments=0, MaxWords=40, MinWords=30, StartSel='<span class="highlight">', StopSel='</span>'$$
+                      $$MaxFragments=0,
+                      MaxWords=40,
+                      MinWords=30,
+                      StartSel='<span class="highlight">',
+                      StopSel='</span>'$$
                     ) preview
                 WHERE
                     query @@ search_text
@@ -147,8 +151,8 @@ class SearchResultsRelation(Relation):
                     base
                     + f"WHERE (NOT public AND region_id NOT IN ({placeholder}))" % value
                 )
-                #                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                #                                 Remove this if there are no regions assigned
+                #                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                #                              Remove this if there are no regions assigned
             case _:
                 return ""
 

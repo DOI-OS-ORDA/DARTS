@@ -28,6 +28,6 @@ class TextConversion:
         base, ext = os.path.splitext(filename)
         match ext:
             case ".docx":
-                return f"pandoc -d pandoc.yml -f docx -t markdown"
+                return "pandoc -d pandoc.yml -f docx -t markdown"
             case ".pdf":
-                return f"pdftotext - -"
+                return "pdftotext - -"
