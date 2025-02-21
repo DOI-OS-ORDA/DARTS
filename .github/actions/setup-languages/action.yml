@@ -17,6 +17,9 @@ runs:
     - name: Install dependencies
       run: pipenv install --system --dev
       shell: bash
+    - name: Install Django
+      run: pipenv install django
+      shell: bash
 
 
     - name: Set up node
