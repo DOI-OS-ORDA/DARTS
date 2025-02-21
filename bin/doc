@@ -15,12 +15,10 @@ case $format in
   docx)
     case $path_or_bytes in
       path)
-        echo "docx path!"
-        pandoc -d pandoc.yml -f docx -t markdown "$filepath"
+        pandoc -d /app/pandoc.yml -f docx -t markdown "$filepath"
         ;;
       bytes)
-        echo "docx bytes!"
-        pandoc -d pandoc.yml -f docx -t markdown
+        pandoc -d /app/pandoc.yml -f docx -t markdown
         ;;
     esac
 
@@ -28,11 +26,9 @@ case $format in
   pdf)
     case $path_or_bytes in
       path)
-        echo "pdf path!"
         pdftotext "$filepath" -
         ;;
       bytes)
-        echo "pdf bytes!"
         pdftotext - -
         ;;
     esac

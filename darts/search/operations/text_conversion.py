@@ -13,7 +13,7 @@ class TextConversion:
 
     @classmethod
     def from_file_bytes(cls, filename: str, file_bytes: bytes):
-        params = [cls.command_path, cls.ext(filename), "path"]
+        params = [cls.command_path, cls.ext(filename), "bytes"]
         return subprocess.check_output(params, input=file_bytes, shell=False).decode(
             encoding="utf-8"
         )
