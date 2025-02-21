@@ -47,6 +47,5 @@ jobs:
           docker_name: 'zaproxy/zap-weekly'
           target: 'http://localhost:8000/'
           fail_action: true
-          artifact_name: Zs
           rules_file_name: 'zap.conf'
           cmd_options: '-I'
