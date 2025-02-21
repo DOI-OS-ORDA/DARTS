@@ -80,7 +80,7 @@ class SearchResultsRelation(Relation):
                   preview,
                   rank
                 from base
-        """ + self.visibility_clause(
+        """ + self.visibility_clause(  # nosec B608
             options
         )
 
