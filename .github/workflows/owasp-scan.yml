@@ -44,7 +44,7 @@ jobs:
       - name: Run OWASP Full Scan
         uses: zaproxy/action-full-scan@v0.3.0
         with:
-          docker_name: 'owasp/zap2docker-weekly'
+          docker_name: 'zaproxy/zap-weekly'
           target: 'http://localhost:8000/'
           fail_action: true
           rules_file_name: 'zap.conf'
