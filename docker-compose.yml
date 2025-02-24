@@ -45,4 +45,14 @@ services:
     profiles: ["owasp-scan"]
 
 
-  # gulp image goes here
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=hello@gsa.gov
+      - PGADMIN_DEFAULT_PASSWORD=password
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    restart: always
