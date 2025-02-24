@@ -21,7 +21,7 @@ pyyaml = "*"
 black = "*"
 gunicorn = "*"
 gevent = "*"
-django = "*"
+django = "~=5.1.6"
 
 [dev-packages]
 wait4it = "*"
