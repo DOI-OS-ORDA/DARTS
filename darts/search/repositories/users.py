@@ -4,15 +4,14 @@ from search.structs.struct import Struct
 
 
 class UsersRepository(Repository):
+    relation = Person
 
-    @classmethod
-    def get_or_fallback(self, id):
+    def get_or_fallback(self, pk):
         try:
-            return self.get(id)
-        except Person.DoesNotExist:
+            return self.get(pk)
+        except (Person.DoesNotExist, TypeError):
             return self.fallback()
 
-    @classmethod
     def fallback(self):
         return Struct(
             {

@@ -13,9 +13,11 @@
 # ModifiedBy
 # ModifiedDate
 # Public
+import os
 import pandas
 import re
 
+from search.operations.text_conversion import TextConversion
 from search.structs.struct import Struct
 from search.repositories.cases import CasesRepository as CaseRepo
 from search.repositories.documents import DocumentsRepository as DocRepo
@@ -27,6 +29,7 @@ class NewDocumentImport:
 
     def __init__(self, metadata_file: str = "/app/test_data/new_metadata.csv"):
         self.metadata_file = metadata_file
+        self.text_converter = TextConversion
 
     def call(self):
         print("----> [START] Starting document import...")
@@ -40,13 +43,17 @@ class NewDocumentImport:
 
         case = CaseRepo().find_or_create(int(row.CaseID), { 'name': row.CaseName })
 
+        real_file_name = f"/app/test_data/heaping_bowl/{int(row.DocumentID)}_{row.OriginalFileName}"
+
         document = DocRepo().find_or_create(int(row.DocumentID), {
-            'title': row.DocumentName,
-            'filename': row.OriginalFileName,
-            'category': row.Category,
-            'type': row.Type,
-            'public': True,
+            'body': self.text_converter.from_filepath(real_file_name),
             'case_id': case.id,
+            'category': row.Category,
+            'file': open(real_file_name, "rb").read(),
+            'filename': os.path.basename(row.OriginalFileName),
+            'public': True,
+            'title': row.DocumentName,
+            'type': row.Type,
         })
 
         # document_entered_user = UserRepository.find_or_create({ 'slug': row.EnteredBy })

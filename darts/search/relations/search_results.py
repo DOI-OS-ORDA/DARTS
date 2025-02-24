@@ -42,11 +42,10 @@ class SearchResultsRelation(Relation):
                     ts_rank_cd(search_text, query) AS rank,
                     preview,
                     search_document.case_id,
-                    search_region.id as region_id
+                    search_case.region_id
                 FROM
                     search_document
-                        JOIN search_case ON case_id = search_case.id
-                        JOIN search_region ON search_case.region_id = search_region.id,
+                        LEFT OUTER JOIN search_case ON case_id = search_case.id,
                     websearch_to_tsquery('english', %(query)s) query,
                     ts_headline(
                       body,

@@ -21,7 +21,7 @@ class Repository:
 
 
     def get(self, pk):
-        return find(self, pk)
+        return self.find(pk)
 
 
     def first(self):

@@ -19,19 +19,19 @@ class Case(models.Model):
     public = models.BooleanField(default=False)
     # has_many :documents
     # belongs_to :region
-    region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True, blank=True)
 
-    alias = models.CharField(max_length=255, null=True)
-    state = models.CharField(max_length=255, null=True)
-    location = models.CharField(max_length=255, null=True)
-    contaminants_of_concern = models.CharField(max_length=255, null=True)
-    affected_doi_resources = models.TextField(null=True)
-    incident_type = models.CharField(max_length=255, null=True)
-    status = models.CharField(max_length=255, null=True)
-    authority = models.CharField(max_length=255, null=True)
-    description = models.TextField(null=True)
-    contact = models.CharField(max_length=255, null=True)
-    trustees = models.TextField(null=True)
+    alias = models.CharField(max_length=255, null=True, blank=True)
+    state = models.CharField(max_length=255, null=True, blank=True)
+    location = models.CharField(max_length=255, null=True, blank=True)
+    contaminants_of_concern = models.CharField(max_length=255, null=True, blank=True)
+    affected_doi_resources = models.TextField(null=True, blank=True)
+    incident_type = models.CharField(max_length=255, null=True, blank=True)
+    status = models.CharField(max_length=255, null=True, blank=True)
+    authority = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    contact = models.CharField(max_length=255, null=True, blank=True)
+    trustees = models.TextField(null=True, blank=True)
 
     def photos(self):
         return [
@@ -83,11 +83,13 @@ class Document(models.Model):
     title = models.CharField(max_length=255)
     # slug should be null=False, unique=True, default=slugify(self.title)
     # but can't figure out how to do that.
-    slug = models.SlugField(max_length=255, null=True)
+    slug = models.SlugField(max_length=255, null=True, blank=True)
     public = models.BooleanField(default=False)
+    category = models.CharField(max_length=255, null=True, blank=True)
+    type = models.CharField(max_length=255, null=True, blank=True)
 
     # belongs_to :case
-    case = models.ForeignKey(Case, on_delete=models.CASCADE, null=True)
+    case = models.ForeignKey(Case, on_delete=models.CASCADE, null=True, blank=True)
 
     # belongs_to :region, through: :case
     def region(self):
@@ -129,8 +131,8 @@ class Document(models.Model):
 class Person(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    first_name = models.CharField(null=True)
-    last_name = models.CharField(null=True)
+    first_name = models.CharField(null=True, blank=True)
+    last_name = models.CharField(null=True, blank=True)
 
     GUEST = "guest"
     SUPERUSER = "superuser"
@@ -153,7 +155,7 @@ class Person(models.Model):
     cases = models.ManyToManyField(Case, blank=True)
 
     # belongs_to :region
-    region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, null=True, blank=True)
 
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
