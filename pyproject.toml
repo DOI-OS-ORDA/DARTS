@@ -1,0 +1,3 @@
+[tool.bandit]
+exclude_dirs = ["darts/features/steps/*",]
+skips = ["B101",]

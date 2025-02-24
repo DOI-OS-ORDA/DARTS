@@ -36,7 +36,7 @@ services:
       - ./data/db15:/var/lib/postgresql/data
 
   owasp:
-    image: owasp/zap2docker-weekly
+    image: zaproxy/zap-weekly
     command: zap-baseline.py -t http://app:8000 -c zap.conf -I -r zap_report.html
     depends_on:
       - app

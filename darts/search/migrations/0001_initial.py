@@ -8,21 +8,27 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Document',
+            name="Document",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('filename', models.CharField(max_length=255)),
-                ('file', models.BinaryField()),
-                ('body', models.TextField()),
-                ('search_text', django.contrib.postgres.search.SearchVectorField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("filename", models.CharField(max_length=255)),
+                ("file", models.BinaryField()),
+                ("body", models.TextField()),
+                ("search_text", django.contrib.postgres.search.SearchVectorField()),
             ],
         ),
-
         # It appears to be impossible to alter an existing column to be generated, so
         # we drop the column and re-create it here.
         migrations.RunSQL(
@@ -32,11 +38,14 @@ class Migration(migrations.Migration):
                 ALTER TABLE search_document
                 ADD COLUMN search_text tsvector
                 GENERATED ALWAYS AS
-                    (to_tsvector('english', coalesce(filename, '') || ' ' || coalesce(body, '')))
+                    (to_tsvector('english',
+                        coalesce(filename, '') ||
+                        ' ' ||
+                        coalesce(body, '')
+                    ))
                 STORED;
                 """,
-
             # SQL that does nothing, so that Django knows we can reverse the migration
-            reverse_sql="SELECT 'reversing' as message"
+            reverse_sql="SELECT 'reversing' as message",
         ),
     ]

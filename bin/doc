@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# Usage:
+#   bin/doc [input format] [path | bytes] [file path]
+#
+# Examples:
+#   bin/doc pdf path path/to/file.pdf
+#   cat path/to/file.docx | bin/doc docx bytes
+
+format=$1
+path_or_bytes=$2
+filepath=$3
+
+case $format in
+  docx)
+    case $path_or_bytes in
+      path)
+        pandoc -d /app/pandoc.yml -f docx -t markdown "$filepath"
+        ;;
+      bytes)
+        pandoc -d /app/pandoc.yml -f docx -t markdown
+        ;;
+    esac
+
+    ;;
+  pdf)
+    case $path_or_bytes in
+      path)
+        pdftotext "$filepath" -
+        ;;
+      bytes)
+        pdftotext - -
+        ;;
+    esac
+    ;;
+  *)
+    echo "broken!"
+    ;;
+esac

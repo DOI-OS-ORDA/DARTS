@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker compose run -it --remove-orphans app behave
+bin/run app behave

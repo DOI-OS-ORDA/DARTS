@@ -1,12 +1,12 @@
 import re
 import time
-import unittest
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 from search.operations.documents_import import DocumentsImport
 from .base import FeatureTest
+
 
 class SearchTest(FeatureTest):
 
@@ -33,8 +33,10 @@ class SearchTest(FeatureTest):
         time.sleep(1)
 
         # They see highlighted results containing the search term
-        results = self.browser.find_elements(By.CLASS_NAME, "usa-collection__description")
-        self.assertTrue(any(re.search('bats', result.text, re.I) for result in results))
+        results = self.browser.find_elements(
+            By.CLASS_NAME, "usa-collection__description"
+        )
+        self.assertTrue(any(re.search("bats", result.text, re.I) for result in results))
 
         # They search for outside of Kentucky
         # inputbox.send_keys("bats -Kentucky")

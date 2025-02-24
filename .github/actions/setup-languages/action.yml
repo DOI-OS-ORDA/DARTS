@@ -17,8 +17,11 @@ runs:
     - name: Install dependencies
       run: pipenv install --system --dev
       shell: bash
+    - name: Install Django
+      run: pipenv install django
+      shell: bash
 
-    
+
     - name: Set up node
       uses: actions/setup-node@v3
       with:
@@ -27,4 +30,3 @@ runs:
     - name: Install npm dependencies
       shell: bash
       run: npm ci
-    
