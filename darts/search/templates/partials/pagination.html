@@ -1,3 +1,4 @@
+{% load static %}
 <nav aria-label="Pagination" class="usa-pagination">
   <ul class="usa-pagination__list">
     <li class="usa-pagination__item usa-pagination__arrow">
@@ -6,7 +7,7 @@
         class="usa-pagination__link usa-pagination__previous-page"
         aria-label="Previous page"
         ><svg class="usa-icon" aria-hidden="true" role="img">
-          <use href="/assets/img/sprite.svg#navigate_before"></use>
+          <use href="{% static 'img/sprite.svg#navigate_before' %}"></use>
         </svg>
         <span class="usa-pagination__link-text">Previous</span></a
       >
@@ -14,7 +15,7 @@
     <li class="usa-pagination__item usa-pagination__page-no">
       <a
         href="javascript:void(0);"
-        class="usa-pagination__button"
+        class="usa-pagination__button usa-current"
         aria-label="Page 1"
         >1</a
       >
@@ -36,7 +37,7 @@
     <li class="usa-pagination__item usa-pagination__page-no">
       <a
         href="javascript:void(0);"
-        class="usa-pagination__button usa-current"
+        class="usa-pagination__button"
         aria-label="Page 10"
         aria-current="page"
         >10</a
@@ -71,7 +72,7 @@
         aria-label="Next page"
         ><span class="usa-pagination__link-text">Next </span
         ><svg class="usa-icon" aria-hidden="true" role="img">
-          <use href="/assets/img/sprite.svg#navigate_next"></use></svg
+          <use href="/static/img/sprite.svg#navigate_next' %}"></use></svg
       ></a>
     </li>
   </ul>

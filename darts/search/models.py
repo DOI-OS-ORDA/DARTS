@@ -162,3 +162,8 @@ class Person(models.Model):
 
     def __str__(self):
         return self.full_name()
+
+
+class Event(models.Model):
+    type = models.CharField(max_length=255, default="UnknownEventOccurred")
+    data = models.JSONField(default=dict)

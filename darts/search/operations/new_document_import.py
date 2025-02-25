@@ -21,8 +21,8 @@ from search.operations.text_conversion import TextConversion
 from search.structs.struct import Struct
 from search.repositories.cases import CasesRepository as CaseRepo
 from search.repositories.documents import DocumentsRepository as DocRepo
-# from search.repositories.events import EventsRepository
-# from search.repositories.users import UsersRepository
+from search.repositories.events import EventsRepository as EventRepo
+from search.repositories.users import UsersRepository as UserRepo
 
 
 class NewDocumentImport:
@@ -56,22 +56,23 @@ class NewDocumentImport:
             'type': row.Type,
         })
 
-        # document_entered_user = UserRepository.find_or_create({ 'slug': row.EnteredBy })
+        # TODO Next: set up person accounts, find by slug
+        # document_entered_user = UserRepo.find_or_create({ 'slug': row.EnteredBy })
 
-        # document_entered_event = EventRepository.create({
+        # document_entered_event = EventRepo.create({
+        #     'type': 'DocumentEntered',
         #     'data': {
-        #         'type': 'DocumentEntered',
         #         'document': document.id,
         #         'user': user.id,
         #         'timestamp': row.EnteredDate,
         #     }
         # })
 
-        # document_modified_user = UserRepository.find_or_create({ 'slug': row.ModifiedBy })
+        # document_modified_user = UserRepo.find_or_create({ 'slug': row.ModifiedBy })
 
-        # document_modified_event = EventRepository.create({
+        # document_modified_event = EventRepo.create({
+        #     'type': 'DocumentModified',
         #     'data': {
-        #         'type': 'DocumentModified',
         #         'document': document.id,
         #         'user': user.id,
         #         'timestamp': row.EnteredDate,
