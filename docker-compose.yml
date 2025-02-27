@@ -12,7 +12,8 @@ services:
         condition: on-failure
         max_attempts: 5
     environment:
-      - PYTHONUNBUFFERED=yup
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
       - DATABASE_URL=postgres://darts_user:darts_password@db/darts
       - RUNNING_IN_DOCKER=yup
       - DJANGO_SETTINGS_MODULE=darts.settings.dev
@@ -26,15 +27,15 @@ services:
       python manage.py runserver 0.0.0.0:8000"
 
   db:
-    image: postgres:15.7
+    build:
+      context: .
+      dockerfile: ./.docker/Postgres.Dockerfile
     environment:
       - POSTGRES_DB=darts
       - POSTGRES_USER=darts_user
       - POSTGRES_PASSWORD=darts_password
     volumes:
-      - ./data/db15:/var/lib/postgresql/data
-      - sharedir:/usr/share/postgresql/15/tsearch_data
-      - ./support:/usr/support
+      - dbdata:/var/lib/postgresql/data
 
   owasp:
     image: zaproxy/zap-weekly
@@ -59,4 +60,4 @@ services:
     restart: always
 
 volumes:
-  sharedir:
+  dbdata:

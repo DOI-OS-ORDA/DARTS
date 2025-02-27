@@ -5,7 +5,9 @@ from search.models import Person
 
 def current_user(request):
     return {
-        "current_user": UsersRepository().get_or_fallback(request.session.get("user.id"))
+        "current_user": UsersRepository().get_or_fallback(
+            request.session.get("user.id")
+        )
     }
 
 

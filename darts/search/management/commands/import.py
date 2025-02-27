@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from search.operations.documents_import import DocumentsImport
+from search.operations.new_document_import import NewDocumentImport
 
 
 class Command(BaseCommand):
@@ -10,12 +10,15 @@ class Command(BaseCommand):
             "documents_dir", nargs="?", type=str, default="test_data/docs/*"
         )
         parser.add_argument(
-            "metadata_file", nargs="?", type=str, default="test_data/metadata.csv"
+            "metadata_file",
+            nargs="?",
+            type=str,
+            default="/app/test_data/new_metadata.csv",
         )
 
     def handle(self, *args, **options):
         self.stdout.write(
             self.style.SUCCESS(f'Loading documents from {options["documents_dir"]}')
         )
-        DocumentsImport(options["documents_dir"], options["metadata_file"]).call()
+        NewDocumentImport(options["metadata_file"]).call()
         self.stdout.write(self.style.SUCCESS("Successfully imported documents"))

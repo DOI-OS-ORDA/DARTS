@@ -13,16 +13,15 @@
 # ModifiedBy
 # ModifiedDate
 # Public
+import gc
 import os
 import pandas
-import re
+from subprocess import CalledProcessError  # nosec B404
 
 from search.operations.text_conversion import TextConversion
 from search.structs.struct import Struct
 from search.repositories.cases import CasesRepository as CaseRepo
-from search.repositories.documents import DocumentsRepository as DocRepo
-from search.repositories.events import EventsRepository as EventRepo
-from search.repositories.users import UsersRepository as UserRepo
+from search.models import Document
 
 
 class NewDocumentImport:
@@ -39,22 +38,42 @@ class NewDocumentImport:
 
     def do_import(self, row_data):
         row = Struct(dict(row_data))
-        print(f"----> Importing {row.OriginalFileName}...")
+        real_file_name = (
+            f"/app/test_data/heaping_bowl/{int(row.DocumentID)}_{row.OriginalFileName}"
+        )
 
-        case = CaseRepo().find_or_create(int(row.CaseID), { 'name': row.CaseName })
+        print(f"----> Importing {real_file_name}...")
 
-        real_file_name = f"/app/test_data/heaping_bowl/{int(row.DocumentID)}_{row.OriginalFileName}"
+        case = CaseRepo().find_or_create(int(row.CaseID), {"name": row.CaseName})
 
-        document = DocRepo().find_or_create(int(row.DocumentID), {
-            'body': self.text_converter.from_filepath(real_file_name),
-            'case_id': case.id,
-            'category': row.Category,
-            'file': open(real_file_name, "rb").read(),
-            'filename': os.path.basename(row.OriginalFileName),
-            'public': True,
-            'title': row.DocumentName,
-            'type': row.Type,
-        })
+        with os.fdopen(os.open(real_file_name, os.O_RDONLY), "rb") as file:
+            try:
+                Document.objects.get(pk=int(row.DocumentID))
+            except Document.DoesNotExist:
+                try:
+                    document = Document(
+                        id=int(row.DocumentID),
+                        body=self.text_converter.from_filepath(real_file_name),
+                        case_id=case.id,
+                        category=row.Category,
+                        file=file.read(),
+                        filename=os.path.basename(row.OriginalFileName),
+                        public=True,
+                        title=row.DocumentName,
+                        type=row.Type,
+                    )
+                    document.save()
+                    del document
+                    gc.collect()
+                except CalledProcessError:
+                    print(f"Couldn't import {real_file_name}")
+
+        # Reading the file then setting Document#file to a test set of bytes
+        # works quickly and is fine.
+
+        # The problem happens when the Document#file = bytea.
+        # So it's not garbage collection in here -- it's something with
+        # how the document is created. What if we did the document model directly?
 
         # TODO Next: set up person accounts, find by slug
         # document_entered_user = UserRepo.find_or_create({ 'slug': row.EnteredBy })

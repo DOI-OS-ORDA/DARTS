@@ -33,6 +33,21 @@ class Migration(migrations.Migration):
         # we drop the column and re-create it here.
         migrations.RunSQL(
             sql="""
+                CREATE TEXT SEARCH DICTIONARY thesaurus_acronyms (
+                    TEMPLATE = thesaurus,
+                    DictFile = acronyms,
+                    Dictionary = pg_catalog.english_stem
+                );
+
+                ALTER TEXT SEARCH CONFIGURATION english
+                    ALTER MAPPING FOR asciiword, asciihword, hword_asciipart
+                    WITH thesaurus_acronyms, english_stem;
+                """,
+            # SQL that does nothing, so that Django knows we can reverse the migration
+            reverse_sql="SELECT 'reversing thesaurus' as message",
+        ),
+        migrations.RunSQL(
+            sql="""
                 ALTER TABLE search_document DROP COLUMN search_text;
 
                 ALTER TABLE search_document
@@ -46,6 +61,6 @@ class Migration(migrations.Migration):
                 STORED;
                 """,
             # SQL that does nothing, so that Django knows we can reverse the migration
-            reverse_sql="SELECT 'reversing' as message",
+            reverse_sql="SELECT 'reversing search text generation' as message",
         ),
     ]

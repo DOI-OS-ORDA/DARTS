@@ -1,6 +1,4 @@
 FROM python:3.10
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
 
 COPY ./.docker/zscaler_cert.pem /tmp/zscaler.crt
 RUN cp /tmp/zscaler.crt /usr/local/share/ca-certificates/zscaler.crt ; update-ca-certificates

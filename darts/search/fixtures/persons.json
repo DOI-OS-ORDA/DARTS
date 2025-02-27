@@ -23,8 +23,7 @@
         "role": "superuser",
         "region": 1,
         "cases": [
-            2,
-            4
+            2
         ]
     }
 },
@@ -38,8 +37,7 @@
         "role": "tech",
         "region": 2,
         "cases": [
-            2,
-            4
+            2
         ]
     }
 },
@@ -53,7 +51,6 @@
         "role": "staff",
         "region": 5,
         "cases": [
-            3
         ]
     }
 }
